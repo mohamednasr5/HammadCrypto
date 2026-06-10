@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0e17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hammad Crypto">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="محفظة العملات الرقمية — تحليل AI وإدارة المحفظة">
+<title>Hammad Crypto Pro — محفظة العملات الرقمية</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0e17;--bg2:#0f1420;--bg3:#141d2a;--bg4:#1a2535;--bg5:#202d42;
+  --border:#1c2a3e;--border2:#253448;
+  --green:#00d4aa;--gold:#f0b429;--red:#ff4757;--blue:#4ecdc4;--purple:#a855f7;
+  --cyan:#00c9ff;--pink:#ff006e;--orange:#ff6b35;
+  --text:#dde3f0;--text2:#6b7a99;--text3:#3a4560;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Segoe UI','Cairo',Tahoma,sans-serif}
+body{display:flex;flex-direction:column}
+#hdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(135deg,rgba(15,20,32,0.8),rgba(20,29,42,0.8));border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-ico{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#000;box-shadow:0 0 15px rgba(0,212,170,0.3);animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-4px)}}
+.logo-txt{font-size:14px;font-weight:800;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.5px}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.on{background:var(--green);box-shadow:0 0 8px var(--green),inset 0 0 8px rgba(0,212,170,0.4);animation:pulse 2s infinite}
+.dot.off{background:var(--red);box-shadow:0 0 8px var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ico-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);transition:all .25s;backdrop-filter:blur(5px)}
+.ico-btn:hover{border-color:var(--green);color:var(--green);background:rgba(0,212,170,0.1);transform:scale(1.05)}
+.spin{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#coins-bar{flex-shrink:0;background:linear-gradient(90deg,rgba(15,20,32,0.6),rgba(20,29,42,0.6));border-bottom:1px solid var(--border);padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;overflow-y:hidden}
+#coins-bar::-webkit-scrollbar{height:2px}
+#coins-bar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:1px}
+.coin-pill{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(20,29,42,0.7),rgba(26,37,53,0.7));border:1px solid var(--border);border-radius:8px;padding:5px 10px;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.coin-pill:hover{border-color:var(--green);background:rgba(0,212,170,0.1);transform:translateY(-2px)}
+.cp-sym{font-size:11px;font-weight:700;color:var(--text);min-width:35px}
+.cp-price{font-size:10px;color:var(--text2)}
+.cp-chg{font-size:10px;font-weight:600;min-width:40px;text-align:left}
+.cp-chg.up{color:var(--green)}.cp-chg.dn{color:var(--red)}
+#tabs{flex-shrink:0;display:flex;background:var(--bg2);border-bottom:1px solid var(--border)}
+.tab{flex:1;padding:10px 2px;text-align:center;font-size:10px;color:var(--text3);cursor:pointer;border-bottom:3px solid transparent;transition:all .25s;user-select:none}
+.tab.on{border-bottom-color:var(--green);color:var(--green);background:rgba(0,212,170,0.03)}
+.tab:hover:not(.on){color:var(--text2);background:rgba(255,255,255,0.02)}
+.tab-ico{font-size:16px;display:block;margin-bottom:2px}
+#content{flex:1;overflow-y:auto;overflow-x:hidden}
+#content::-webkit-scrollbar{width:3px}
+#content::-webkit-scrollbar-track{background:transparent}
+#content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.page{display:none}.page.on{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.port-card{margin:12px 10px 8px;background:linear-gradient(135deg,rgba(13,24,40,0.6),rgba(15,32,53,0.6));border:1px solid var(--border2);border-radius:14px;padding:14px;backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.port-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.port-total-lbl{font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.port-total{font-size:28px;font-weight:900;color:#fff;line-height:1;background:linear-gradient(135deg,#fff,var(--text));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.port-egp{font-size:11px;color:var(--gold);margin-top:4px}
+.port-badge{background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(76,205,196,0.15));border:1px solid rgba(0,212,170,0.4);border-radius:10px;padding:6px 12px;text-align:center;box-shadow:0 0 15px rgba(0,212,170,0.1)}
+.pb-lbl{font-size:9px;color:var(--text2);font-weight:600;text-transform:uppercase}
+.pb-val{font-size:15px;font-weight:800}
+.port-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ps{background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6));border:1px solid var(--border);border-radius:10px;padding:10px;transition:all .3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.ps:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 12px 24px rgba(0,212,170,0.2)}
+.ps::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,212,170,0.1),transparent);animation:shimmer 3s infinite}
+@keyframes shimmer{0%{transform:translate(-100%,-100%)}100%{transform:translate(100%,100%)}}
+.ps-lbl{font-size:9px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.ps-val{font-size:14px;font-weight:800;white-space:nowrap;position:relative;z-index:1}
+.assets-hdr{display:flex;justify-content:space-between;align-items:center;padding:8px 12px 6px;margin-top:8px}
+.assets-hdr-txt{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
+.badge-sm{font-size:9px;background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(76,205,196,0.15));border:1px solid rgba(0,212,170,0.4);border-radius:6px;padding:3px 8px;color:var(--green);font-weight:600}
+.asset-row{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(28,42,62,0.6);transition:all .2s;position:relative}
+.asset-row:hover{background:rgba(0,212,170,0.05);padding-right:16px}
+.asset-row::before{content:'';position:absolute;right:0;top:0;height:100%;width:3px;background:linear-gradient(180deg,transparent,var(--green),transparent);opacity:0;transition:opacity .2s}
+.asset-row:hover::before{opacity:1}
+.ar-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:2px solid;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);position:relative;transition:all .3s}
+.ar-ico::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:12px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.2),transparent);pointer-events:none}
+.asset-row:hover .ar-ico{transform:scale(1.1);box-shadow:0 8px 20px rgba(0,0,0,0.4)}
+.ar-mid{min-width:0}
+.ar-sym{font-size:13px;font-weight:800;color:var(--text);letter-spacing:0.5px}
+.ar-sub{font-size:9px;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.ar-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .8s cubic-bezier(0.34,1.56,0.64,1)}
+.ar-right{text-align:left;flex-shrink:0;padding:0 4px}
+.ar-val{font-size:13px;font-weight:800;color:var(--text);letter-spacing:0.3px}
+.ar-pnl{font-size:10px;margin-top:2px;font-weight:600}
+.ar-day{font-size:9px;color:var(--text3);margin-top:1px}
+.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}
+.ai-top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,rgba(168,85,247,.08),rgba(0,212,170,.08));border-bottom:1px solid var(--border);flex-wrap:wrap;gap:6px}
+.ai-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.5px}
+.ai-badge-pill{background:linear-gradient(135deg,var(--purple),#6366f1);border-radius:6px;padding:3px 8px;font-size:9px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(168,85,247,0.3)}
+.ai-last{font-size:9px;color:var(--text2)}
+.btn-ai-run{background:linear-gradient(135deg,var(--green),var(--blue));border:none;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:700;color:#000;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:0 4px 15px rgba(0,212,170,0.3)}
+.btn-ai-run:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.4)}
+.btn-ai-run:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ai-card{margin:10px 10px;background:linear-gradient(135deg,rgba(20,29,42,0.9),rgba(26,37,53,0.7));border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:all .3s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.ai-card:hover{transform:translateY(-6px) scale(1.01);border-color:var(--green);box-shadow:0 12px 40px rgba(0,212,170,0.25)}
+.ai-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);opacity:0;transition:opacity .3s}
+.ai-card:hover::before{opacity:1}
+.ai-card-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6));border-bottom:1px solid var(--border);position:relative;z-index:1}
+.ai-card-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all .3s;position:relative}
+.ai-card-ico::after{content:'';position:absolute;inset:0;border-radius:10px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.2),transparent);pointer-events:none}
+.ai-card:hover .ai-card-ico{transform:scale(1.15) rotateZ(5deg);box-shadow:0 6px 18px rgba(0,0,0,0.4)}
+.ai-sym{font-size:13px;font-weight:800;letter-spacing:0.3px}
+.ai-price{font-size:10px;color:var(--text2);margin-top:1px}
+.sig{display:inline-flex;align-items:center;gap:4px;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;margin-right:auto;margin-left:auto}
+.sig.buy{background:rgba(0,212,170,0.2);border:1px solid rgba(0,212,170,0.5);color:var(--green)}
+.sig.hold{background:rgba(240,180,41,0.2);border:1px solid rgba(240,180,41,0.5);color:var(--gold)}
+.sig.sell{background:rgba(255,71,87,0.2);border:1px solid rgba(255,71,87,0.5);color:var(--red)}
+.ai-body{padding:14px;position:relative;z-index:1}
+.ai-reason{font-size:10px;color:var(--text2);line-height:1.6;margin-bottom:10px;padding:8px;background:rgba(0,0,0,0.2);border-right:3px solid var(--green);border-radius:4px}
+.ai-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.sc{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;transition:all .2s}
+.sc:hover{border-color:var(--green);background:rgba(0,212,170,0.05)}
+.sc-l{font-size:8px;color:var(--text3);margin-bottom:3px;font-weight:600;text-transform:uppercase}
+.sc-v{font-size:14px;font-weight:800}
+.sc-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
+.sc-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(0.34,1.56,0.64,1)}
+.ai-levels{display:flex;gap:8px;flex-wrap:wrap;font-size:9px;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px;border:1px solid var(--border)}
+.ai-lv-item{display:flex;align-items:center;gap:4px;flex:1;min-width:80px}
+.ai-lv-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.al-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border)}
+.al-hdr-txt{font-size:12px;font-weight:700;text-transform:uppercase}
+.al-item{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(28,42,62,0.6);transition:background .15s}
+.al-item:hover{background:rgba(20,29,42,0.5)}
+.al-item.unread{background:rgba(20,29,42,0.3)}
+.al-dot{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.al-ttl{font-size:11px;font-weight:600;color:var(--text)}
+.al-msg{font-size:9px;color:var(--text2);margin-top:1px}
+.al-time{font-size:8px;color:var(--text3);margin-top:1px}
+.s-sec{display:block;border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 10px 0;background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6))}
+.s-title{font-size:11px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.s-title.green{color:var(--green)}.s-title.blue{color:var(--blue)}.s-title.purple{color:var(--purple)}
+.inp{width:100%;background:rgba(20,29,42,0.8);border:1px solid var(--border2);border-radius:8px;padding:9px 11px;color:var(--text);font-size:12px;margin-bottom:8px;direction:ltr;outline:none;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.inp:focus{border-color:var(--green);box-shadow:0 0 12px rgba(0,212,170,0.2),0 2px 8px rgba(0,0,0,0.2)}
+.btn{border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--blue));color:#000;box-shadow:0 4px 15px rgba(0,212,170,0.3)}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.4)}
+.btn-red{background:rgba(255,71,87,.15);border:1px solid rgba(255,71,87,.4);color:var(--red)}
+.btn-red:hover{background:rgba(255,71,87,.25)}
+.btn-gray{background:var(--bg4);border:1px solid var(--border);color:var(--text2)}
+.btn-gray:hover{border-color:var(--green);color:var(--green)}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.btn-row .btn{flex:1}
+.conn-msg{margin-top:6px;font-size:10px;padding:4px 8px;border-radius:6px;display:none}
+.conn-msg.ok{display:block;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--green)}
+.conn-msg.fail{display:block;background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);color:var(--red)}
+.footer{text-align:center;padding:14px;color:var(--text3);font-size:9px;border-top:1px solid var(--border);margin-top:10px;line-height:1.7}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;gap:10px}
+.spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
+.ld-txt{font-size:12px;color:var(--text2);font-weight:500}
+.empty{text-align:center;padding:35px 20px;color:var(--text3);font-size:12px;line-height:1.6}
+.install-banner{margin:10px 10px 0;background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(0,212,170,0.1));border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:14px}
+.install-banner .s-title{color:var(--purple)}
+.install-btn{width:100%;background:linear-gradient(135deg,var(--purple),#6366f1);border:none;border-radius:8px;padding:10px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(168,85,247,0.3)}
+.install-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(168,85,247,0.4)}
+.install-desc{font-size:10px;color:var(--text2);margin-bottom:8px;line-height:1.6}
+@media(min-width:768px){#app{max-width:480px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border);min-height:100vh}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="hdr"><div class="logo"><div class="logo-ico">₿</div><span class="logo-txt">HAMMAD CRYPTO</span></div><div class="hdr-r"><div class="dot off" id="statusDot"></div><button class="ico-btn" id="refreshBtn" title="تحديث">↻</button></div></div>
+<div id="coins-bar"></div>
+<div id="tabs"><div class="tab on" id="tab-home" data-tab="home"><span class="tab-ico">🏠</span>الرئيسية</div><div class="tab" id="tab-ai" data-tab="ai"><span class="tab-ico">🤖</span>تحليل</div><div class="tab" id="tab-alerts" data-tab="alerts"><span class="tab-ico">🔔</span>تنبيهات</div><div class="tab" id="tab-settings" data-tab="settings"><span class="tab-ico">⚙️</span>إعدادات</div></div>
+<div id="content">
+<div class="page on" id="page-home"><div id="homeContent"><div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div></div></div>
+<div class="page" id="page-ai"><div class="ai-top-bar"><div class="ai-title"><span class="ai-badge-pill">AI</span>التحليل الذكي</div><span class="ai-last" id="aiLastTxt">—</span><button class="btn-ai-run" id="btnRunAI">تحليل الآن ▶</button></div><div id="aiContent"><div class="empty">🤖 اضغط "تحليل الآن" لبدء تحليل العملات بالذكاء الاصطناعي</div></div></div>
+<div class="page" id="page-alerts"><div class="al-hdr"><span class="al-hdr-txt">🔔 التنبيهات</span><button class="btn btn-gray" id="btnClearAlerts" style="padding:4px 10px;font-size:9px">مسح الكل</button></div><div id="alertsContent"><div class="empty">لا توجد تنبيهات</div></div></div>
+<div class="page" id="page-settings">
+<div class="s-sec"><div class="s-title green">🔑 بيانات OKX API</div><input class="inp" type="password" id="inp_api" placeholder="API Key" autocomplete="off"><input class="inp" type="password" id="inp_sec" placeholder="Secret Key" autocomplete="off"><input class="inp" type="password" id="inp_pass" placeholder="Passphrase" autocomplete="off"><div class="btn-row"><button class="btn btn-green" id="btnSave">💾 حفظ</button><button class="btn btn-gray" id="btnTest">🔌 اختبار</button><button class="btn btn-red" id="btnRemove">🗑️ حذف</button></div><div class="conn-msg" id="connMsg"></div></div>
+<div class="s-sec"><div class="s-title blue">📊 عملات شريط الأسعار</div><input class="inp" id="tickerCoinsInp" placeholder="BTC,ETH,SOL,..." style="direction:ltr"><button class="btn btn-green" id="btnUpdateTicker" style="width:100%">تحديث الشريط</button></div>
+<div class="install-banner" id="installBanner" style="display:none"><div class="s-title">📱 تثبيت التطبيق</div><div class="install-desc">ثبّت Hammad Crypto على جهازك للوصول السريع والعمل بدون إنترنت</div><button class="install-btn" id="btnInstall">📲 تثبيت التطبيق</button></div>
+<div class="footer">برمجة وتطوير بكل ❤️ المهندس محمد حماد<br><span style="color:var(--green)">Hammad Crypto v3.2 Pro — PWA</span></div>
+</div>
+</div>
+</div>
+<script>
+'use strict';
+let portfolio=null,aiAnalyses=[],alerts=[],currentTab='home',deferredPrompt=null;
+const OKX_BASE='https://www.okx.com',AI_ENDPOINT='https://taybat-ai.studegy8.workers.dev/';
+const COIN_META={BTC:{bg:'#f7931a',icon:'₿'},ETH:{bg:'#627eea',icon:'Ξ'},USDT:{bg:'#26a17b',icon:'$'},USDC:{bg:'#2775ca',icon:'$'},BNB:{bg:'#f3ba2f',icon:'B'},SOL:{bg:'#9945ff',icon:'◎'},XRP:{bg:'#346aa9',icon:'X'},ADA:{bg:'#627eea',icon:'A'},TON:{bg:'#0088cc',icon:'T'},KAT:{bg:'#ff6b35',icon:'K'},PI:{bg:'#8b4513',icon:'π'},OFC:{bg:'#4ecdc4',icon:'O'},BASED:{bg:'#0052ff',icon:'B'},CHIP:{bg:'#a855f7',icon:'C'},LTC:{bg:'#bfbbbb',icon:'Ł'},DOT:{bg:'#e6007a',icon:'●'}};
+const DEMO_PRICES={BTC:{p:68450,c:2.34},ETH:{p:3890,c:1.87},SOL:{p:182,c:3.5},BNB:{p:610,c:-0.9},KAT:{p:0.0245,c:-0.85},PI:{p:2.35,c:5.2},OFC:{p:0.0012,c:12.5},BASED:{p:0.00045,c:-2.1},CHIP:{p:0.0089,c:8.7},XRP:{p:0.58,c:1.2},ADA:{p:0.47,c:-1.5},TON:{p:7.2,c:4.1},LTC:{p:88,c:0.6},DOT:{p:7.8,c:-2.3}};
+function meta(sym){const s=sym.toUpperCase().replace(/-USDT$|,-USD$/g,'');return COIN_META[s]||{bg:'#4ecdc4',icon:s.charAt(0)}}
+function fmt(n,d=2){if(isNaN(n)||n===null)return'0';return parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fmtPrice(p){p=parseFloat(p);if(p>=1000)return fmt(p,0);if(p>=1)return fmt(p,2);if(p>=0.01)return fmt(p,4);return fmt(p,6)}
+function fmtTime(d){return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})}
+function safeB64Encode(str){return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode(parseInt(p1,16))))}
+function safeB64Decode(b64){return decodeURIComponent(atob(b64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''))}
+function lsGet(key,fb){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fb}catch{return fb}}
+function lsSet(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch{}}
+function getCredentials(){const enc=localStorage.getItem('okx_creds_enc');if(!enc)return null;try{return JSON.parse(safeB64Decode(enc))}catch{return null}}
+function saveCredentials(creds){localStorage.setItem('okx_creds_enc',safeB64Encode(JSON.stringify(creds)))}
+function removeCredsFull(){localStorage.removeItem('okx_creds_enc');localStorage.removeItem('hc_portfolio');portfolio=null;dot(false);renderHome()}
+async function hmacSHA256(key,msg){const k=new TextEncoder().encode(key),m=new TextEncoder().encode(msg),ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']),sig=await crypto.subtle.sign('HMAC',ck,m);return btoa(String.fromCharCode(...new Uint8Array(sig)))}
+async function getOKXHeaders(method,path,body=''){const creds=getCredentials();if(!creds)return null;const ts=new Date().toISOString(),sign=await hmacSHA256(creds.secretKey,ts+method.toUpperCase()+path+body);return{'OK-ACCESS-KEY':creds.apiKey,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':creds.passphrase,'Content-Type':'application/json'}}
+async function fetchBalance(){const h=await getOKXHeaders('GET','/api/v5/account/balance');if(!h)return null;try{const r=await fetch(OKX_BASE+'/api/v5/account/balance',{headers:h}),d=await r.json();return d.code==='0'?d.data:null}catch{return null}}
+async function fetchTicker(id){try{const r=await fetch(OKX_BASE+'/api/v5/market/ticker?instId='+id),d=await r.json();return d.code==='0'?d.data[0]:null}catch{return null}}
+async function fetchOrderHistory(id){const p='/api/v5/trade/orders-history?instType=SPOT&instId='+id+'&limit=50',h=await getOKXHeaders('GET',p);if(!h)return[];try{const r=await fetch(OKX_BASE+p,{headers:h}),d=await r.json();return d.code==='0'?d.data:[]}catch{return[]}}
+function computeAvgBuy(orders){let tc=0,tq=0;for(const o of orders)if(o.side==='buy'&&o.state==='filled'){tc+=parseFloat(o.fillSz||0)*parseFloat(o.avgPx||0);tq+=parseFloat(o.fillSz||0)}return tq>0?tc/tq:0}
+async function fetchEGPRate(){try{const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD'),d=await r.json();return d.rates?.EGP||50.8}catch{return 50.8}}
+async function buildPortfolio(){const bd=await fetchBalance();if(!bd||!bd[0])return null;const details=bd[0].details||[],assets=[];let tv=0;const va=details.filter(d=>d.ccy!=='USDT'&&parseFloat(d.eq||0)>0);for(const d of va){const sym=d.ccy,qty=parseFloat(d.eq||0),tk=await fetchTicker(sym+'-USDT');if(!tk)continue;const price=parseFloat(tk.last),value=qty*price;if(value<1)continue;const o24h=parseFloat(tk.open24h||price),dcP=o24h>0?((price-o24h)/o24h)*100:0,orders=await fetchOrderHistory(sym+'-USDT'),avg=computeAvgBuy(orders),cb=avg*qty,upl=value-cb,uplp=cb>0?(upl/cb)*100:0;assets.push({sym,qty,price,value,avgBuy:avg,costBasis:cb,unrealizedPnL:upl,unrealizedPnLPct:uplp,dailyChangePct:dcP});tv+=value}for(const a of assets)a.allocPct=tv>0?(a.value/tv)*100:0;const ti=assets.reduce((s,a)=>s+(a.costBasis||a.value),0),eg=await fetchEGPRate();return{total:tv,invested:ti,profit:tv-ti,egpRate:eg,assets,ts:Date.now()}}
+async function analyzeAsset(asset){const prompt=`أنت محلل تداول خبير. حلل العملة الرقمية بالبيانات التالية وأعط توصية واضحة.\n\nالعملة: ${asset.sym}\nالسعر الحالي: $${asset.price}\nالتغير اليومي: ${asset.dailyChangePct.toFixed(2)}%\nمتوسط سعر الشراء: $${asset.avgBuy||asset.price}\nالربح/الخسارة غير المحققة: ${asset.unrealizedPnL>=0?'+':''}$${asset.unrealizedPnL.toFixed(2)} (${asset.unrealizedPnLPct.toFixed(1)}%)\nنسبة التخصيص في المحفظة: ${asset.allocPct.toFixed(1)}%\n\nأجب بـ JSON فقط بدون أي نص إضافي:\n{"trend":"صاعد أو هابط أو محايد","signal":"buy أو sell أو hold","reason":"تحليل مختصر باللغة العربية 2-3 جمل","support":0.0,"resistance":0.0,"stopLoss":0.0,"confidence":75,"bullScore":70,"bearScore":30}`;try{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000),r=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]}),signal:c.signal});clearTimeout(t);if(!r.ok)return{};const d=await r.json();let txt='';if(d.content&&Array.isArray(d.content))txt=d.content.find(b=>b.type==='text')?.text||'';else if(d.text)txt=d.text;else if(typeof d==='string')txt=d;if(!txt)return{};const jm=txt.match(/\{[\s\S]*?\}/);if(!jm)return{};return JSON.parse(jm[0])}catch{return{}}}
+function switchTab(tab){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('page-'+tab).classList.add('on');document.getElementById('tab-'+tab).classList.add('on');currentTab=tab;document.getElementById('content').scrollTop=0;if(tab==='ai')loadAI();if(tab==='alerts')renderAlerts()}
+async function loadPortfolio(){const creds=getCredentials();if(!creds){renderNoCreds();return}document.getElementById('homeContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div>';const data=await buildPortfolio();if(data){portfolio=data;lsSet('hc_portfolio',data);renderHome();dot(true)}else{const cached=lsGet('hc_portfolio',null);if(cached){portfolio=cached;renderHome();dot(true)}else renderNoCreds()}}
+function renderHome(){if(!portfolio){renderNoCreds();return}const{total,profit,egpRate,assets}=portfolio,egp=total*(egpRate||50.8),todayPnl=assets.reduce((s,a)=>s+(a.value*(a.dailyChangePct/100)||0),0);const rows=assets.map(a=>{const m=meta(a.sym),pos=a.unrealizedPnL>=0;return`<div class="asset-row"><div class="ar-ico" style="background:${m.bg}20;color:${m.bg};border-color:${m.bg}50">${m.icon}</div><div class="ar-mid"><div class="ar-sym">${a.sym}</div><div class="ar-sub">${fmt(a.qty,4)} · avg $${fmtPrice(a.avgBuy||a.price)} · <span class="${a.dailyChangePct>=0?'green':'red'}">${a.dailyChangePct>=0?'▲':'▼'} ${Math.abs(a.dailyChangePct).toFixed(2)}%</span></div><div class="ar-bar"><div class="ar-bar-fill" style="width:${a.allocPct.toFixed(1)}%"></div></div></div><div class="ar-right"><div class="ar-val">$${fmt(a.value,2)}</div><div class="ar-pnl ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnL,2)}</div><div class="ar-day ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnLPct,1)}%</div></div></div>`}).join('');document.getElementById('homeContent').innerHTML=`<div class="port-card"><div class="port-top"><div><div class="port-total-lbl">إجمالي المحفظة</div><div class="port-total">$${fmt(total,2)}</div><div class="port-egp">ج.م ${fmt(egp,0)}</div></div><div class="port-badge"><div class="pb-lbl">صافي الربح</div><div class="pb-val ${profit>=0?'green':'red'}">${profit>=0?'+':''}$${fmt(profit,0)}</div></div></div><div class="port-stats"><div class="ps"><div class="ps-lbl">ربح اليوم</div><div class="ps-val ${todayPnl>=0?'green':'red'}">${todayPnl>=0?'+':''}$${fmt(todayPnl,2)}</div></div><div class="ps"><div class="ps-lbl">عدد العملات</div><div class="ps-val" style="color:var(--blue)">${assets.length}</div></div><div class="ps"><div class="ps-lbl">سعر الدولار</div><div class="ps-val gold">ج.م ${(egpRate||50.8).toFixed(1)}</div></div></div></div><div class="assets-hdr"><span class="assets-hdr-txt">الأصول النشطة</span><span class="badge-sm">${assets.length} عملة</span></div>${rows}`}
+function renderNoCreds(){document.getElementById('homeContent').innerHTML=`<div class="empty" style="padding:50px 16px"><div style="font-size:36px;margin-bottom:12px">🔑</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">أضف مفاتيح OKX API</div><div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.7">اذهب إلى الإعدادات وأدخل<br>بيانات OKX API للبدء</div><button class="btn btn-green" onclick="switchTab('settings')">⚙️ فتح الإعدادات</button></div>`;dot(false)}
+async function loadAI(){const cached=lsGet('hc_ai',null);if(cached&&cached.analyses){aiAnalyses=cached.analyses;document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(cached.lastUpdate||Date.now());renderAI()}else{document.getElementById('aiContent').innerHTML='<div class="empty">اضغط "تحليل الآن" لبدء التحليل</div>';document.getElementById('aiLastTxt').textContent='لم يتم التحليل بعد'}}
+function renderAI(){if(!aiAnalyses.length){document.getElementById('aiContent').innerHTML='<div class="empty">لا يوجد تحليل</div>';return}document.getElementById('aiContent').innerHTML=aiAnalyses.map(a=>{const m=meta(a.sym),sig=a.signal||'hold',conf=a.confidence||50,bull=a.bullScore||50,bear=a.bearScore||50,sl=sig==='buy'?'🟢 شراء':sig==='sell'?'🔴 بيع':'🟡 انتظار';return`<div class="ai-card"><div class="ai-card-hdr"><div class="ai-card-ico" style="background:${m.bg}20;color:${m.bg};border-color:${m.bg}50">${m.icon}</div><div><div class="ai-sym">${a.sym}</div><div class="ai-price">$${fmtPrice(a.price)} · ${a.trend||'محايد'}</div></div><span class="sig ${sig}">${sl}</span></div><div class="ai-body"><div class="ai-reason">${a.reason||'لا يوجد تحليل متاح'}</div><div class="ai-scores"><div class="sc"><div class="sc-l">الثقة</div><div class="sc-v" style="color:var(--blue)">${conf}%</div><div class="sc-bar"><div class="sc-fill" style="width:${conf}%;background:var(--blue)"></div></div></div><div class="sc"><div class="sc-l">صعودي</div><div class="sc-v green">${bull}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bull}%;background:var(--green)"></div></div></div><div class="sc"><div class="sc-l">هبوطي</div><div class="sc-v red">${bear}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bear}%;background:var(--red)"></div></div></div></div>${a.support?`<div class="ai-levels"><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--green)"></div><span class="green">دعم: $${fmtPrice(a.support)}</span></div><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--red)"></div><span class="red">مقاومة: $${fmtPrice(a.resistance||0)}</span></div><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--gold)"></div><span class="gold">وقف: $${fmtPrice(a.stopLoss||0)}</span></div></div>`:''}</div></div>`}).join('')}
+async function runAI(){const btn=document.getElementById('btnRunAI');btn.disabled=true;btn.textContent='⏳ جاري التحليل...';document.getElementById('aiContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحليل العملات...</div></div>';document.getElementById('aiLastTxt').textContent='جاري التحليل...';if(!portfolio){const c=lsGet('hc_portfolio',null);if(c)portfolio=c}if(!portfolio||!portfolio.assets?.length){document.getElementById('aiContent').innerHTML='<div class="empty">لا توجد عملات في المحفظة</div>';btn.disabled=false;btn.textContent='تحليل الآن ▶';return}const analyses=[];for(const a of portfolio.assets){const an=await analyzeAsset(a);analyses.push({...a,...an})}aiAnalyses=analyses;lsSet('hc_ai',{analyses,lastUpdate:Date.now()});renderAI();document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(Date.now());btn.disabled=false;btn.textContent='تحليل الآن ▶'}
+function addAlert(title,body,type='info'){alerts.unshift({id:Date.now(),title,body,type,time:new Date().toISOString(),read:false});lsSet('hc_alerts',alerts);if(currentTab==='alerts')renderAlerts();if('Notification'in window&&Notification.permission==='granted')try{new Notification(title,{body,icon:'icons/icon-192.png'})}catch{}}
+function renderAlerts(){const el=document.getElementById('alertsContent');if(!alerts.length){el.innerHTML='<div class="empty">لا توجد تنبيهات</div>';return}const col={profit:'var(--green)',alert:'var(--red)',ai:'var(--purple)',info:'var(--blue)'};el.innerHTML=alerts.map(a=>`<div class="al-item ${a.read?'':'unread'}"><div class="al-dot" style="background:${col[a.type]||'var(--blue)'}"></div><div><div class="al-ttl">${a.title}</div><div class="al-msg">${a.body}</div><div class="al-time">${fmtTime(a.time)}</div></div></div>`).join('')}
+function saveCreds(){const api=document.getElementById('inp_api').value.trim(),sec=document.getElementById('inp_sec').value.trim(),pass=document.getElementById('inp_pass').value.trim();if(!api||!sec||!pass){showConn('fail','⚠️ يرجى ملء الحقول الثلاثة');return}saveCredentials({apiKey:api,secretKey:sec,passphrase:pass});showConn('ok','✅ تم الحفظ — المفاتيح على جهازك فقط');dot(true);addAlert('🔑 OKX','تم حفظ بيانات API','info');setTimeout(loadPortfolio,2000)}
+function removeCredsAction(){if(!confirm('هل تريد حذف بيانات OKX API؟'))return;removeCredsFull();showConn('fail','🗑️ تم حذف البيانات')}
+async function testConn(){showConn('fail','⏳ جاري الاختبار...');const api=document.getElementById('inp_api').value.trim(),sec=document.getElementById('inp_sec').value.trim(),pass=document.getElementById('inp_pass').value.trim();if(!api||!sec||!pass){showConn('fail','⚠️ أدخل البيانات أولاً');return}try{const ts=new Date().toISOString(),path='/api/v5/account/balance',k=new TextEncoder().encode(sec),m=new TextEncoder().encode(ts+'GET'+path),ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']),sig=await crypto.subtle.sign('HMAC',ck,m),sign=btoa(String.fromCharCode(...new Uint8Array(sig)));const r=await fetch(OKX_BASE+path,{headers:{'OK-ACCESS-KEY':api,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':pass,'Content-Type':'application/json'}});showConn(r.ok?'ok':'fail',r.ok?'🟢 الاتصال بـ OKX ناجح!':'🔴 بيانات غير صحيحة');if(r.ok)dot(true)}catch{showConn('fail','⚠️ فشل الاتصال — تحقق من الشبكة')}}
+function showConn(type,msg){const el=document.getElementById('connMsg');el.textContent=msg;el.className='conn-msg '+type}
+function dot(on){document.getElementById('statusDot').className='dot '+(on?'on':'off')}
+function initCoinsBar(){const stored=lsGet('hc_tickerCoins','BTC,ETH,SOL,BNB,KAT,PI,OFC');const el=document.getElementById('tickerCoinsInp');if(el)el.value=stored;renderCoinsBar(stored)}
+function renderCoinsBar(coinsStr){const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);document.getElementById('coins-bar').innerHTML=coins.map(sym=>{const d=DEMO_PRICES[sym]||{p:(Math.random()*100).toFixed(4),c:((Math.random()-.5)*10).toFixed(2)};const up=parseFloat(d.c)>=0;return`<span class="coin-pill" data-sym="${sym}"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`}).join('')}
+function refreshCoinsBarPrices(){document.querySelectorAll('.coin-pill').forEach(el=>{const sym=el.dataset.sym,d=DEMO_PRICES[sym];if(!d)return;d.c=parseFloat(d.c)+(Math.random()-.5)*.4;const up=d.c>=0,chg=el.querySelector('.cp-chg');if(chg){chg.textContent=(up?'+':'')+d.c.toFixed(2)+'%';chg.className='cp-chg '+(up?'up':'dn')}})}
+function updateTicker(){const v=document.getElementById('tickerCoinsInp').value.trim();if(v){lsSet('hc_tickerCoins',v);renderCoinsBar(v)}}
+async function doRefresh(){const btn=document.getElementById('refreshBtn');btn.classList.add('spin');await loadPortfolio();btn.classList.remove('spin');addAlert('🔄 تحديث','تم تحديث بيانات المحفظة','info')}
+function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null})}}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').style.display='block'});
+if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').then(()=>console.log('SW registered')).catch(()=>{});
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));document.getElementById('refreshBtn').addEventListener('click',doRefresh);document.getElementById('btnRunAI').addEventListener('click',runAI);document.getElementById('btnClearAlerts').addEventListener('click',()=>{alerts=[];lsSet('hc_alerts',[]);renderAlerts()});document.getElementById('btnSave').addEventListener('click',saveCreds);document.getElementById('btnTest').addEventListener('click',testConn);document.getElementById('btnRemove').addEventListener('click',removeCredsAction);document.getElementById('btnUpdateTicker').addEventListener('click',updateTicker);document.getElementById('btnInstall').addEventListener('click',installPWA);alerts=lsGet('hc_alerts',[{id:1,title:'🎉 مرحباً بك',body:'أضف مفاتيح OKX API من الإعدادات للبدء',type:'info',time:new Date().toISOString(),read:false}]);initCoinsBar();loadPortfolio();setInterval(loadPortfolio,60000);setInterval(refreshCoinsBarPrices,5000)});
+</script>
+</body>
+</html>
