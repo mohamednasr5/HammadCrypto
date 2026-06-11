@@ -1,53 +1,48 @@
-// Hammad Crypto — Service Worker for PWA
-const CACHE_NAME = 'hammad-crypto-v3';
+// Hammad Crypto PWA — Service Worker v3.5
+const CACHE_NAME = 'hammad-crypto-v3.5';
 const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  '/',
+  '/index.html',
+  '/manifest.json'
 ];
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-  const url = new URL(event.request.url);
-  // Don't cache API calls
-  if (url.hostname !== self.location.hostname) return;
-
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        return response;
-      })
-      .catch(() => caches.match(event.request).then((cached) => cached || new Response('Offline', { status: 503 })))
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : {};
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'Hammad Crypto', {
-      body: data.body || 'تحديث جديد',
-      icon: 'icons/icon-192.png',
-      vibrate: [100, 50, 100],
-    })
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
+});
+
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+
+  // Always network-first for API calls
+  if (url.hostname.includes('okx.com') || url.hostname.includes('pollinations.ai') || url.hostname.includes('exchangerate-api.com')) {
+    e.respondWith(
+      fetch(e.request).catch(() => new Response(JSON.stringify({code:'offline'}), {headers:{'Content-Type':'application/json'}}))
+    );
+    return;
+  }
+
+  // Cache-first for app shell
+  if (url.hostname === self.location.hostname) {
+    e.respondWith(
+      caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+        return res;
+      }))
+    );
+    return;
+  }
+
+  // Network-first for everything else
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });

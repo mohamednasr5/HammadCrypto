@@ -2,347 +2,1289 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0e17">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#06080f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Hammad Crypto">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="محفظة العملات الرقمية — تحليل AI وإدارة المحفظة">
-<title>Hammad Crypto Pro — محفظة العملات الرقمية</title>
+<meta name="description" content="محفظة العملات الرقمية — تحليل AI مجاني بدون تسجيل">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon192.png">
+<link rel="icon" type="image/png" href="icons/icon192.png">
+<title>Hammad Crypto Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0a0e17;--bg2:#0f1420;--bg3:#141d2a;--bg4:#1a2535;--bg5:#202d42;
-  --border:#1c2a3e;--border2:#253448;
-  --green:#00d4aa;--gold:#f0b429;--red:#ff4757;--blue:#4ecdc4;--purple:#a855f7;
-  --cyan:#00c9ff;--pink:#ff006e;--orange:#ff6b35;
-  --text:#dde3f0;--text2:#6b7a99;--text3:#3a4560;
+  --bg-primary:#06080f;
+  --bg-secondary:#0c1018;
+  --bg-card:#111827;
+  --bg-card-hover:#162032;
+  --bg-input:#0a0f1a;
+  --border-subtle:#1e293b;
+  --border-active:#334155;
+  --accent:#10b981;
+  --accent-dim:rgba(16,185,129,0.12);
+  --accent-glow:rgba(16,185,129,0.25);
+  --gold:#f59e0b;
+  --gold-dim:rgba(245,158,11,0.12);
+  --danger:#ef4444;
+  --danger-dim:rgba(239,68,68,0.12);
+  --info:#3b82f6;
+  --info-dim:rgba(59,130,246,0.12);
+  --purple:#8b5cf6;
+  --purple-dim:rgba(139,92,246,0.12);
+  --cyan:#06b6d4;
+  --text-primary:#f1f5f9;
+  --text-secondary:#94a3b8;
+  --text-muted:#475569;
+  --radius:14px;
+  --radius-sm:10px;
+  --radius-xs:7px;
+  --shadow-card:0 4px 24px rgba(0,0,0,0.4);
+  --shadow-glow:0 0 20px rgba(16,185,129,0.15);
+  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
+  --safe-bottom:env(safe-area-inset-bottom, 0px);
+  --safe-top:env(safe-area-inset-top, 0px);
 }
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Segoe UI','Cairo',Tahoma,sans-serif}
-body{display:flex;flex-direction:column}
-#hdr{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(135deg,rgba(15,20,32,0.8),rgba(20,29,42,0.8));border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
-.logo{display:flex;align-items:center;gap:8px}
-.logo-ico{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--green),var(--blue));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#000;box-shadow:0 0 15px rgba(0,212,170,0.3);animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-4px)}}
-.logo-txt{font-size:14px;font-weight:800;background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.5px}
-.hdr-r{display:flex;align-items:center;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot.on{background:var(--green);box-shadow:0 0 8px var(--green),inset 0 0 8px rgba(0,212,170,0.4);animation:pulse 2s infinite}
-.dot.off{background:var(--red);box-shadow:0 0 8px var(--red)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.ico-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text2);transition:all .25s;backdrop-filter:blur(5px)}
-.ico-btn:hover{border-color:var(--green);color:var(--green);background:rgba(0,212,170,0.1);transform:scale(1.05)}
+
+html,body{
+  width:100%;height:100%;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  font-family:'Cairo','Segoe UI',Tahoma,sans-serif;
+  overflow:hidden;
+  overscroll-behavior:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+#app{
+  display:flex;flex-direction:column;
+  height:100dvh;
+  height:100vh;
+  padding-top:var(--safe-top);
+  padding-bottom:var(--safe-bottom);
+  overflow:hidden;
+}
+
+/* ══════════ PWA INSTALL BANNER ══════════ */
+#install-banner{
+  display:none;
+  background:linear-gradient(135deg,var(--accent-dim),rgba(6,182,212,0.1));
+  border-bottom:1px solid rgba(16,185,129,0.3);
+  padding:10px 16px;
+  align-items:center;gap:10px;flex-shrink:0;
+}
+#install-banner.show{display:flex}
+.ib-text{flex:1;font-size:11px;color:var(--text-secondary);line-height:1.5}
+.ib-text strong{color:var(--accent);display:block;font-size:12px;margin-bottom:2px}
+.ib-btn{
+  background:linear-gradient(135deg,var(--accent),#059669);
+  color:#fff;border:none;border-radius:var(--radius-xs);
+  padding:7px 14px;font-size:11px;font-weight:700;
+  cursor:pointer;white-space:nowrap;font-family:'Cairo',sans-serif;
+  flex-shrink:0;
+}
+.ib-close{
+  background:none;border:none;color:var(--text-muted);
+  font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0;
+}
+
+/* ══════════ HEADER ══════════ */
+#hdr{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+  background:linear-gradient(180deg,rgba(12,16,24,0.98),rgba(6,8,15,0.99));
+  border-bottom:1px solid var(--border-subtle);
+  position:relative;z-index:10;
+  min-height:58px;
+}
+#hdr::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0.35;
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-ico{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),#059669);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:900;color:#fff;
+  box-shadow:0 4px 16px rgba(16,185,129,0.35);
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.logo-ico::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.22),transparent);
+  border-radius:12px;
+}
+.logo-txt{
+  font-size:15px;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:0.3px;
+}
+.logo-ver{font-size:9px;color:var(--text-muted);font-weight:600}
+.hdr-actions{display:flex;align-items:center;gap:8px}
+.status-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;
+  padding:5px 11px;border-radius:20px;
+  transition:var(--transition);cursor:default;
+}
+.status-badge.connected{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+.status-badge.disconnected{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-badge.connected .status-dot{background:var(--accent);box-shadow:0 0 6px var(--accent);animation:statusPulse 2s infinite}
+.status-badge.disconnected .status-dot{background:var(--danger)}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.ico-btn{
+  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-xs);
+  width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:17px;color:var(--text-secondary);transition:var(--transition);
+  flex-shrink:0;
+}
+.ico-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.ico-btn:active{transform:scale(0.92)}
 .spin{animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#coins-bar{flex-shrink:0;background:linear-gradient(90deg,rgba(15,20,32,0.6),rgba(20,29,42,0.6));border-bottom:1px solid var(--border);padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;overflow-x:auto;overflow-y:hidden}
-#coins-bar::-webkit-scrollbar{height:2px}
-#coins-bar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:1px}
-.coin-pill{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(20,29,42,0.7),rgba(26,37,53,0.7));border:1px solid var(--border);border-radius:8px;padding:5px 10px;white-space:nowrap;transition:all .2s;flex-shrink:0}
-.coin-pill:hover{border-color:var(--green);background:rgba(0,212,170,0.1);transform:translateY(-2px)}
-.cp-sym{font-size:11px;font-weight:700;color:var(--text);min-width:35px}
-.cp-price{font-size:10px;color:var(--text2)}
-.cp-chg{font-size:10px;font-weight:600;min-width:40px;text-align:left}
-.cp-chg.up{color:var(--green)}.cp-chg.dn{color:var(--red)}
-#tabs{flex-shrink:0;display:flex;background:var(--bg2);border-bottom:1px solid var(--border)}
-.tab{flex:1;padding:10px 2px;text-align:center;font-size:10px;color:var(--text3);cursor:pointer;border-bottom:3px solid transparent;transition:all .25s;user-select:none}
-.tab.on{border-bottom-color:var(--green);color:var(--green);background:rgba(0,212,170,0.03)}
-.tab:hover:not(.on){color:var(--text2);background:rgba(255,255,255,0.02)}
-.tab-ico{font-size:16px;display:block;margin-bottom:2px}
-#content{flex:1;overflow-y:auto;overflow-x:hidden}
+
+/* ══════════ COINS BAR ══════════ */
+#coins-bar{
+  flex-shrink:0;
+  background:var(--bg-secondary);
+  border-bottom:1px solid var(--border-subtle);
+  padding:8px 12px;
+  display:flex;gap:6px;flex-wrap:nowrap;
+  overflow-x:auto;overflow-y:hidden;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+#coins-bar::-webkit-scrollbar{display:none}
+.coin-pill{
+  display:flex;align-items:center;gap:5px;
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius-xs);padding:6px 10px;
+  white-space:nowrap;transition:var(--transition);flex-shrink:0;
+  cursor:default;
+}
+.coin-pill:active{transform:scale(0.95)}
+.cp-sym{font-size:11px;font-weight:700;color:var(--text-primary);min-width:28px}
+.cp-price{font-size:10px;color:var(--text-secondary)}
+.cp-chg{font-size:10px;font-weight:700;min-width:40px;text-align:left}
+.cp-chg.up{color:var(--accent)}.cp-chg.dn{color:var(--danger)}
+
+/* ══════════ SCROLL CONTENT ══════════ */
+#content{
+  flex:1;
+  overflow-y:auto;overflow-x:hidden;
+  background:var(--bg-primary);
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  padding-bottom:8px;
+}
 #content::-webkit-scrollbar{width:3px}
-#content::-webkit-scrollbar-track{background:transparent}
-#content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.page{display:none}.page.on{display:block;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.port-card{margin:12px 10px 8px;background:linear-gradient(135deg,rgba(13,24,40,0.6),rgba(15,32,53,0.6));border:1px solid var(--border2);border-radius:14px;padding:14px;backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.port-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.port-total-lbl{font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
-.port-total{font-size:28px;font-weight:900;color:#fff;line-height:1;background:linear-gradient(135deg,#fff,var(--text));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.port-egp{font-size:11px;color:var(--gold);margin-top:4px}
-.port-badge{background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(76,205,196,0.15));border:1px solid rgba(0,212,170,0.4);border-radius:10px;padding:6px 12px;text-align:center;box-shadow:0 0 15px rgba(0,212,170,0.1)}
-.pb-lbl{font-size:9px;color:var(--text2);font-weight:600;text-transform:uppercase}
-.pb-val{font-size:15px;font-weight:800}
+#content::-webkit-scrollbar-thumb{background:var(--border-active);border-radius:2px}
+
+/* ══════════ BOTTOM NAV ══════════ */
+#bottom-nav{
+  flex-shrink:0;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:var(--bg-secondary);
+  border-top:1px solid var(--border-subtle);
+  position:relative;z-index:10;
+}
+#bottom-nav::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0.25;
+}
+.nav-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:10px 4px 11px;
+  color:var(--text-muted);
+  cursor:pointer;transition:var(--transition);
+  position:relative;user-select:none;
+  border:none;background:none;font-family:'Cairo',sans-serif;
+  min-height:60px;
+  -webkit-tap-highlight-color:transparent;
+}
+.nav-btn:hover:not(.on){color:var(--text-secondary)}
+.nav-btn.on{color:var(--accent)}
+.nav-btn.on::before{
+  content:'';position:absolute;top:0;left:15%;right:15%;height:2.5px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  border-radius:0 0 3px 3px;
+}
+.nav-ico{font-size:20px;line-height:1;transition:var(--transition)}
+.nav-btn.on .nav-ico{transform:scale(1.1)}
+.nav-lbl{font-size:9px;font-weight:700;letter-spacing:0.3px;margin-top:3px}
+.nav-badge{
+  position:absolute;top:6px;right:calc(50% - 18px);
+  background:var(--danger);color:#fff;
+  width:16px;height:16px;border-radius:50%;
+  font-size:8px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  display:none;
+}
+.nav-badge.show{display:flex}
+
+/* ══════════ PAGES ══════════ */
+.page{display:none;animation:pageIn .3s ease}
+.page.on{display:block}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════ HOME PAGE ══════════ */
+.port-card{
+  margin:14px 12px 10px;
+  background:linear-gradient(145deg,#0f1a2e,#0a0f1a);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow-card);
+  position:relative;overflow:hidden;
+}
+.port-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent));
+  opacity:0.7;
+}
+.port-card::after{
+  content:'';position:absolute;top:0;right:0;
+  width:120px;height:120px;
+  background:radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%);
+  pointer-events:none;
+}
+.port-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:10px}
+.port-total-lbl{font-size:10px;color:var(--text-secondary);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.port-total{font-size:32px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-0.5px}
+.port-egp{font-size:12px;color:var(--gold);margin-top:6px;font-weight:600}
+.port-badge{
+  background:var(--accent-dim);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:var(--radius-sm);padding:10px 14px;text-align:center;flex-shrink:0;
+  min-width:100px;
+}
+.pb-lbl{font-size:9px;color:var(--text-secondary);font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.pb-val{font-size:18px;font-weight:900;margin-top:3px}
 .port-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.ps{background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6));border:1px solid var(--border);border-radius:10px;padding:10px;transition:all .3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
-.ps:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 12px 24px rgba(0,212,170,0.2)}
-.ps::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,212,170,0.1),transparent);animation:shimmer 3s infinite}
-@keyframes shimmer{0%{transform:translate(-100%,-100%)}100%{transform:translate(100%,100%)}}
-.ps-lbl{font-size:9px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
-.ps-val{font-size:14px;font-weight:800;white-space:nowrap;position:relative;z-index:1}
-.assets-hdr{display:flex;justify-content:space-between;align-items:center;padding:8px 12px 6px;margin-top:8px}
-.assets-hdr-txt{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
-.badge-sm{font-size:9px;background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(76,205,196,0.15));border:1px solid rgba(0,212,170,0.4);border-radius:6px;padding:3px 8px;color:var(--green);font-weight:600}
-.asset-row{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(28,42,62,0.6);transition:all .2s;position:relative}
-.asset-row:hover{background:rgba(0,212,170,0.05);padding-right:16px}
-.asset-row::before{content:'';position:absolute;right:0;top:0;height:100%;width:3px;background:linear-gradient(180deg,transparent,var(--green),transparent);opacity:0;transition:opacity .2s}
-.asset-row:hover::before{opacity:1}
-.ar-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;border:2px solid;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);position:relative;transition:all .3s}
-.ar-ico::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:12px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.2),transparent);pointer-events:none}
-.asset-row:hover .ar-ico{transform:scale(1.1);box-shadow:0 8px 20px rgba(0,0,0,0.4)}
+.ps{
+  background:var(--bg-primary);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-sm);padding:12px;
+  transition:var(--transition);
+}
+.ps:active{border-color:var(--accent)}
+.ps-lbl{font-size:9px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
+.ps-val{font-size:14px;font-weight:900;white-space:nowrap}
+.assets-hdr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 14px 6px;
+}
+.assets-hdr-txt{font-size:11px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.8px}
+.badge-sm{
+  font-size:9px;background:var(--accent-dim);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:20px;padding:3px 10px;color:var(--accent);font-weight:700;
+}
+.asset-row{
+  display:grid;grid-template-columns:44px 1fr auto;
+  gap:12px;align-items:center;
+  padding:13px 14px;
+  border-bottom:1px solid rgba(30,41,59,0.5);
+  transition:var(--transition);position:relative;
+}
+.asset-row:active{background:rgba(16,185,129,0.04)}
+.asset-row::after{
+  content:'';position:absolute;right:0;top:0;height:100%;width:3px;
+  background:linear-gradient(180deg,transparent,var(--accent),transparent);
+  opacity:0;transition:var(--transition);
+}
+.ar-ico{
+  width:44px;height:44px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:800;border:2px solid;
+  flex-shrink:0;position:relative;
+}
+.ar-ico::before{
+  content:'';position:absolute;inset:0;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  pointer-events:none;
+}
 .ar-mid{min-width:0}
-.ar-sym{font-size:13px;font-weight:800;color:var(--text);letter-spacing:0.5px}
-.ar-sub{font-size:9px;color:var(--text2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ar-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
-.ar-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .8s cubic-bezier(0.34,1.56,0.64,1)}
-.ar-right{text-align:left;flex-shrink:0;padding:0 4px}
-.ar-val{font-size:13px;font-weight:800;color:var(--text);letter-spacing:0.3px}
-.ar-pnl{font-size:10px;margin-top:2px;font-weight:600}
-.ar-day{font-size:9px;color:var(--text3);margin-top:1px}
-.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}
-.ai-top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,rgba(168,85,247,.08),rgba(0,212,170,.08));border-bottom:1px solid var(--border);flex-wrap:wrap;gap:6px}
-.ai-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.5px}
-.ai-badge-pill{background:linear-gradient(135deg,var(--purple),#6366f1);border-radius:6px;padding:3px 8px;font-size:9px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(168,85,247,0.3)}
-.ai-last{font-size:9px;color:var(--text2)}
-.btn-ai-run{background:linear-gradient(135deg,var(--green),var(--blue));border:none;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:700;color:#000;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:0 4px 15px rgba(0,212,170,0.3)}
-.btn-ai-run:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.4)}
-.btn-ai-run:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.ai-card{margin:10px 10px;background:linear-gradient(135deg,rgba(20,29,42,0.9),rgba(26,37,53,0.7));border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.4);transition:all .3s cubic-bezier(0.34,1.56,0.64,1);position:relative}
-.ai-card:hover{transform:translateY(-6px) scale(1.01);border-color:var(--green);box-shadow:0 12px 40px rgba(0,212,170,0.25)}
-.ai-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);opacity:0;transition:opacity .3s}
-.ai-card:hover::before{opacity:1}
-.ai-card-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6));border-bottom:1px solid var(--border);position:relative;z-index:1}
-.ai-card-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:all .3s;position:relative}
-.ai-card-ico::after{content:'';position:absolute;inset:0;border-radius:10px;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.2),transparent);pointer-events:none}
-.ai-card:hover .ai-card-ico{transform:scale(1.15) rotateZ(5deg);box-shadow:0 6px 18px rgba(0,0,0,0.4)}
-.ai-sym{font-size:13px;font-weight:800;letter-spacing:0.3px}
-.ai-price{font-size:10px;color:var(--text2);margin-top:1px}
-.sig{display:inline-flex;align-items:center;gap:4px;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;margin-right:auto;margin-left:auto}
-.sig.buy{background:rgba(0,212,170,0.2);border:1px solid rgba(0,212,170,0.5);color:var(--green)}
-.sig.hold{background:rgba(240,180,41,0.2);border:1px solid rgba(240,180,41,0.5);color:var(--gold)}
-.sig.sell{background:rgba(255,71,87,0.2);border:1px solid rgba(255,71,87,0.5);color:var(--red)}
-.ai-body{padding:14px;position:relative;z-index:1}
-.ai-reason{font-size:10px;color:var(--text2);line-height:1.6;margin-bottom:10px;padding:8px;background:rgba(0,0,0,0.2);border-right:3px solid var(--green);border-radius:4px}
-.ai-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
-.sc{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:8px;text-align:center;transition:all .2s}
-.sc:hover{border-color:var(--green);background:rgba(0,212,170,0.05)}
-.sc-l{font-size:8px;color:var(--text3);margin-bottom:3px;font-weight:600;text-transform:uppercase}
-.sc-v{font-size:14px;font-weight:800}
-.sc-bar{height:3px;background:var(--border);border-radius:2px;margin-top:4px;overflow:hidden}
-.sc-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(0.34,1.56,0.64,1)}
-.ai-levels{display:flex;gap:8px;flex-wrap:wrap;font-size:9px;background:rgba(0,0,0,0.2);border-radius:8px;padding:8px;border:1px solid var(--border)}
-.ai-lv-item{display:flex;align-items:center;gap:4px;flex:1;min-width:80px}
-.ai-lv-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.al-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border)}
-.al-hdr-txt{font-size:12px;font-weight:700;text-transform:uppercase}
-.al-item{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(28,42,62,0.6);transition:background .15s}
-.al-item:hover{background:rgba(20,29,42,0.5)}
-.al-item.unread{background:rgba(20,29,42,0.3)}
-.al-dot{width:6px;height:6px;border-radius:50%;margin-top:4px;flex-shrink:0}
-.al-ttl{font-size:11px;font-weight:600;color:var(--text)}
-.al-msg{font-size:9px;color:var(--text2);margin-top:1px}
-.al-time{font-size:8px;color:var(--text3);margin-top:1px}
-.s-sec{display:block;border:1px solid var(--border);border-radius:10px;padding:14px;margin:10px 10px 0;background:linear-gradient(135deg,rgba(20,29,42,0.8),rgba(26,37,53,0.6))}
-.s-title{font-size:11px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
-.s-title.green{color:var(--green)}.s-title.blue{color:var(--blue)}.s-title.purple{color:var(--purple)}
-.inp{width:100%;background:rgba(20,29,42,0.8);border:1px solid var(--border2);border-radius:8px;padding:9px 11px;color:var(--text);font-size:12px;margin-bottom:8px;direction:ltr;outline:none;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
-.inp:focus{border-color:var(--green);box-shadow:0 0 12px rgba(0,212,170,0.2),0 2px 8px rgba(0,0,0,0.2)}
-.btn{border:none;border-radius:8px;padding:8px 14px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
-.btn-green{background:linear-gradient(135deg,var(--green),var(--blue));color:#000;box-shadow:0 4px 15px rgba(0,212,170,0.3)}
-.btn-green:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,170,0.4)}
-.btn-red{background:rgba(255,71,87,.15);border:1px solid rgba(255,71,87,.4);color:var(--red)}
-.btn-red:hover{background:rgba(255,71,87,.25)}
-.btn-gray{background:var(--bg4);border:1px solid var(--border);color:var(--text2)}
-.btn-gray:hover{border-color:var(--green);color:var(--green)}
-.btn-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.btn-row .btn{flex:1}
-.conn-msg{margin-top:6px;font-size:10px;padding:4px 8px;border-radius:6px;display:none}
-.conn-msg.ok{display:block;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--green)}
-.conn-msg.fail{display:block;background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);color:var(--red)}
-.creds-saved{display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 10px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:8px;font-size:10px;color:var(--green)}
-.creds-saved .lock-ico{font-size:14px}
-.creds-saved .creds-info{flex:1;line-height:1.5}
-.creds-saved .creds-hint{color:var(--text2);font-size:9px}
-.show-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:6px;padding:4px 8px;font-size:9px;color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap}
-.show-btn:hover{border-color:var(--green);color:var(--green)}
-.footer{text-align:center;padding:14px;color:var(--text3);font-size:9px;border-top:1px solid var(--border);margin-top:10px;line-height:1.7}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;gap:10px}
-.spinner{width:32px;height:32px;border:3px solid var(--border2);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
-.ld-txt{font-size:12px;color:var(--text2);font-weight:500}
-.empty{text-align:center;padding:35px 20px;color:var(--text3);font-size:12px;line-height:1.6}
-.install-banner{margin:10px 10px 0;background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(0,212,170,0.1));border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:14px}
-.install-banner .s-title{color:var(--purple)}
-.install-btn{width:100%;background:linear-gradient(135deg,var(--purple),#6366f1);border:none;border-radius:8px;padding:10px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 15px rgba(168,85,247,0.3)}
-.install-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(168,85,247,0.4)}
-.install-desc{font-size:10px;color:var(--text2);margin-bottom:8px;line-height:1.6}
-@media(min-width:768px){#app{max-width:480px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border);min-height:100vh}}
+.ar-sym{font-size:13px;font-weight:800;color:var(--text-primary)}
+.ar-sub{font-size:9px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar-bar{height:3px;background:var(--border-subtle);border-radius:2px;margin-top:6px;overflow:hidden}
+.ar-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .8s ease}
+.ar-right{text-align:left;flex-shrink:0}
+.ar-val{font-size:13px;font-weight:800;color:var(--text-primary)}
+.ar-pnl{font-size:10px;margin-top:2px;font-weight:700}
+.ar-day{font-size:9px;color:var(--text-muted);margin-top:2px}
+.green{color:var(--accent)}.red{color:var(--danger)}.gold{color:var(--gold)}
+
+/* ══════════ AI PAGE ══════════ */
+.ai-top-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;gap:8px;
+  background:linear-gradient(90deg,rgba(139,92,246,0.08),rgba(16,185,129,0.06));
+  border-bottom:1px solid var(--border-subtle);
+  flex-wrap:wrap;
+}
+.ai-title{font-size:12px;font-weight:800;display:flex;align-items:center;gap:6px}
+.ai-badge-pill{
+  background:linear-gradient(135deg,var(--purple),#6366f1);
+  border-radius:var(--radius-xs);padding:4px 10px;font-size:9px;font-weight:800;color:#fff;
+  box-shadow:0 4px 12px rgba(139,92,246,0.3);
+}
+.ai-last{font-size:9px;color:var(--text-secondary);flex:1;text-align:center}
+.btn-ai-run{
+  background:linear-gradient(135deg,var(--accent),#059669);
+  border:none;border-radius:var(--radius-sm);padding:8px 16px;
+  font-size:10px;font-weight:800;color:#fff;cursor:pointer;
+  transition:var(--transition);white-space:nowrap;
+  box-shadow:0 4px 15px rgba(16,185,129,0.3);
+  font-family:'Cairo',sans-serif;
+}
+.btn-ai-run:active{transform:scale(0.96)}
+.btn-ai-run:disabled{opacity:.5;cursor:not-allowed}
+.ai-card{
+  margin:10px 12px;
+  background:var(--bg-card);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow-card);
+  position:relative;
+}
+.ai-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--purple),var(--accent));
+  opacity:0.5;
+}
+.ai-card-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;
+  background:rgba(0,0,0,0.2);
+  border-bottom:1px solid var(--border-subtle);
+}
+.ai-card-ico{
+  width:40px;height:40px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;border:2px solid;flex-shrink:0;
+  position:relative;
+}
+.ai-card-ico::before{
+  content:'';position:absolute;inset:0;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  pointer-events:none;
+}
+.ai-sym{font-size:14px;font-weight:800}
+.ai-price{font-size:10px;color:var(--text-secondary);margin-top:2px}
+.sig{
+  display:inline-flex;align-items:center;
+  border-radius:var(--radius-xs);padding:5px 12px;font-size:10px;font-weight:800;
+  margin-right:auto;
+}
+.sig.buy{background:var(--accent-dim);border:1px solid rgba(16,185,129,0.4);color:var(--accent)}
+.sig.hold{background:var(--gold-dim);border:1px solid rgba(245,158,11,0.4);color:var(--gold)}
+.sig.sell{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.4);color:var(--danger)}
+.ai-body{padding:16px}
+.ai-reason{font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px;padding:10px 12px;background:var(--bg-primary);border-right:3px solid var(--accent);border-radius:var(--radius-xs)}
+.ai-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.sc{background:var(--bg-primary);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.sc-l{font-size:8px;color:var(--text-muted);margin-bottom:4px;font-weight:700;text-transform:uppercase}
+.sc-v{font-size:16px;font-weight:900}
+.sc-bar{height:3px;background:var(--border-subtle);border-radius:2px;margin-top:5px;overflow:hidden}
+.sc-fill{height:100%;border-radius:2px;transition:width .6s ease}
+.ai-levels{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;background:var(--bg-primary);border-radius:var(--radius-sm);padding:10px;border:1px solid var(--border-subtle)}
+.ai-lv-item{display:flex;align-items:center;gap:5px;flex:1;min-width:90px}
+.ai-lv-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ══════════ ALERTS PAGE ══════════ */
+.al-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border-subtle)}
+.al-hdr-txt{font-size:13px;font-weight:800}
+.al-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:13px 14px;border-bottom:1px solid var(--border-subtle);
+  transition:var(--transition);
+}
+.al-item.unread{background:var(--accent-dim);border-right:3px solid var(--accent)}
+.al-dot-el{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.al-ttl{font-size:12px;font-weight:700}
+.al-msg{font-size:10px;color:var(--text-secondary);margin-top:3px;line-height:1.5}
+.al-time{font-size:9px;color:var(--text-muted);margin-top:3px}
+.btn-sm-clear{
+  background:var(--bg-card);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-xs);padding:6px 12px;font-size:10px;
+  color:var(--text-secondary);cursor:pointer;transition:var(--transition);
+  font-family:'Cairo',sans-serif;font-weight:600;
+}
+.btn-sm-clear:active{background:var(--danger-dim);border-color:var(--danger);color:var(--danger)}
+
+/* ══════════ SETTINGS PAGE ══════════ */
+.settings-section{
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius);padding:18px;margin:12px;
+  background:var(--bg-card);position:relative;overflow:hidden;
+}
+.settings-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.settings-section.api-section::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.settings-section.ticker-section::before{background:linear-gradient(90deg,var(--info),var(--cyan))}
+.settings-section.ai-section::before{background:linear-gradient(90deg,var(--purple),var(--info))}
+.settings-title{font-size:13px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.settings-title .icon{font-size:18px}
+.api-status{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9px;font-weight:700;padding:3px 8px;
+  border-radius:20px;margin-right:auto;
+}
+.api-status.saved{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+.api-status.not-saved{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+.inp{
+  width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-primary);
+  font-size:14px;margin-bottom:10px;direction:ltr;
+  outline:none;transition:var(--transition);
+  font-family:'Cairo',monospace;
+  -webkit-appearance:none;
+}
+.inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+.inp::placeholder{color:var(--text-muted)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.btn{
+  border:none;border-radius:var(--radius-sm);padding:11px 18px;font-size:12px;
+  font-weight:700;cursor:pointer;transition:var(--transition);
+  font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:5px;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:active{transform:scale(0.95)}
+.btn-green{background:linear-gradient(135deg,var(--accent),#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,0.25)}
+.btn-gray{background:var(--bg-primary);border:1px solid var(--border-subtle);color:var(--text-secondary)}
+.btn-red{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.4);color:var(--danger)}
+.conn-msg{
+  margin-top:10px;padding:10px 12px;border-radius:var(--radius-xs);
+  font-size:11px;font-weight:600;
+  display:none;line-height:1.5;
+}
+.conn-msg.ok{display:block;background:var(--accent-dim);border:1px solid rgba(16,185,129,0.3);color:var(--accent)}
+.conn-msg.fail{display:block;background:var(--danger-dim);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
+
+/* ══════════ SHARED ══════════ */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:14px}
+.spinner{
+  width:40px;height:40px;
+  border:3px solid var(--border-subtle);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+.ld-txt{font-size:12px;color:var(--text-secondary);font-weight:600}
+.empty{text-align:center;padding:50px 20px;color:var(--text-muted);font-size:12px;line-height:1.8}
+.empty .empty-icon{font-size:40px;margin-bottom:14px}
+.footer{
+  text-align:center;padding:20px;color:var(--text-muted);
+  font-size:9px;border-top:1px solid var(--border-subtle);
+  margin-top:8px;line-height:2;
+}
+
+/* ══════════ TOAST ══════════ */
+#toast{
+  position:fixed;bottom:calc(70px + var(--safe-bottom) + 12px);left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--bg-card);border:1px solid var(--border-active);
+  border-radius:var(--radius-sm);padding:10px 20px;
+  font-size:12px;font-weight:600;color:var(--text-primary);
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  z-index:9999;opacity:0;transition:all .3s ease;pointer-events:none;
+  white-space:nowrap;max-width:90vw;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══════════ OFFLINE BADGE ══════════ */
+#offline-badge{
+  display:none;
+  position:fixed;top:calc(var(--safe-top) + 60px);left:50%;transform:translateX(-50%);
+  background:var(--danger);color:#fff;
+  padding:5px 14px;border-radius:20px;font-size:10px;font-weight:700;
+  z-index:9998;box-shadow:0 4px 20px rgba(239,68,68,0.4);
+}
+#offline-badge.show{display:block}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(min-width:768px){
+  #app{max-width:480px;margin:0 auto;height:100dvh;box-shadow:0 0 60px rgba(0,0,0,0.8)}
+  .port-total{font-size:36px}
+}
+@media(min-width:1024px){
+  body{background:#030508;display:flex;align-items:center;justify-content:center}
+  #app{border-radius:24px;overflow:hidden;border:1px solid var(--border-subtle);height:min(820px,95dvh)}
+}
 </style>
 </head>
 <body>
+
 <div id="app">
-<div id="hdr"><div class="logo"><div class="logo-ico">₿</div><span class="logo-txt">HAMMAD CRYPTO</span></div><div class="hdr-r"><div class="dot off" id="statusDot"></div><button class="ico-btn" id="refreshBtn" title="تحديث">↻</button></div></div>
-<div id="coins-bar"></div>
-<div id="tabs"><div class="tab on" id="tab-home" data-tab="home"><span class="tab-ico">🏠</span>الرئيسية</div><div class="tab" id="tab-ai" data-tab="ai"><span class="tab-ico">🤖</span>تحليل</div><div class="tab" id="tab-alerts" data-tab="alerts"><span class="tab-ico">🔔</span>تنبيهات</div><div class="tab" id="tab-settings" data-tab="settings"><span class="tab-ico">⚙️</span>إعدادات</div></div>
-<div id="content">
-<div class="page on" id="page-home"><div id="homeContent"><div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div></div></div>
-<div class="page" id="page-ai"><div class="ai-top-bar"><div class="ai-title"><span class="ai-badge-pill">AI</span>التحليل الذكي</div><span class="ai-last" id="aiLastTxt">—</span><button class="btn-ai-run" id="btnRunAI">تحليل الآن ▶</button></div><div id="aiContent"><div class="empty">🤖 اضغط "تحليل الآن" لبدء تحليل العملات بالذكاء الاصطناعي</div></div></div>
-<div class="page" id="page-alerts"><div class="al-hdr"><span class="al-hdr-txt">🔔 التنبيهات</span><button class="btn btn-gray" id="btnClearAlerts" style="padding:4px 10px;font-size:9px">مسح الكل</button></div><div id="alertsContent"><div class="empty">لا توجد تنبيهات</div></div></div>
-<div class="page" id="page-settings">
-<div class="s-sec"><div class="s-title green">🔑 بيانات OKX API</div><input class="inp" type="password" id="inp_api" placeholder="API Key" autocomplete="off"><input class="inp" type="password" id="inp_sec" placeholder="Secret Key" autocomplete="off"><input class="inp" type="password" id="inp_pass" placeholder="Passphrase" autocomplete="off"><div class="btn-row"><button class="btn btn-green" id="btnSave">💾 حفظ</button><button class="btn btn-gray" id="btnTest">🔌 اختبار</button><button class="btn btn-red" id="btnRemove">🗑️ حذف</button></div><div class="conn-msg" id="connMsg"></div><div class="creds-saved" id="credsSavedBox" style="display:none"><span class="lock-ico">🔒</span><div class="creds-info"><div id="credsSavedText">✅ البيانات محفوظة بشكل آمن</div><div class="creds-hint" id="credsSavedHint">يتم حفظها على جهازك فقط</div></div><button class="show-btn" id="btnToggleShow">👁️ عرض</button></div></div>
-<div class="s-sec"><div class="s-title blue">📊 عملات شريط الأسعار</div><input class="inp" id="tickerCoinsInp" placeholder="BTC,ETH,SOL,..." style="direction:ltr"><button class="btn btn-green" id="btnUpdateTicker" style="width:100%">تحديث الشريط</button></div>
-<div class="install-banner" id="installBanner" style="display:none"><div class="s-title">📱 تثبيت التطبيق</div><div class="install-desc">ثبّت Hammad Crypto على جهازك للوصول السريع والعمل بدون إنترنت</div><button class="install-btn" id="btnInstall">📲 تثبيت التطبيق</button></div>
-<div class="footer">برمجة وتطوير بكل ❤️ المهندس محمد حماد<br><span style="color:var(--green)">Hammad Crypto v3.3 Pro — PWA</span></div>
-</div>
-</div>
-</div>
+
+  <!-- INSTALL BANNER -->
+  <div id="install-banner">
+    <div class="ib-text">
+      <strong>📱 ثبّت التطبيق</strong>
+      وصول سريع من الشاشة الرئيسية
+    </div>
+    <button class="ib-btn" id="btnInstall">تثبيت</button>
+    <button class="ib-close" id="btnDismissInstall">×</button>
+  </div>
+
+  <!-- HEADER -->
+  <div id="hdr">
+    <div class="logo">
+      <div class="logo-ico">₿</div>
+      <div>
+        <div class="logo-txt">HAMMAD CRYPTO</div>
+        <div class="logo-ver">PWA v3.5</div>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <div class="status-badge disconnected" id="statusBadge">
+        <div class="status-dot"></div>
+        <span id="statusText">غير متصل</span>
+      </div>
+      <button class="ico-btn" id="refreshBtn" title="تحديث">↻</button>
+    </div>
+  </div>
+
+  <!-- COINS BAR -->
+  <div id="coins-bar">
+    <span class="coin-pill"><span class="cp-sym">BTC</span><span class="cp-price" style="color:var(--text-muted)">⏳</span><span class="cp-chg">--</span></span>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- HOME -->
+    <div class="page on" id="page-home">
+      <div id="homeContent">
+        <div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div class="page" id="page-ai">
+      <div class="ai-top-bar">
+        <div class="ai-title"><span class="ai-badge-pill">AI</span>التحليل الذكي</div>
+        <span class="ai-last" id="aiLastTxt">—</span>
+        <button class="btn-ai-run" id="btnRunAI">تحليل الآن ▶</button>
+      </div>
+      <div id="aiContent">
+        <div class="empty">اضغط "تحليل الآن" لبدء التحليل<br><span style="font-size:10px;color:var(--text-muted);display:block;margin-top:6px">AI مجاني بدون تسجيل</span></div>
+      </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="page" id="page-alerts">
+      <div class="al-hdr">
+        <span class="al-hdr-txt">🔔 التنبيهات</span>
+        <button class="btn-sm-clear" id="btnClearAlerts">مسح الكل</button>
+      </div>
+      <div id="alertsContent"><div class="empty">لا توجد تنبيهات</div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+
+      <div class="settings-section api-section">
+        <div class="settings-title">
+          <span class="icon">🔑</span>
+          بيانات OKX API
+          <span class="api-status not-saved" id="apiStatusBadge">غير محفوظ</span>
+        </div>
+        <input class="inp" type="password" id="inp_api" placeholder="API Key" autocomplete="off">
+        <input class="inp" type="password" id="inp_sec" placeholder="Secret Key" autocomplete="off">
+        <input class="inp" type="password" id="inp_pass" placeholder="Passphrase" autocomplete="off">
+        <div class="btn-row">
+          <button class="btn btn-green" id="btnSave" style="flex:1">💾 حفظ</button>
+          <button class="btn btn-gray" id="btnTest" style="flex:1">🔌 اختبار</button>
+          <button class="btn btn-red" id="btnRemove" style="flex:1">🗑️ حذف</button>
+        </div>
+        <div class="conn-msg" id="connMsg"></div>
+        <div style="margin-top:12px;padding:10px 12px;background:var(--bg-primary);border-radius:var(--radius-xs);font-size:10px;color:var(--text-muted);line-height:1.7;border:1px solid var(--border-subtle)">
+          🔒 بياناتك محفوظة محلياً على جهازك فقط ولن تُرسل لأي خادم خارجي
+        </div>
+      </div>
+
+      <div class="settings-section ai-section">
+        <div class="settings-title">
+          <span class="icon">🤖</span>
+          الذكاء الاصطناعي
+          <span class="api-status saved">مجاني ✓</span>
+        </div>
+        <div style="font-size:11px;color:var(--text-secondary);line-height:1.8">
+          التحليل مجاني 100% عبر Pollinations AI — بدون أي مفتاح أو تسجيل
+        </div>
+      </div>
+
+      <div class="settings-section ticker-section">
+        <div class="settings-title">
+          <span class="icon">📊</span>
+          عملات شريط الأسعار
+        </div>
+        <input class="inp" id="tickerCoinsInp" placeholder="BTC,ETH,SOL,..." style="direction:ltr">
+        <button class="btn btn-green" id="btnUpdateTicker" style="width:100%">تحديث الشريط</button>
+      </div>
+
+      <div class="footer">برمجة وتطوير بكل ❤️ المهندس محمد حماد<br><span style="color:var(--accent)">Hammad Crypto PWA v3.5</span></div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- BOTTOM NAV -->
+  <div id="bottom-nav">
+    <button class="nav-btn on" id="nav-home" data-tab="home">
+      <span class="nav-ico">🏠</span>
+      <span class="nav-lbl">الرئيسية</span>
+    </button>
+    <button class="nav-btn" id="nav-ai" data-tab="ai">
+      <span class="nav-ico">🤖</span>
+      <span class="nav-lbl">تحليل</span>
+    </button>
+    <button class="nav-btn" id="nav-alerts" data-tab="alerts">
+      <span class="nav-ico">🔔</span>
+      <span class="nav-lbl">تنبيهات</span>
+      <span class="nav-badge" id="alertsBadge">0</span>
+    </button>
+    <button class="nav-btn" id="nav-settings" data-tab="settings">
+      <span class="nav-ico">⚙️</span>
+      <span class="nav-lbl">إعدادات</span>
+    </button>
+  </div>
+
+</div><!-- /app -->
+
+<div id="toast"></div>
+<div id="offline-badge">📡 غير متصل بالإنترنت</div>
+
 <script>
 'use strict';
-let portfolio=null,aiAnalyses=[],alerts=[],currentTab='home',deferredPrompt=null,credsVisible=false;
-const OKX_BASE='https://www.okx.com',AI_ENDPOINT='https://taybat-ai.studegy8.workers.dev/';
-const IDB_NAME='HammadCryptoDB',IDB_STORE='credentials',IDB_VER=1;
 
-// ===== IndexedDB Persistence Layer =====
-function openIDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(IDB_NAME,IDB_VER);req.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE)};req.onsuccess=e=>resolve(e.target.result);req.onerror=e=>reject(e.target.error)})}
-async function idbSave(key,val){try{const db=await openIDB(),tx=db.transaction(IDB_STORE,'readwrite'),st=tx.objectStore(IDB_STORE);st.put(val,key);await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=rej})}catch{}}
-async function idbLoad(key){try{const db=await openIDB(),tx=db.transaction(IDB_STORE,'readonly'),st=tx.objectStore(IDB_STORE),req=st.get(key);return new Promise((res,rej)=>{req.onsuccess=()=>res(req.result||null);req.onerror=rej})}catch{return null}}
-async function idbRemove(key){try{const db=await openIDB(),tx=db.transaction(IDB_STORE,'readwrite'),st=tx.objectStore(IDB_STORE);st.delete(key);await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=rej})}catch{}}
-const COIN_META={BTC:{bg:'#f7931a',icon:'₿'},ETH:{bg:'#627eea',icon:'Ξ'},USDT:{bg:'#26a17b',icon:'$'},USDC:{bg:'#2775ca',icon:'$'},BNB:{bg:'#f3ba2f',icon:'B'},SOL:{bg:'#9945ff',icon:'◎'},XRP:{bg:'#346aa9',icon:'X'},ADA:{bg:'#627eea',icon:'A'},TON:{bg:'#0088cc',icon:'T'},KAT:{bg:'#ff6b35',icon:'K'},PI:{bg:'#8b4513',icon:'π'},OFC:{bg:'#4ecdc4',icon:'O'},BASED:{bg:'#0052ff',icon:'B'},CHIP:{bg:'#a855f7',icon:'C'},LTC:{bg:'#bfbbbb',icon:'Ł'},DOT:{bg:'#e6007a',icon:'●'}};
-const DEMO_PRICES={BTC:{p:68450,c:2.34},ETH:{p:3890,c:1.87},SOL:{p:182,c:3.5},BNB:{p:610,c:-0.9},KAT:{p:0.0245,c:-0.85},PI:{p:2.35,c:5.2},OFC:{p:0.0012,c:12.5},BASED:{p:0.00045,c:-2.1},CHIP:{p:0.0089,c:8.7},XRP:{p:0.58,c:1.2},ADA:{p:0.47,c:-1.5},TON:{p:7.2,c:4.1},LTC:{p:88,c:0.6},DOT:{p:7.8,c:-2.3}};
-function meta(sym){const s=sym.toUpperCase().replace(/-USDT$|,-USD$/g,'');return COIN_META[s]||{bg:'#4ecdc4',icon:s.charAt(0)}}
-function fmt(n,d=2){if(isNaN(n)||n===null)return'0';return parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
-function fmtPrice(p){p=parseFloat(p);if(p>=1000)return fmt(p,0);if(p>=1)return fmt(p,2);if(p>=0.01)return fmt(p,4);return fmt(p,6)}
-function fmtTime(d){return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'})}
-function safeB64Encode(str){return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode(parseInt(p1,16))))}
-function safeB64Decode(b64){return decodeURIComponent(atob(b64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''))}
-function lsGet(key,fb){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fb}catch{return fb}}
-function lsSet(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch{}}
-async function getCredentials(){
-  // Try localStorage first
-  const enc=localStorage.getItem('okx_creds_enc');
-  if(enc){try{const c=JSON.parse(safeB64Decode(enc));if(c&&c.apiKey)return c}catch{}}
-  // Fallback to IndexedDB
-  const idbCreds=await idbLoad('okx_creds');
-  if(idbCreds){try{const c=typeof idbCreds==='string'?JSON.parse(safeB64Decode(idbCreds)):idbCreds;if(c&&c.apiKey){localStorage.setItem('okx_creds_enc',typeof idbCreds==='string'?idbCreds:safeB64Encode(JSON.stringify(idbCreds)));return c}}catch{}}
+// ══════════════════════════════════════════
+//   STORAGE (localStorage — persistent)
+// ══════════════════════════════════════════
+const STORE = {
+  get(key){ try{ return JSON.parse(localStorage.getItem(key)) }catch{ return null } },
+  set(key,val){ try{ localStorage.setItem(key,JSON.stringify(val)) }catch{} },
+  remove(key){ localStorage.removeItem(key) }
+};
+
+// ══════════════════════════════════════════
+//   CONSTANTS
+// ══════════════════════════════════════════
+const OKX_BASE = 'https://www.okx.com';
+const AI_ENDPOINT = 'https://text.pollinations.ai/';
+const DEFAULT_COINS = 'BTC,ETH,SOL,BNB,KAT,PI,OFC';
+
+const COIN_META = {
+  BTC:{bg:'#f7931a',icon:'₿'},ETH:{bg:'#627eea',icon:'Ξ'},
+  USDT:{bg:'#26a17b',icon:'$'},USDC:{bg:'#2775ca',icon:'$'},
+  BNB:{bg:'#f3ba2f',icon:'B'},SOL:{bg:'#9945ff',icon:'◎'},
+  XRP:{bg:'#346aa9',icon:'X'},ADA:{bg:'#627eea',icon:'A'},
+  TON:{bg:'#0088cc',icon:'T'},KAT:{bg:'#ff6b35',icon:'K'},
+  PI:{bg:'#8b4513',icon:'π'},OFC:{bg:'#4ecdc4',icon:'O'},
+  BASED:{bg:'#0052ff',icon:'B'},CHIP:{bg:'#a855f7',icon:'C'},
+  LTC:{bg:'#bfbbbb',icon:'Ł'},DOT:{bg:'#e6007a',icon:'●'},
+};
+
+// ══════════════════════════════════════════
+//   STATE
+// ══════════════════════════════════════════
+let portfolio = null;
+let aiAnalyses = [];
+let alerts = [];
+let currentTab = 'home';
+let apiSaved = false;
+let livePrices = {};
+let deferredInstallPrompt = null;
+
+// ══════════════════════════════════════════
+//   HELPERS
+// ══════════════════════════════════════════
+function meta(sym){
+  const s = sym.toUpperCase().replace(/-USDT$|-USD$/g,'');
+  return COIN_META[s] || {bg:'#4ecdc4', icon:s.charAt(0)};
+}
+function fmt(n,d=2){ return isNaN(n)||n===null ? '0' : parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function fmtPrice(p){
+  p=parseFloat(p);
+  if(p>=1000) return fmt(p,0);
+  if(p>=1) return fmt(p,2);
+  if(p>=0.01) return fmt(p,4);
+  return fmt(p,6);
+}
+function fmtTime(d){ return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}); }
+
+function safeB64Encode(str){ return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode(parseInt(p1,16)))); }
+function safeB64Decode(b64){ return decodeURIComponent(atob(b64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); }
+
+function showToast(msg, dur=2800){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), dur);
+}
+
+// ══════════════════════════════════════════
+//   CREDENTIALS (localStorage — persistent)
+// ══════════════════════════════════════════
+function getCredentials(){
+  const enc = STORE.get('okx_creds_enc');
+  if(!enc) return null;
+  try{ return JSON.parse(safeB64Decode(enc)); }catch{ return null; }
+}
+function saveCredentials(creds){
+  STORE.set('okx_creds_enc', safeB64Encode(JSON.stringify(creds)));
+}
+function removeCredentials(){
+  STORE.remove('okx_creds_enc');
+  STORE.remove('portfolio_cache');
+}
+function hasCredentials(){ const c=getCredentials(); return !!(c&&c.apiKey&&c.secretKey&&c.passphrase); }
+
+// ══════════════════════════════════════════
+//   API STATUS UI
+// ══════════════════════════════════════════
+function updateApiStatus(saved){
+  apiSaved = saved;
+  const badge = document.getElementById('apiStatusBadge');
+  const statusBadge = document.getElementById('statusBadge');
+  const statusText = document.getElementById('statusText');
+  if(badge){ badge.className='api-status '+(saved?'saved':'not-saved'); badge.textContent=saved?'محفوظ ✓':'غير محفوظ'; }
+  if(statusBadge){ statusBadge.className='status-badge '+(saved?'connected':'disconnected'); }
+  if(statusText){ statusText.textContent=saved?'متصل':'غير متصل'; }
+}
+function checkApiStatus(){ updateApiStatus(hasCredentials()); }
+
+// ══════════════════════════════════════════
+//   HMAC SHA256
+// ══════════════════════════════════════════
+async function hmacSHA256(key, msg){
+  const k = new TextEncoder().encode(key);
+  const m = new TextEncoder().encode(msg);
+  const ck = await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']);
+  const sig = await crypto.subtle.sign('HMAC',ck,m);
+  return btoa(String.fromCharCode(...new Uint8Array(sig)));
+}
+async function getOKXHeaders(method, path, body=''){
+  const creds = getCredentials();
+  if(!creds) return null;
+  const ts = new Date().toISOString();
+  const sign = await hmacSHA256(creds.secretKey, ts+method.toUpperCase()+path+body);
+  return {
+    'OK-ACCESS-KEY':creds.apiKey,
+    'OK-ACCESS-SIGN':sign,
+    'OK-ACCESS-TIMESTAMP':ts,
+    'OK-ACCESS-PASSPHRASE':creds.passphrase,
+    'Content-Type':'application/json'
+  };
+}
+
+// ══════════════════════════════════════════
+//   OKX API CALLS
+// ══════════════════════════════════════════
+async function fetchTicker(instId){
+  try{
+    const res = await fetch(`${OKX_BASE}/api/v5/market/ticker?instId=${instId}`);
+    const data = await res.json();
+    return data.code==='0' ? data.data[0] : null;
+  }catch{ return null; }
+}
+
+async function fetchDirectTickerPrice(sym){
+  for(const instId of [sym+'-USDT',sym+'-USD']){
+    try{
+      const res = await fetch(`${OKX_BASE}/api/v5/market/ticker?instId=${instId}`);
+      const data = await res.json();
+      if(data.code==='0'&&data.data?.[0]){
+        const t=data.data[0], price=parseFloat(t.last), open24h=parseFloat(t.open24h||price);
+        return {p:price, c:open24h>0?((price-open24h)/open24h)*100:0};
+      }
+    }catch{}
+  }
   return null;
 }
-async function saveCredentials(creds){
-  const encoded=safeB64Encode(JSON.stringify(creds));
-  // Save to both localStorage AND IndexedDB
-  try{localStorage.setItem('okx_creds_enc',encoded)}catch{}
-  try{await idbSave('okx_creds',encoded)}catch{}
-}
-async function removeCredsFull(){
-  try{localStorage.removeItem('okx_creds_enc')}catch{}
-  try{await idbRemove('okx_creds')}catch{}
-  try{localStorage.removeItem('hc_portfolio')}catch{}
-  try{await idbRemove('hc_portfolio')}catch{}
-  portfolio=null;dot(false);
-  document.getElementById('inp_api').value='';
-  document.getElementById('inp_sec').value='';
-  document.getElementById('inp_pass').value='';
-  updateCredsSavedUI();
-  renderHome();
-}
-async function hmacSHA256(key,msg){const k=new TextEncoder().encode(key),m=new TextEncoder().encode(msg),ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']),sig=await crypto.subtle.sign('HMAC',ck,m);return btoa(String.fromCharCode(...new Uint8Array(sig)))}
-async function getOKXHeaders(method,path,body=''){const creds=await getCredentials();if(!creds)return null;const ts=new Date().toISOString(),sign=await hmacSHA256(creds.secretKey,ts+method.toUpperCase()+path+body);return{'OK-ACCESS-KEY':creds.apiKey,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':creds.passphrase,'Content-Type':'application/json'}}
-async function fetchBalance(){const h=await getOKXHeaders('GET','/api/v5/account/balance');if(!h)return null;try{const r=await fetch(OKX_BASE+'/api/v5/account/balance',{headers:h}),d=await r.json();return d.code==='0'?d.data:null}catch{return null}}
-async function fetchTicker(id){try{const r=await fetch(OKX_BASE+'/api/v5/market/ticker?instId='+id),d=await r.json();return d.code==='0'?d.data[0]:null}catch{return null}}
-async function fetchOrderHistory(id){const p='/api/v5/trade/orders-history?instType=SPOT&instId='+id+'&limit=50',h=await getOKXHeaders('GET',p);if(!h)return[];try{const r=await fetch(OKX_BASE+p,{headers:h}),d=await r.json();return d.code==='0'?d.data:[]}catch{return[]}}
-function computeAvgBuy(orders){let tc=0,tq=0;for(const o of orders)if(o.side==='buy'&&o.state==='filled'){tc+=parseFloat(o.fillSz||0)*parseFloat(o.avgPx||0);tq+=parseFloat(o.fillSz||0)}return tq>0?tc/tq:0}
-async function fetchEGPRate(){try{const r=await fetch('https://api.exchangerate-api.com/v4/latest/USD'),d=await r.json();return d.rates?.EGP||50.8}catch{return 50.8}}
-async function buildPortfolio(){const bd=await fetchBalance();if(!bd||!bd[0])return null;const details=bd[0].details||[],assets=[];let tv=0;const va=details.filter(d=>d.ccy!=='USDT'&&parseFloat(d.eq||0)>0);for(const d of va){const sym=d.ccy,qty=parseFloat(d.eq||0),tk=await fetchTicker(sym+'-USDT');if(!tk)continue;const price=parseFloat(tk.last),value=qty*price;if(value<1)continue;const o24h=parseFloat(tk.open24h||price),dcP=o24h>0?((price-o24h)/o24h)*100:0,orders=await fetchOrderHistory(sym+'-USDT'),avg=computeAvgBuy(orders),cb=avg*qty,upl=value-cb,uplp=cb>0?(upl/cb)*100:0;assets.push({sym,qty,price,value,avgBuy:avg,costBasis:cb,unrealizedPnL:upl,unrealizedPnLPct:uplp,dailyChangePct:dcP});tv+=value}for(const a of assets)a.allocPct=tv>0?(a.value/tv)*100:0;const ti=assets.reduce((s,a)=>s+(a.costBasis||a.value),0),eg=await fetchEGPRate();return{total:tv,invested:ti,profit:tv-ti,egpRate:eg,assets,ts:Date.now()}}
-async function analyzeAsset(asset){const prompt=`أنت محلل تداول خبير. حلل العملة الرقمية بالبيانات التالية وأعط توصية واضحة.\n\nالعملة: ${asset.sym}\nالسعر الحالي: $${asset.price}\nالتغير اليومي: ${asset.dailyChangePct.toFixed(2)}%\nمتوسط سعر الشراء: $${asset.avgBuy||asset.price}\nالربح/الخسارة غير المحققة: ${asset.unrealizedPnL>=0?'+':''}$${asset.unrealizedPnL.toFixed(2)} (${asset.unrealizedPnLPct.toFixed(1)}%)\nنسبة التخصيص في المحفظة: ${asset.allocPct.toFixed(1)}%\n\nأجب بـ JSON فقط بدون أي نص إضافي:\n{"trend":"صاعد أو هابط أو محايد","signal":"buy أو sell أو hold","reason":"تحليل مختصر باللغة العربية 2-3 جمل","support":0.0,"resistance":0.0,"stopLoss":0.0,"confidence":75,"bullScore":70,"bearScore":30}`;try{const c=new AbortController(),t=setTimeout(()=>c.abort(),15000),r=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]}),signal:c.signal});clearTimeout(t);if(!r.ok)return{};const d=await r.json();let txt='';if(d.content&&Array.isArray(d.content))txt=d.content.find(b=>b.type==='text')?.text||'';else if(d.text)txt=d.text;else if(typeof d==='string')txt=d;if(!txt)return{};const jm=txt.match(/\{[\s\S]*?\}/);if(!jm)return{};return JSON.parse(jm[0])}catch{return{}}}
-function switchTab(tab){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('page-'+tab).classList.add('on');document.getElementById('tab-'+tab).classList.add('on');currentTab=tab;document.getElementById('content').scrollTop=0;if(tab==='ai')loadAI();if(tab==='alerts')renderAlerts()}
-async function loadPortfolio(){const creds=await getCredentials();if(!creds){renderNoCreds();return}document.getElementById('homeContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div>';const data=await buildPortfolio();if(data){portfolio=data;lsSet('hc_portfolio',data);try{await idbSave('hc_portfolio',JSON.stringify(data))}catch{};renderHome();dot(true)}else{let cached=lsGet('hc_portfolio',null);if(!cached){try{const idbPort=await idbLoad('hc_portfolio');if(idbPort){cached=typeof idbPort==='string'?JSON.parse(idbPort):idbPort}}catch{}}if(cached){portfolio=cached;renderHome();dot(true)}else renderNoCreds()}}
-function renderHome(){if(!portfolio){renderNoCreds();return}const{total,profit,egpRate,assets}=portfolio,egp=total*(egpRate||50.8),todayPnl=assets.reduce((s,a)=>s+(a.value*(a.dailyChangePct/100)||0),0);const rows=assets.map(a=>{const m=meta(a.sym),pos=a.unrealizedPnL>=0;return`<div class="asset-row"><div class="ar-ico" style="background:${m.bg}20;color:${m.bg};border-color:${m.bg}50">${m.icon}</div><div class="ar-mid"><div class="ar-sym">${a.sym}</div><div class="ar-sub">${fmt(a.qty,4)} · avg $${fmtPrice(a.avgBuy||a.price)} · <span class="${a.dailyChangePct>=0?'green':'red'}">${a.dailyChangePct>=0?'▲':'▼'} ${Math.abs(a.dailyChangePct).toFixed(2)}%</span></div><div class="ar-bar"><div class="ar-bar-fill" style="width:${a.allocPct.toFixed(1)}%"></div></div></div><div class="ar-right"><div class="ar-val">$${fmt(a.value,2)}</div><div class="ar-pnl ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnL,2)}</div><div class="ar-day ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnLPct,1)}%</div></div></div>`}).join('');document.getElementById('homeContent').innerHTML=`<div class="port-card"><div class="port-top"><div><div class="port-total-lbl">إجمالي المحفظة</div><div class="port-total">$${fmt(total,2)}</div><div class="port-egp">ج.م ${fmt(egp,0)}</div></div><div class="port-badge"><div class="pb-lbl">صافي الربح</div><div class="pb-val ${profit>=0?'green':'red'}">${profit>=0?'+':''}$${fmt(profit,0)}</div></div></div><div class="port-stats"><div class="ps"><div class="ps-lbl">ربح اليوم</div><div class="ps-val ${todayPnl>=0?'green':'red'}">${todayPnl>=0?'+':''}$${fmt(todayPnl,2)}</div></div><div class="ps"><div class="ps-lbl">عدد العملات</div><div class="ps-val" style="color:var(--blue)">${assets.length}</div></div><div class="ps"><div class="ps-lbl">سعر الدولار</div><div class="ps-val gold">ج.م ${(egpRate||50.8).toFixed(1)}</div></div></div></div><div class="assets-hdr"><span class="assets-hdr-txt">الأصول النشطة</span><span class="badge-sm">${assets.length} عملة</span></div>${rows}`}
-async function renderNoCreds(){
-  // Check if credentials actually exist in storage (they might be there but API failed)
-  const creds=await getCredentials();
-  if(creds){
-    document.getElementById('homeContent').innerHTML=`<div class="empty" style="padding:50px 16px"><div style="font-size:36px;margin-bottom:12px">📡</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">فشل الاتصال بـ OKX</div><div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.7">بيانات API محفوظة ✅ لكن لم يتم الاتصال<br>تحقق من الإنترنت وحاول مجدداً</div><button class="btn btn-green" onclick="doRefresh()" style="margin-bottom:8px">🔄 إعادة المحاولة</button><button class="btn btn-gray" onclick="switchTab('settings')">⚙️ فتح الإعدادات</button></div>`;
-    dot(false);
-    return;
-  }
-  document.getElementById('homeContent').innerHTML=`<div class="empty" style="padding:50px 16px"><div style="font-size:36px;margin-bottom:12px">🔑</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">أضف مفاتيح OKX API</div><div style="font-size:11px;color:var(--text2);margin-bottom:16px;line-height:1.7">اذهب إلى الإعدادات وأدخل<br>بيانات OKX API للبدء</div><button class="btn btn-green" onclick="switchTab('settings')">⚙️ فتح الإعدادات</button></div>`;dot(false)
-}
-async function loadAI(){const cached=lsGet('hc_ai',null);if(cached&&cached.analyses){aiAnalyses=cached.analyses;document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(cached.lastUpdate||Date.now());renderAI()}else{document.getElementById('aiContent').innerHTML='<div class="empty">اضغط "تحليل الآن" لبدء التحليل</div>';document.getElementById('aiLastTxt').textContent='لم يتم التحليل بعد'}}
-function renderAI(){if(!aiAnalyses.length){document.getElementById('aiContent').innerHTML='<div class="empty">لا يوجد تحليل</div>';return}document.getElementById('aiContent').innerHTML=aiAnalyses.map(a=>{const m=meta(a.sym),sig=a.signal||'hold',conf=a.confidence||50,bull=a.bullScore||50,bear=a.bearScore||50,sl=sig==='buy'?'🟢 شراء':sig==='sell'?'🔴 بيع':'🟡 انتظار';return`<div class="ai-card"><div class="ai-card-hdr"><div class="ai-card-ico" style="background:${m.bg}20;color:${m.bg};border-color:${m.bg}50">${m.icon}</div><div><div class="ai-sym">${a.sym}</div><div class="ai-price">$${fmtPrice(a.price)} · ${a.trend||'محايد'}</div></div><span class="sig ${sig}">${sl}</span></div><div class="ai-body"><div class="ai-reason">${a.reason||'لا يوجد تحليل متاح'}</div><div class="ai-scores"><div class="sc"><div class="sc-l">الثقة</div><div class="sc-v" style="color:var(--blue)">${conf}%</div><div class="sc-bar"><div class="sc-fill" style="width:${conf}%;background:var(--blue)"></div></div></div><div class="sc"><div class="sc-l">صعودي</div><div class="sc-v green">${bull}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bull}%;background:var(--green)"></div></div></div><div class="sc"><div class="sc-l">هبوطي</div><div class="sc-v red">${bear}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bear}%;background:var(--red)"></div></div></div></div>${a.support?`<div class="ai-levels"><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--green)"></div><span class="green">دعم: $${fmtPrice(a.support)}</span></div><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--red)"></div><span class="red">مقاومة: $${fmtPrice(a.resistance||0)}</span></div><div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--gold)"></div><span class="gold">وقف: $${fmtPrice(a.stopLoss||0)}</span></div></div>`:''}</div></div>`}).join('')}
-async function runAI(){const btn=document.getElementById('btnRunAI');btn.disabled=true;btn.textContent='⏳ جاري التحليل...';document.getElementById('aiContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحليل العملات...</div></div>';document.getElementById('aiLastTxt').textContent='جاري التحليل...';if(!portfolio){const c=lsGet('hc_portfolio',null);if(c)portfolio=c}if(!portfolio||!portfolio.assets?.length){document.getElementById('aiContent').innerHTML='<div class="empty">لا توجد عملات في المحفظة</div>';btn.disabled=false;btn.textContent='تحليل الآن ▶';return}const analyses=[];for(const a of portfolio.assets){const an=await analyzeAsset(a);analyses.push({...a,...an})}aiAnalyses=analyses;lsSet('hc_ai',{analyses,lastUpdate:Date.now()});renderAI();document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(Date.now());btn.disabled=false;btn.textContent='تحليل الآن ▶'}
-function addAlert(title,body,type='info'){alerts.unshift({id:Date.now(),title,body,type,time:new Date().toISOString(),read:false});lsSet('hc_alerts',alerts);if(currentTab==='alerts')renderAlerts();if('Notification'in window&&Notification.permission==='granted')try{new Notification(title,{body,icon:'icons/icon-192.png'})}catch{}}
-function renderAlerts(){const el=document.getElementById('alertsContent');if(!alerts.length){el.innerHTML='<div class="empty">لا توجد تنبيهات</div>';return}const col={profit:'var(--green)',alert:'var(--red)',ai:'var(--purple)',info:'var(--blue)'};el.innerHTML=alerts.map(a=>`<div class="al-item ${a.read?'':'unread'}"><div class="al-dot" style="background:${col[a.type]||'var(--blue)'}"></div><div><div class="al-ttl">${a.title}</div><div class="al-msg">${a.body}</div><div class="al-time">${fmtTime(a.time)}</div></div></div>`).join('')}
-async function saveCreds(){const api=document.getElementById('inp_api').value.trim(),sec=document.getElementById('inp_sec').value.trim(),pass=document.getElementById('inp_pass').value.trim();if(!api||!sec||!pass){showConn('fail','⚠️ يرجى ملء الحقول الثلاثة');return}await saveCredentials({apiKey:api,secretKey:sec,passphrase:pass});showConn('ok','✅ تم الحفظ بأمان — البيانات لن تضيع حتى لو أغلقت التطبيق');dot(true);addAlert('🔑 OKX','تم حفظ بيانات API بأمان','info');updateCredsSavedUI();setTimeout(loadPortfolio,2000)}
-async function removeCredsAction(){if(!confirm('هل تريد حذف بيانات OKX API؟'))return;await removeCredsFull();showConn('fail','🗑️ تم حذف البيانات');document.getElementById('inp_api').value='';document.getElementById('inp_sec').value='';document.getElementById('inp_pass').value=''}
 
-async function updateCredsSavedUI(){
-  const box=document.getElementById('credsSavedBox');
-  const hint=document.getElementById('credsSavedHint');
-  let enc=localStorage.getItem('okx_creds_enc');
-  // If not in localStorage, try IndexedDB
-  if(!enc){
-    try{const idbCreds=await idbLoad('okx_creds');if(idbCreds){enc=typeof idbCreds==='string'?idbCreds:safeB64Encode(JSON.stringify(idbCreds));localStorage.setItem('okx_creds_enc',enc)}}catch{}
-  }
-  if(enc){
-    box.style.display='flex';
-    try{const c=JSON.parse(safeB64Decode(enc));document.getElementById('credsSavedText').textContent='✅ البيانات محفوظة بأمان على جهازك';hint.textContent='API Key: '+c.apiKey.substring(0,6)+'****'+c.apiKey.slice(-4);document.getElementById('inp_api').value=c.apiKey;document.getElementById('inp_sec').value=c.secretKey;document.getElementById('inp_pass').value=c.passphrase}catch{}
-  }else{
-    box.style.display='none';
-  }
+async function fetchAllDirectPrices(coinsStr){
+  const coins = coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
+  const results = await Promise.allSettled(coins.map(async sym=>({sym, data:await fetchDirectTickerPrice(sym)})));
+  const prices = {};
+  for(const r of results) if(r.status==='fulfilled'&&r.value.data) prices[r.value.sym]=r.value.data;
+  if(Object.keys(prices).length>0) livePrices={...livePrices,...prices};
+  return prices;
 }
-function toggleCredsVisibility(){
-  credsVisible=!credsVisible;
-  const fields=['inp_api','inp_sec','inp_pass'];
-  fields.forEach(id=>{document.getElementById(id).type=credsVisible?'text':'password'});
-  document.getElementById('btnToggleShow').textContent=credsVisible?'🙈 إخفاء':'👁️ عرض';
-}
-async function testConn(){showConn('fail','⏳ جاري الاختبار...');const api=document.getElementById('inp_api').value.trim(),sec=document.getElementById('inp_sec').value.trim(),pass=document.getElementById('inp_pass').value.trim();if(!api||!sec||!pass){showConn('fail','⚠️ أدخل البيانات أولاً');return}try{const ts=new Date().toISOString(),path='/api/v5/account/balance',k=new TextEncoder().encode(sec),m=new TextEncoder().encode(ts+'GET'+path),ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']),sig=await crypto.subtle.sign('HMAC',ck,m),sign=btoa(String.fromCharCode(...new Uint8Array(sig)));const r=await fetch(OKX_BASE+path,{headers:{'OK-ACCESS-KEY':api,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':pass,'Content-Type':'application/json'}});showConn(r.ok?'ok':'fail',r.ok?'🟢 الاتصال بـ OKX ناجح!':'🔴 بيانات غير صحيحة');if(r.ok)dot(true)}catch{showConn('fail','⚠️ فشل الاتصال — تحقق من الشبكة')}}
-function showConn(type,msg){const el=document.getElementById('connMsg');el.textContent=msg;el.className='conn-msg '+type}
-function dot(on){document.getElementById('statusDot').className='dot '+(on?'on':'off')}
-function initCoinsBar(){const stored=lsGet('hc_tickerCoins','BTC,ETH,SOL,BNB,KAT,PI,OFC');const el=document.getElementById('tickerCoinsInp');if(el)el.value=stored;renderCoinsBar(stored)}
-function renderCoinsBar(coinsStr){const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);document.getElementById('coins-bar').innerHTML=coins.map(sym=>{const d=DEMO_PRICES[sym]||{p:(Math.random()*100).toFixed(4),c:((Math.random()-.5)*10).toFixed(2)};const up=parseFloat(d.c)>=0;return`<span class="coin-pill" data-sym="${sym}"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`}).join('')}
-function refreshCoinsBarPrices(){document.querySelectorAll('.coin-pill').forEach(el=>{const sym=el.dataset.sym,d=DEMO_PRICES[sym];if(!d)return;d.c=parseFloat(d.c)+(Math.random()-.5)*.4;const up=d.c>=0,chg=el.querySelector('.cp-chg');if(chg){chg.textContent=(up?'+':'')+d.c.toFixed(2)+'%';chg.className='cp-chg '+(up?'up':'dn')}})}
-function updateTicker(){const v=document.getElementById('tickerCoinsInp').value.trim();if(v){lsSet('hc_tickerCoins',v);renderCoinsBar(v)}}
-async function doRefresh(){const btn=document.getElementById('refreshBtn');btn.classList.add('spin');await loadPortfolio();btn.classList.remove('spin');addAlert('🔄 تحديث','تم تحديث بيانات المحفظة','info')}
-function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null})}}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').style.display='block'});
-if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
-if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').then(()=>console.log('SW registered')).catch(()=>{});
-document.addEventListener('DOMContentLoaded',async()=>{document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));document.getElementById('refreshBtn').addEventListener('click',doRefresh);document.getElementById('btnRunAI').addEventListener('click',runAI);document.getElementById('btnClearAlerts').addEventListener('click',()=>{alerts=[];lsSet('hc_alerts',[]);renderAlerts()});document.getElementById('btnSave').addEventListener('click',saveCreds);document.getElementById('btnTest').addEventListener('click',testConn);document.getElementById('btnRemove').addEventListener('click',removeCredsAction);document.getElementById('btnUpdateTicker').addEventListener('click',updateTicker);document.getElementById('btnInstall').addEventListener('click',installPWA);document.getElementById('btnToggleShow').addEventListener('click',toggleCredsVisibility);alerts=lsGet('hc_alerts',[{id:1,title:'🎉 مرحباً بك',body:'أضف مفاتيح OKX API من الإعدادات للبدء',type:'info',time:new Date().toISOString(),read:false}]);initCoinsBar();
-// Restore credentials from dual storage (localStorage + IndexedDB)
-await restoreCredentials();
-loadPortfolio();setInterval(loadPortfolio,60000);setInterval(refreshCoinsBarPrices,5000)});
 
-async function restoreCredentials(){
-  // Try localStorage first
-  let enc=localStorage.getItem('okx_creds_enc');
-  if(enc){
-    try{
-      const c=JSON.parse(safeB64Decode(enc));
-      if(c&&c.apiKey){
-        document.getElementById('inp_api').value=c.apiKey;
-        document.getElementById('inp_sec').value=c.secretKey;
-        document.getElementById('inp_pass').value=c.passphrase;
-        updateCredsSavedUI();
-        console.log('[HC] Credentials restored from localStorage');
-        return;
-      }
-    }catch(e){console.warn('[HC] localStorage parse error',e)}
-  }
-  // Fallback: try IndexedDB
+async function fetchBalance(){
+  const headers = await getOKXHeaders('GET','/api/v5/account/balance');
+  if(!headers) return null;
   try{
-    const idbCreds=await idbLoad('okx_creds');
-    if(idbCreds){
-      const decoded=typeof idbCreds==='string'?safeB64Decode(idbCreds):null;
-      if(decoded){
-        const c=JSON.parse(decoded);
-        if(c&&c.apiKey){
-          // Restore to localStorage too for next time
-          localStorage.setItem('okx_creds_enc',typeof idbCreds==='string'?idbCreds:safeB64Encode(JSON.stringify(c)));
-          document.getElementById('inp_api').value=c.apiKey;
-          document.getElementById('inp_sec').value=c.secretKey;
-          document.getElementById('inp_pass').value=c.passphrase;
-          updateCredsSavedUI();
-          console.log('[HC] Credentials restored from IndexedDB backup');
-          return;
-        }
-      }
+    const res = await fetch(`${OKX_BASE}/api/v5/account/balance`,{headers});
+    const data = await res.json();
+    return data.code==='0'?data.data:null;
+  }catch{ return null; }
+}
+
+async function fetchOrderHistory(instId){
+  const path=`/api/v5/trade/orders-history?instType=SPOT&instId=${instId}&limit=50`;
+  const headers = await getOKXHeaders('GET',path);
+  if(!headers) return [];
+  try{
+    const res=await fetch(`${OKX_BASE}${path}`,{headers});
+    const data=await res.json();
+    return data.code==='0'?data.data:[];
+  }catch{ return []; }
+}
+
+function computeAvgBuy(orders){
+  let cost=0,qty=0;
+  for(const o of orders) if(o.side==='buy'&&o.state==='filled'){qty+=parseFloat(o.fillSz||0);cost+=parseFloat(o.fillSz||0)*parseFloat(o.avgPx||0);}
+  return qty>0?cost/qty:0;
+}
+
+async function fetchEGPRate(){
+  try{
+    const res=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const data=await res.json();
+    return data.rates?.EGP||50.8;
+  }catch{ return 50.8; }
+}
+
+// ══════════════════════════════════════════
+//   BUILD PORTFOLIO
+// ══════════════════════════════════════════
+async function buildPortfolio(){
+  const balData = await fetchBalance();
+  if(!balData?.[0]) return null;
+  const details = balData[0].details||[];
+  const assets = [], validAssets = details.filter(d=>d.ccy!=='USDT'&&parseFloat(d.eq||0)>0);
+  let totalVal=0;
+  for(const d of validAssets){
+    const sym=d.ccy, qty=parseFloat(d.eq||0);
+    const ticker=await fetchTicker(sym+'-USDT');
+    if(!ticker) continue;
+    const price=parseFloat(ticker.last), value=qty*price;
+    if(value<1) continue;
+    const open24h=parseFloat(ticker.open24h||price);
+    const dailyChangePct=open24h>0?((price-open24h)/open24h)*100:0;
+    const orders=await fetchOrderHistory(sym+'-USDT');
+    const avgBuy=computeAvgBuy(orders);
+    const costBasis=avgBuy*qty;
+    const unrealizedPnL=value-costBasis;
+    const unrealizedPnLPct=costBasis>0?(unrealizedPnL/costBasis)*100:0;
+    assets.push({sym,qty,price,value,avgBuy,costBasis,unrealizedPnL,unrealizedPnLPct,dailyChangePct});
+    totalVal+=value;
+  }
+  for(const a of assets) a.allocPct=totalVal>0?(a.value/totalVal)*100:0;
+  const totalInvested=assets.reduce((s,a)=>s+(a.costBasis||a.value),0);
+  const egpRate=await fetchEGPRate();
+  const p={total:totalVal,invested:totalInvested,profit:totalVal-totalInvested,egpRate,assets,ts:Date.now()};
+  STORE.set('portfolio_cache',p);
+  return p;
+}
+
+// ══════════════════════════════════════════
+//   RENDER HOME
+// ══════════════════════════════════════════
+function renderHome(){
+  if(!portfolio){ renderNoCreds(); return; }
+  const {total,profit,egpRate,assets}=portfolio;
+  const egp=total*(egpRate||50.8);
+  const todayPnl=assets.reduce((s,a)=>s+(a.value*(a.dailyChangePct/100)||0),0);
+  const rows=assets.map(a=>{
+    const m=meta(a.sym), pos=a.unrealizedPnL>=0;
+    return `<div class="asset-row">
+      <div class="ar-ico" style="background:${m.bg}18;color:${m.bg};border-color:${m.bg}40">${m.icon}</div>
+      <div class="ar-mid">
+        <div class="ar-sym">${a.sym}</div>
+        <div class="ar-sub">${fmt(a.qty,4)} · avg $${fmtPrice(a.avgBuy||a.price)} · ${a.dailyChangePct>=0?'▲':'▼'} ${Math.abs(a.dailyChangePct).toFixed(2)}%</div>
+        <div class="ar-bar"><div class="ar-bar-fill" style="width:${a.allocPct.toFixed(1)}%"></div></div>
+      </div>
+      <div class="ar-right">
+        <div class="ar-val">$${fmt(a.value,2)}</div>
+        <div class="ar-pnl ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnL,2)}</div>
+        <div class="ar-day ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnLPct,1)}%</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('homeContent').innerHTML = `
+    <div class="port-card">
+      <div class="port-top">
+        <div>
+          <div class="port-total-lbl">إجمالي المحفظة</div>
+          <div class="port-total">$${fmt(total,2)}</div>
+          <div class="port-egp">ج.م ${fmt(egp,0)}</div>
+        </div>
+        <div class="port-badge">
+          <div class="pb-lbl">صافي الربح</div>
+          <div class="pb-val ${profit>=0?'green':'red'}">${profit>=0?'+':''}$${fmt(profit,0)}</div>
+        </div>
+      </div>
+      <div class="port-stats">
+        <div class="ps"><div class="ps-lbl">ربح اليوم</div><div class="ps-val ${todayPnl>=0?'green':'red'}">${todayPnl>=0?'+':''}$${fmt(todayPnl,2)}</div></div>
+        <div class="ps"><div class="ps-lbl">عدد العملات</div><div class="ps-val" style="color:var(--cyan)">${assets.length}</div></div>
+        <div class="ps"><div class="ps-lbl">سعر الدولار</div><div class="ps-val gold">ج.م ${(egpRate||50.8).toFixed(1)}</div></div>
+      </div>
+    </div>
+    <div class="assets-hdr"><span class="assets-hdr-txt">الأصول النشطة</span><span class="badge-sm">${assets.length} عملة</span></div>
+    ${rows}`;
+}
+
+function renderNoCreds(){
+  document.getElementById('homeContent').innerHTML=`
+    <div class="empty">
+      <div class="empty-icon">🔑</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:10px">أضف مفاتيح OKX API</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;line-height:1.8">اذهب إلى الإعدادات وأدخل<br>بيانات OKX API للبدء</div>
+      <button class="btn btn-green" id="btnGoSettings" style="margin:0 auto">⚙️ فتح الإعدادات</button>
+    </div>`;
+  document.getElementById('btnGoSettings')?.addEventListener('click',()=>switchTab('settings'));
+  updateApiStatus(false);
+}
+
+function loadPortfolio(){
+  // Try cache first
+  const cached = STORE.get('portfolio_cache');
+  if(cached){ portfolio=cached; renderHome(); updateApiStatus(true); }
+  if(!hasCredentials()){ renderNoCreds(); return; }
+  buildPortfolio().then(p=>{
+    if(!p){ if(!cached) renderNoCreds(); return; }
+    portfolio=p; renderHome(); updateApiStatus(true);
+    livePrices = {};
+    for(const a of p.assets) livePrices[a.sym]={p:a.price,c:a.dailyChangePct};
+    const coinsStr = STORE.get('tickerCoins')||DEFAULT_COINS;
+    renderCoinsBarWithPrices(coinsStr);
+  }).catch(()=>{ if(!cached) renderNoCreds(); });
+}
+
+// ══════════════════════════════════════════
+//   COINS BAR
+// ══════════════════════════════════════════
+async function initCoinsBar(){
+  const coinsStr = STORE.get('tickerCoins')||DEFAULT_COINS;
+  const tickerInp = document.getElementById('tickerCoinsInp');
+  if(tickerInp) tickerInp.value=coinsStr;
+  renderCoinsBarLoading(coinsStr);
+  try{ await fetchAllDirectPrices(coinsStr); renderCoinsBarWithPrices(coinsStr); }catch{}
+}
+
+function renderCoinsBarLoading(coinsStr){
+  const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
+  document.getElementById('coins-bar').innerHTML=coins.map(sym=>{
+    const d=livePrices[sym];
+    if(d&&d.p){ const up=d.c>=0; return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`; }
+    return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price" style="color:var(--text-muted)">⏳</span><span class="cp-chg">--</span></span>`;
+  }).join('');
+}
+
+function renderCoinsBarWithPrices(coinsStr){
+  const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
+  document.getElementById('coins-bar').innerHTML=coins.map(sym=>{
+    const d=livePrices[sym];
+    if(!d||!d.p) return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price" style="color:var(--text-muted)">--</span><span class="cp-chg">--</span></span>`;
+    const up=d.c>=0;
+    return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`;
+  }).join('');
+}
+
+async function refreshCoinsBarPrices(){
+  const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
+  try{ await fetchAllDirectPrices(coinsStr); renderCoinsBarWithPrices(coinsStr); }catch{}
+}
+
+function updateTicker(){
+  const v=document.getElementById('tickerCoinsInp').value.trim();
+  if(v){ STORE.set('tickerCoins',v); fetchAllDirectPrices(v).then(()=>renderCoinsBarWithPrices(v)); showToast('✅ تم تحديث الشريط'); }
+}
+
+// ══════════════════════════════════════════
+//   TABS
+// ══════════════════════════════════════════
+function switchTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(t=>t.classList.remove('on'));
+  document.getElementById('page-'+tab).classList.add('on');
+  document.getElementById('nav-'+tab).classList.add('on');
+  currentTab=tab;
+  document.getElementById('content').scrollTop=0;
+  if(tab==='ai') loadAI();
+  if(tab==='alerts') renderAlerts();
+  if(tab==='settings') loadSettings();
+}
+
+// ══════════════════════════════════════════
+//   AI
+// ══════════════════════════════════════════
+function getLocalAnalysis(asset){
+  const pct=asset.dailyChangePct||0, price=asset.price||0;
+  const support=price*.95, resistance=price*1.05, stopLoss=price*.92;
+  let trend,signal,reason,bullScore,bearScore,confidence;
+  if(pct>3){trend='صاعد';signal='buy';bullScore=75;bearScore=25;confidence=65;reason=`${asset.sym} يظهر ارتفاعاً قوياً بنسبة ${pct.toFixed(1)}%. الاتجاه الصاعد واضح مع زخم إيجابي. يُنصح بالشراء مع وقف خسارة عند $${fmtPrice(stopLoss)}.`;}
+  else if(pct>1){trend='صاعد';signal='hold';bullScore=60;bearScore=40;confidence=55;reason=`${asset.sym} يرتفع بنسبة ${pct.toFixed(1)}% اليوم. الاتجاه إيجابي لكن الزخم غير كافٍ. يُفضل الاحتفاظ بالمراكز الحالية.`;}
+  else if(pct<-3){trend='هبوطي';signal='sell';bullScore=20;bearScore=80;confidence=60;reason=`${asset.sym} يهبط بنسبة ${Math.abs(pct).toFixed(1)}%. الضغط البيعي قوي. يُنصح ببيع جزء وتفعيل وقف الخسارة عند $${fmtPrice(stopLoss)}.`;}
+  else if(pct<-1){trend='هبوطي';signal='hold';bullScore=35;bearScore=65;confidence=50;reason=`${asset.sym} ينخفض بنسبة ${Math.abs(pct).toFixed(1)}%. الاتجاه سلبي لكن الهبوط ليس حاداً. يُفضل الانتظار.`;}
+  else{trend='محايد';signal='hold';bullScore=50;bearScore=50;confidence=45;reason=`${asset.sym} يتحرك بشكل محايد. لا توجد إشارات واضحة. يُنصح بالانتظار حتى يظهر اتجاه واضح.`;}
+  return{trend,signal,reason,support,resistance,stopLoss,confidence,bullScore,bearScore};
+}
+
+async function analyzeAssetDirect(sym,price,dailyChangePct){
+  const prompt=`أنت خبير تداول عملات رقمية محترف مع خبرة 15+ سنة.
+حلل: ${sym} السعر: $${price} التغير: ${dailyChangePct>=0?'+':''}${dailyChangePct.toFixed(2)}%
+أجب بـ JSON فقط:
+{"trend":"صاعد أو هابط أو محايد","signal":"buy أو sell أو hold","reason":"تحليل مفصل 3-4 جمل","support":0.0,"resistance":0.0,"stopLoss":0.0,"confidence":75,"bullScore":70,"bearScore":30}`;
+  try{
+    const ctrl=new AbortController();
+    const to=setTimeout(()=>ctrl.abort(),30000);
+    const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'system',content:'أجب بـ JSON فقط'},{role:'user',content:prompt}],model:'openai',temperature:0.7,seed:Math.floor(Math.random()*100000)}),signal:ctrl.signal});
+    clearTimeout(to);
+    if(!res.ok) return getLocalAnalysis({sym,price,dailyChangePct});
+    const txt=await res.text();
+    const m=txt.match(/\{[\s\S]*?\}/);
+    if(!m) return getLocalAnalysis({sym,price,dailyChangePct});
+    return JSON.parse(m[0]);
+  }catch{ return getLocalAnalysis({sym,price,dailyChangePct}); }
+}
+
+function loadAI(){
+  const cached = STORE.get('ai_analyses');
+  const ts = STORE.get('ai_last_update');
+  if(cached&&cached.length){ aiAnalyses=cached; document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(ts||Date.now()); renderAI(); }
+  else{ document.getElementById('aiContent').innerHTML='<div class="empty">اضغط "تحليل الآن" لبدء تحليل العملات<br><span style="font-size:10px;color:var(--text-muted);display:block;margin-top:6px">AI مجاني بدون تسجيل</span></div>'; document.getElementById('aiLastTxt').textContent='لم يتم التحليل بعد'; }
+}
+
+function renderAI(){
+  if(!aiAnalyses.length){ document.getElementById('aiContent').innerHTML='<div class="empty">لا يوجد تحليل</div>'; return; }
+  document.getElementById('aiContent').innerHTML=aiAnalyses.map(a=>{
+    const m=meta(a.sym), sig=a.signal||'hold', conf=a.confidence||50, bull=a.bullScore||50, bear=a.bearScore||50;
+    const sigLabel=sig==='buy'?'🟢 شراء':sig==='sell'?'🔴 بيع':'🟡 انتظار';
+    return `<div class="ai-card">
+      <div class="ai-card-hdr">
+        <div class="ai-card-ico" style="background:${m.bg}18;color:${m.bg};border-color:${m.bg}40">${m.icon}</div>
+        <div><div class="ai-sym">${a.sym}</div><div class="ai-price">$${fmtPrice(a.price)} · ${a.trend||'محايد'}</div></div>
+        <span class="sig ${sig}">${sigLabel}</span>
+      </div>
+      <div class="ai-body">
+        <div class="ai-reason">${a.reason||'لا يوجد تحليل'}</div>
+        <div class="ai-scores">
+          <div class="sc"><div class="sc-l">الثقة</div><div class="sc-v" style="color:var(--cyan)">${conf}%</div><div class="sc-bar"><div class="sc-fill" style="width:${conf}%;background:var(--cyan)"></div></div></div>
+          <div class="sc"><div class="sc-l">صعودي</div><div class="sc-v green">${bull}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bull}%;background:var(--accent)"></div></div></div>
+          <div class="sc"><div class="sc-l">هبوطي</div><div class="sc-v red">${bear}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bear}%;background:var(--danger)"></div></div></div>
+        </div>
+        ${a.support?`<div class="ai-levels">
+          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--accent)"></div><span class="green">دعم: $${fmtPrice(a.support)}</span></div>
+          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--danger)"></div><span class="red">مقاومة: $${fmtPrice(a.resistance||0)}</span></div>
+          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--gold)"></div><span class="gold">وقف: $${fmtPrice(a.stopLoss||0)}</span></div>
+        </div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function runAI(){
+  const btn=document.getElementById('btnRunAI');
+  btn.disabled=true; btn.textContent='⏳ جاري التحليل...';
+  document.getElementById('aiContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحليل العملات...</div></div>';
+  try{
+    const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
+    const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
+    const prices=await fetchAllDirectPrices(coinsStr);
+    const analyses=[];
+    for(const sym of coins){
+      const d=livePrices[sym]||prices[sym];
+      if(!d) continue;
+      const analysis=await analyzeAssetDirect(sym,d.p,d.c);
+      analyses.push({sym,price:d.p,dailyChangePct:d.c,avgBuy:0,unrealizedPnL:0,unrealizedPnLPct:0,allocPct:0,...analysis});
     }
-  }catch(e){console.warn('[HC] IndexedDB restore error',e)}
-  // No credentials found
-  updateCredsSavedUI();
-  console.log('[HC] No saved credentials found');
+    aiAnalyses=analyses;
+    STORE.set('ai_analyses',analyses); STORE.set('ai_last_update',Date.now());
+    document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(Date.now());
+    renderAI(); showToast('✅ اكتمل التحليل');
+  }catch(e){ document.getElementById('aiContent').innerHTML=`<div class="empty">حدث خطأ. حاول مرة أخرى.<br><span style="font-size:9px;color:var(--text-muted)">${e.message}</span></div>`; }
+  finally{ btn.disabled=false; btn.textContent='تحليل الآن ▶'; }
+}
+
+// ══════════════════════════════════════════
+//   ALERTS
+// ══════════════════════════════════════════
+function addAlert(title,body,type='info'){
+  alerts.unshift({id:Date.now(),title,body,type,time:new Date(),read:false});
+  STORE.set('popup_alerts',alerts);
+  if(currentTab==='alerts') renderAlerts();
+  updateAlertsBadge();
+}
+function updateAlertsBadge(){
+  const unread=alerts.filter(a=>!a.read).length;
+  const badge=document.getElementById('alertsBadge');
+  if(unread>0){ badge.textContent=unread>9?'9+':unread; badge.classList.add('show'); }
+  else badge.classList.remove('show');
+}
+function renderAlerts(){
+  const el=document.getElementById('alertsContent');
+  if(!alerts.length){ el.innerHTML='<div class="empty">لا توجد تنبيهات</div>'; return; }
+  const col={profit:'var(--accent)',alert:'var(--danger)',ai:'var(--purple)',info:'var(--info)'};
+  el.innerHTML=alerts.map(a=>`
+    <div class="al-item ${a.read?'':'unread'}">
+      <div class="al-dot-el" style="background:${col[a.type]||'var(--info)'}"></div>
+      <div><div class="al-ttl">${a.title}</div><div class="al-msg">${a.body}</div><div class="al-time">${fmtTime(a.time)}</div></div>
+    </div>`).join('');
+  alerts.forEach(a=>a.read=true);
+  STORE.set('popup_alerts',alerts);
+  updateAlertsBadge();
+}
+
+// ══════════════════════════════════════════
+//   SETTINGS
+// ══════════════════════════════════════════
+function loadSettings(){
+  const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
+  const el=document.getElementById('tickerCoinsInp');
+  if(el) el.value=coinsStr;
+  checkApiStatus();
+}
+
+function saveCreds(){
+  const api=document.getElementById('inp_api').value.trim();
+  const sec=document.getElementById('inp_sec').value.trim();
+  const pass=document.getElementById('inp_pass').value.trim();
+  if(!api||!sec||!pass){ showConn('fail','⚠️ يرجى ملء الحقول الثلاثة'); return; }
+  saveCredentials({apiKey:api,secretKey:sec,passphrase:pass});
+  showConn('ok','✅ تم الحفظ — المفاتيح محفوظة محلياً على جهازك');
+  updateApiStatus(true);
+  addAlert('🔑 OKX','تم حفظ بيانات API','info');
+  showToast('✅ تم حفظ بيانات API');
+  setTimeout(loadPortfolio,1500);
+}
+
+function removeCreds(){
+  if(!confirm('هل تريد حذف بيانات OKX API؟')) return;
+  removeCredentials();
+  showConn('fail','🗑️ تم حذف البيانات');
+  updateApiStatus(false);
+  ['inp_api','inp_sec','inp_pass'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
+  portfolio=null;
+  document.getElementById('homeContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">...</div></div>';
+  setTimeout(renderNoCreds,500);
+  showToast('🗑️ تم حذف البيانات');
+}
+
+async function testConn(){
+  showConn('fail','⏳ جاري الاختبار...');
+  const api=document.getElementById('inp_api').value.trim();
+  const sec=document.getElementById('inp_sec').value.trim();
+  const pass=document.getElementById('inp_pass').value.trim();
+  if(!api||!sec||!pass){ showConn('fail','⚠️ أدخل البيانات أولاً'); return; }
+  try{
+    const ts=new Date().toISOString(), path='/api/v5/account/balance';
+    const k=new TextEncoder().encode(sec), m=new TextEncoder().encode(ts+'GET'+path);
+    const ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']);
+    const sig=await crypto.subtle.sign('HMAC',ck,m);
+    const sign=btoa(String.fromCharCode(...new Uint8Array(sig)));
+    const res=await fetch('https://www.okx.com'+path,{headers:{'OK-ACCESS-KEY':api,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':pass,'Content-Type':'application/json'}});
+    showConn(res.ok?'ok':'fail',res.ok?'🟢 الاتصال بـ OKX ناجح!':'🔴 بيانات غير صحيحة');
+    if(res.ok) updateApiStatus(true);
+  }catch{ showConn('fail','⚠️ فشل الاتصال — تحقق من الشبكة'); }
+}
+
+function showConn(type,msg){
+  const el=document.getElementById('connMsg');
+  el.textContent=msg; el.className='conn-msg '+type;
+}
+
+// ══════════════════════════════════════════
+//   REFRESH
+// ══════════════════════════════════════════
+function doRefresh(){
+  const btn=document.getElementById('refreshBtn');
+  btn.classList.add('spin');
+  loadPortfolio();
+  refreshCoinsBarPrices();
+  setTimeout(()=>btn.classList.remove('spin'),1800);
+  showToast('🔄 جاري التحديث...');
+}
+
+// ══════════════════════════════════════════
+//   ONLINE / OFFLINE
+// ══════════════════════════════════════════
+function updateOnlineStatus(){
+  const badge=document.getElementById('offline-badge');
+  if(navigator.onLine) badge.classList.remove('show');
+  else badge.classList.add('show');
+}
+window.addEventListener('online',updateOnlineStatus);
+window.addEventListener('offline',updateOnlineStatus);
+
+// ══════════════════════════════════════════
+//   PWA INSTALL
+// ══════════════════════════════════════════
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  const dismissed=STORE.get('install_dismissed');
+  if(!dismissed) document.getElementById('install-banner').classList.add('show');
+});
+
+document.getElementById('btnInstall')?.addEventListener('click',()=>{
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(r=>{
+      if(r.outcome==='accepted') document.getElementById('install-banner').classList.remove('show');
+      deferredInstallPrompt=null;
+    });
+  }
+});
+
+document.getElementById('btnDismissInstall')?.addEventListener('click',()=>{
+  document.getElementById('install-banner').classList.remove('show');
+  STORE.set('install_dismissed',true);
+});
+
+// ══════════════════════════════════════════
+//   INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  // Nav tabs
+  document.querySelectorAll('.nav-btn').forEach(t=>{
+    t.addEventListener('click',()=>switchTab(t.dataset.tab));
+  });
+
+  // Buttons
+  document.getElementById('refreshBtn').addEventListener('click',doRefresh);
+  document.getElementById('btnRunAI').addEventListener('click',runAI);
+  document.getElementById('btnClearAlerts').addEventListener('click',()=>{ alerts=[]; STORE.remove('popup_alerts'); renderAlerts(); });
+  document.getElementById('btnSave').addEventListener('click',saveCreds);
+  document.getElementById('btnTest').addEventListener('click',testConn);
+  document.getElementById('btnRemove').addEventListener('click',removeCreds);
+  document.getElementById('btnUpdateTicker').addEventListener('click',updateTicker);
+
+  // Load saved alerts
+  const savedAlerts=STORE.get('popup_alerts');
+  if(savedAlerts) alerts=savedAlerts;
+  else alerts=[{id:1,title:'🎉 مرحباً بك',body:'أضف مفاتيح OKX API من الإعدادات للبدء',type:'info',time:new Date(),read:false}];
+  updateAlertsBadge();
+
+  // Online status
+  updateOnlineStatus();
+
+  // Init data
+  initCoinsBar();
+  loadPortfolio();
+  checkApiStatus();
+
+  // Refresh every 30s
+  setInterval(refreshCoinsBarPrices,30000);
+  setInterval(()=>{ if(hasCredentials()&&currentTab==='home') loadPortfolio(); },60000);
+});
+
+// Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 </script>
 </body>
