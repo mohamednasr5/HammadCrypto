@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hammad Crypto</title>
+<script>
+// GitHub Pages SPA redirect fix
+// Converts /HammadCrypto/some/path to /HammadCrypto/?/some/path
+// so the main index.html can handle it
+var l = window.location;
+var path = l.pathname.slice(1); // remove leading /
+// Store the path in sessionStorage and redirect to root
+sessionStorage.setItem('spa_redirect', l.pathname + l.search + l.hash);
+l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/HammadCrypto/');
+</script>
+</head>
+<body>
+<style>
+body{background:#06080f;color:#10b981;font-family:Cairo,sans-serif;
+  display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0}
+p{font-size:18px}
+</style>
+<p>جاري التحميل... ⏳</p>
+</body>
+</html>

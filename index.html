@@ -3,1289 +3,491 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#06080f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Hammad Crypto">
+<meta name="apple-mobile-web-app-title" content="Crypto Pro">
+<meta name="theme-color" content="#10b981">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="محفظة العملات الرقمية — تحليل AI مجاني بدون تسجيل">
+<title>Hammad Crypto Pro</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon192.png">
-<link rel="icon" type="image/png" href="icons/icon192.png">
-<title>Hammad Crypto Pro</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg-primary:#06080f;
-  --bg-secondary:#0c1018;
-  --bg-card:#111827;
-  --bg-card-hover:#162032;
-  --bg-input:#0a0f1a;
-  --border-subtle:#1e293b;
-  --border-active:#334155;
-  --accent:#10b981;
-  --accent-dim:rgba(16,185,129,0.12);
-  --accent-glow:rgba(16,185,129,0.25);
-  --gold:#f59e0b;
-  --gold-dim:rgba(245,158,11,0.12);
-  --danger:#ef4444;
-  --danger-dim:rgba(239,68,68,0.12);
-  --info:#3b82f6;
-  --info-dim:rgba(59,130,246,0.12);
-  --purple:#8b5cf6;
-  --purple-dim:rgba(139,92,246,0.12);
+  --bg:#06080f;--bg2:#0c1018;--bg-card:#111827;--bg-card-h:#162032;--bg-inp:#0a0f1a;
+  --border:#1e293b;--border-a:#334155;
+  --accent:#10b981;--accent-dim:rgba(16,185,129,0.12);--accent-glow:rgba(16,185,129,0.25);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,0.12);
+  --danger:#ef4444;--danger-dim:rgba(239,68,68,0.12);
+  --info:#3b82f6;--info-dim:rgba(59,130,246,0.12);
+  --purple:#8b5cf6;--purple-dim:rgba(139,92,246,0.12);
   --cyan:#06b6d4;
-  --text-primary:#f1f5f9;
-  --text-secondary:#94a3b8;
-  --text-muted:#475569;
-  --radius:14px;
-  --radius-sm:10px;
-  --radius-xs:7px;
-  --shadow-card:0 4px 24px rgba(0,0,0,0.4);
-  --shadow-glow:0 0 20px rgba(16,185,129,0.15);
-  --transition:all 0.25s cubic-bezier(0.4,0,0.2,1);
-  --safe-bottom:env(safe-area-inset-bottom, 0px);
-  --safe-top:env(safe-area-inset-top, 0px);
+  --text:#f1f5f9;--text2:#94a3b8;--text3:#475569;
+  --r:12px;--r-sm:8px;--r-xs:6px;
+  --shadow:0 4px 24px rgba(0,0,0,0.3);--glow:0 0 20px rgba(16,185,129,0.15);
+  --tr:all 0.25s cubic-bezier(0.4,0,0.2,1);
+  --nav-h:64px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
-html,body{
-  width:100%;height:100%;
-  background:var(--bg-primary);
-  color:var(--text-primary);
-  font-family:'Cairo','Segoe UI',Tahoma,sans-serif;
-  overflow:hidden;
-  overscroll-behavior:none;
-  -webkit-font-smoothing:antialiased;
-}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+  font-family:'Cairo','Segoe UI',Tahoma,sans-serif;}
+body{display:flex;flex-direction:column;position:fixed;inset:0;}
 
-#app{
-  display:flex;flex-direction:column;
-  height:100dvh;
-  height:100vh;
-  padding-top:var(--safe-top);
-  padding-bottom:var(--safe-bottom);
-  overflow:hidden;
-}
-
-/* ══════════ PWA INSTALL BANNER ══════════ */
-#install-banner{
-  display:none;
-  background:linear-gradient(135deg,var(--accent-dim),rgba(6,182,212,0.1));
-  border-bottom:1px solid rgba(16,185,129,0.3);
-  padding:10px 16px;
-  align-items:center;gap:10px;flex-shrink:0;
-}
-#install-banner.show{display:flex}
-.ib-text{flex:1;font-size:11px;color:var(--text-secondary);line-height:1.5}
-.ib-text strong{color:var(--accent);display:block;font-size:12px;margin-bottom:2px}
-.ib-btn{
-  background:linear-gradient(135deg,var(--accent),#059669);
-  color:#fff;border:none;border-radius:var(--radius-xs);
-  padding:7px 14px;font-size:11px;font-weight:700;
-  cursor:pointer;white-space:nowrap;font-family:'Cairo',sans-serif;
-  flex-shrink:0;
-}
-.ib-close{
-  background:none;border:none;color:var(--text-muted);
-  font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0;
-}
-
-/* ══════════ HEADER ══════════ */
+/* ── HEADER ── */
 #hdr{
-  flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 16px;
-  background:linear-gradient(180deg,rgba(12,16,24,0.98),rgba(6,8,15,0.99));
-  border-bottom:1px solid var(--border-subtle);
-  position:relative;z-index:10;
-  min-height:58px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:linear-gradient(180deg,rgba(12,16,24,0.97),rgba(6,8,15,0.99));
+  border-bottom:1px solid var(--border);position:relative;z-index:20;
 }
-#hdr::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
-  opacity:0.35;
-}
+#hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.3;}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-ico{
-  width:38px;height:38px;border-radius:12px;
+.logo-ico{width:36px;height:36px;border-radius:10px;
   background:linear-gradient(135deg,var(--accent),#059669);
   display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:900;color:#fff;
-  box-shadow:0 4px 16px rgba(16,185,129,0.35);
-  position:relative;overflow:hidden;flex-shrink:0;
-}
-.logo-ico::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,0.22),transparent);
-  border-radius:12px;
-}
-.logo-txt{
-  font-size:15px;font-weight:800;
+  font-size:18px;font-weight:900;color:#fff;
+  box-shadow:0 4px 12px rgba(16,185,129,0.3);}
+.logo-txt{font-size:15px;font-weight:800;
   background:linear-gradient(135deg,var(--accent),var(--cyan));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  letter-spacing:0.3px;
-}
-.logo-ver{font-size:9px;color:var(--text-muted);font-weight:600}
-.hdr-actions{display:flex;align-items:center;gap:8px}
-.status-badge{
-  display:flex;align-items:center;gap:5px;
-  font-size:10px;font-weight:700;
-  padding:5px 11px;border-radius:20px;
-  transition:var(--transition);cursor:default;
-}
-.status-badge.connected{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
-.status-badge.disconnected{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
-.status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.status-badge.connected .status-dot{background:var(--accent);box-shadow:0 0 6px var(--accent);animation:statusPulse 2s infinite}
-.status-badge.disconnected .status-dot{background:var(--danger)}
-@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.ico-btn{
-  background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius-xs);
-  width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:17px;color:var(--text-secondary);transition:var(--transition);
-  flex-shrink:0;
-}
-.ico-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
-.ico-btn:active{transform:scale(0.92)}
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo-ver{font-size:9px;color:var(--text3);font-weight:600;margin-right:2px}
+.hdr-r{display:flex;align-items:center;gap:8px}
+.status-badge{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;
+  padding:4px 10px;border-radius:20px;transition:var(--tr);}
+.status-badge.on{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+.status-badge.off{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+.s-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status-badge.on .s-dot{background:var(--accent);box-shadow:0 0 6px var(--accent);animation:sPulse 2s infinite}
+.status-badge.off .s-dot{background:var(--danger)}
+@keyframes sPulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.ico-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xs);
+  width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:var(--text2);transition:var(--tr);user-select:none;}
+.ico-btn:active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .spin{animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ══════════ COINS BAR ══════════ */
-#coins-bar{
-  flex-shrink:0;
-  background:var(--bg-secondary);
-  border-bottom:1px solid var(--border-subtle);
-  padding:8px 12px;
-  display:flex;gap:6px;flex-wrap:nowrap;
-  overflow-x:auto;overflow-y:hidden;
-  scrollbar-width:none;-ms-overflow-style:none;
-}
-#coins-bar::-webkit-scrollbar{display:none}
-.coin-pill{
-  display:flex;align-items:center;gap:5px;
-  background:var(--bg-card);
-  border:1px solid var(--border-subtle);
-  border-radius:var(--radius-xs);padding:6px 10px;
-  white-space:nowrap;transition:var(--transition);flex-shrink:0;
-  cursor:default;
-}
-.coin-pill:active{transform:scale(0.95)}
-.cp-sym{font-size:11px;font-weight:700;color:var(--text-primary);min-width:28px}
-.cp-price{font-size:10px;color:var(--text-secondary)}
-.cp-chg{font-size:10px;font-weight:700;min-width:40px;text-align:left}
-.cp-chg.up{color:var(--accent)}.cp-chg.dn{color:var(--danger)}
+/* ── CAROUSEL ── */
+#coins-bar{flex-shrink:0;height:108px;background:linear-gradient(180deg,#080b12,#0c1018);
+  border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+#coins-bar::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(16,185,129,0.08),transparent 70%);pointer-events:none;}
+#asset-carousel{position:relative;width:100%;height:100%;display:flex;
+  align-items:center;justify-content:center;transform-style:preserve-3d;}
+.asset-card{position:absolute;width:calc(100% - 32px);max-width:340px;height:82px;
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:2px;cursor:pointer;transform-style:preserve-3d;
+  transition:transform 0.7s cubic-bezier(0.4,0,0.2,1),opacity 0.7s ease;
+  border:1px solid transparent;}
+.asset-card.c-active{z-index:5;opacity:1;animation:cFloat 3s ease-in-out infinite}
+.asset-card.c-prev{z-index:3;opacity:0.45;transform:translateX(-62%) translateZ(-80px) rotateY(22deg) scale(0.82)}
+.asset-card.c-next{z-index:3;opacity:0.45;transform:translateX(62%) translateZ(-80px) rotateY(-22deg) scale(0.82)}
+.asset-card.c-hide{opacity:0;transform:translateZ(-200px) scale(0.5);z-index:1;pointer-events:none}
+@keyframes cFloat{0%,100%{transform:translateZ(0) translateY(0)}33%{transform:translateZ(10px) translateY(-3px)}66%{transform:translateZ(5px) translateY(-1px)}}
+.ac-sym{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:0.75}
+.ac-price{font-size:28px;font-weight:900;letter-spacing:-0.5px;line-height:1;
+  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,0.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ac-row{display:flex;align-items:center;gap:8px;margin-top:2px}
+.ac-chg{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;display:flex;align-items:center;gap:3px}
+.ac-chg.up{background:rgba(16,185,129,0.2);color:#10b981}
+.ac-chg.dn{background:rgba(239,68,68,0.18);color:#ef4444}
+.ac-val{font-size:11px;color:rgba(255,255,255,0.5);font-weight:600}
+#carousel-dots{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);
+  display:flex;gap:5px;z-index:10;}
+.c-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .35s;cursor:pointer}
+.c-dot.on{width:16px;border-radius:3px;background:var(--accent)}
+.ac-arr{display:inline-block;animation:arrUp 1s ease-in-out infinite}
+@keyframes arrUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.ac-arr.dn{animation:arrDn 1s ease-in-out infinite}
+@keyframes arrDn{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 
-/* ══════════ SCROLL CONTENT ══════════ */
-#content{
-  flex:1;
-  overflow-y:auto;overflow-x:hidden;
-  background:var(--bg-primary);
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-y:contain;
-  padding-bottom:8px;
-}
-#content::-webkit-scrollbar{width:3px}
-#content::-webkit-scrollbar-thumb{background:var(--border-active);border-radius:2px}
+/* ── SCROLL CONTENT ── */
+#scroll{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--bg);
+  -webkit-overflow-scrolling:touch;}
+#scroll::-webkit-scrollbar{width:3px}
+#scroll::-webkit-scrollbar-thumb{background:var(--border-a);border-radius:2px}
+.page{display:none;min-height:calc(100% - 10px)}.page.on{display:block;animation:pIn .3s ease}
+@keyframes pIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ══════════ BOTTOM NAV ══════════ */
-#bottom-nav{
-  flex-shrink:0;
-  display:grid;grid-template-columns:repeat(4,1fr);
-  background:var(--bg-secondary);
-  border-top:1px solid var(--border-subtle);
-  position:relative;z-index:10;
+/* ── BOTTOM NAV ── */
+#nav{
+  flex-shrink:0;display:flex;
+  background:rgba(12,16,24,0.97);
+  border-top:1px solid var(--border);
+  padding-bottom:var(--safe-bottom);
+  height:calc(var(--nav-h) + var(--safe-bottom));
+  position:relative;z-index:20;
 }
-#bottom-nav::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
-  opacity:0.25;
-}
-.nav-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:10px 4px 11px;
-  color:var(--text-muted);
-  cursor:pointer;transition:var(--transition);
-  position:relative;user-select:none;
-  border:none;background:none;font-family:'Cairo',sans-serif;
-  min-height:60px;
-  -webkit-tap-highlight-color:transparent;
-}
-.nav-btn:hover:not(.on){color:var(--text-secondary)}
-.nav-btn.on{color:var(--accent)}
-.nav-btn.on::before{
-  content:'';position:absolute;top:0;left:15%;right:15%;height:2.5px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
-  border-radius:0 0 3px 3px;
-}
-.nav-ico{font-size:20px;line-height:1;transition:var(--transition)}
-.nav-btn.on .nav-ico{transform:scale(1.1)}
-.nav-lbl{font-size:9px;font-weight:700;letter-spacing:0.3px;margin-top:3px}
-.nav-badge{
-  position:absolute;top:6px;right:calc(50% - 18px);
-  background:var(--danger);color:#fff;
-  width:16px;height:16px;border-radius:50%;
-  font-size:8px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-  display:none;
-}
-.nav-badge.show{display:flex}
+#nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.2;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;transition:var(--tr);position:relative;user-select:none;
+  padding-bottom:4px;}
+.nav-item:active{transform:scale(0.92)}
+.nav-ico{font-size:22px;line-height:1;transition:var(--tr)}
+.nav-lbl{font-size:10px;font-weight:700;color:var(--text3);transition:var(--tr);letter-spacing:0.3px}
+.nav-item.on .nav-lbl{color:var(--accent)}
+.nav-item.on .nav-ico{transform:translateY(-2px)}
+.nav-pip{position:absolute;top:8px;right:calc(50% - 18px);width:8px;height:8px;
+  border-radius:50%;background:var(--danger);border:2px solid var(--bg2);
+  display:none;}
+.nav-pip.show{display:block;animation:pipPulse 1.5s infinite}
+@keyframes pipPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.nav-active-bar{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:0;height:3px;border-radius:3px 3px 0 0;background:var(--accent);
+  transition:width .3s cubic-bezier(0.4,0,0.2,1);}
+.nav-item.on .nav-active-bar{width:32px}
 
-/* ══════════ PAGES ══════════ */
-.page{display:none;animation:pageIn .3s ease}
-.page.on{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══════════ HOME PAGE ══════════ */
-.port-card{
-  margin:14px 12px 10px;
-  background:linear-gradient(145deg,#0f1a2e,#0a0f1a);
-  border:1px solid var(--border-subtle);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow:var(--shadow-card);
-  position:relative;overflow:hidden;
-}
-.port-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent));
-  opacity:0.7;
-}
-.port-card::after{
-  content:'';position:absolute;top:0;right:0;
-  width:120px;height:120px;
-  background:radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%);
-  pointer-events:none;
-}
-.port-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:10px}
-.port-total-lbl{font-size:10px;color:var(--text-secondary);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-.port-total{font-size:32px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-0.5px}
+/* ── HOME PAGE ── */
+.port-card{margin:14px 12px 10px;background:linear-gradient(145deg,var(--bg-card),#0f172a);
+  border:1px solid var(--border);border-radius:var(--r);padding:18px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.port-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent));opacity:0.6;}
+.port-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.port-lbl{font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.8px}
+.port-total{font-size:30px;font-weight:900;color:#fff;line-height:1.1}
 .port-egp{font-size:12px;color:var(--gold);margin-top:6px;font-weight:600}
-.port-badge{
-  background:var(--accent-dim);
-  border:1px solid rgba(16,185,129,0.3);
-  border-radius:var(--radius-sm);padding:10px 14px;text-align:center;flex-shrink:0;
-  min-width:100px;
-}
-.pb-lbl{font-size:9px;color:var(--text-secondary);font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
-.pb-val{font-size:18px;font-weight:900;margin-top:3px}
+.port-badge{background:var(--accent-dim);border:1px solid rgba(16,185,129,0.3);
+  border-radius:var(--r-sm);padding:8px 14px;text-align:center;}
+.pb-lbl{font-size:9px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.pb-val{font-size:17px;font-weight:900;color:var(--accent);margin-top:2px}
 .port-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.ps{
-  background:var(--bg-primary);border:1px solid var(--border-subtle);
-  border-radius:var(--radius-sm);padding:12px;
-  transition:var(--transition);
-}
-.ps:active{border-color:var(--accent)}
-.ps-lbl{font-size:9px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
-.ps-val{font-size:14px;font-weight:900;white-space:nowrap}
-.assets-hdr{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 14px 6px;
-}
-.assets-hdr-txt{font-size:11px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.8px}
-.badge-sm{
-  font-size:9px;background:var(--accent-dim);
-  border:1px solid rgba(16,185,129,0.3);
-  border-radius:20px;padding:3px 10px;color:var(--accent);font-weight:700;
-}
-.asset-row{
-  display:grid;grid-template-columns:44px 1fr auto;
-  gap:12px;align-items:center;
-  padding:13px 14px;
-  border-bottom:1px solid rgba(30,41,59,0.5);
-  transition:var(--transition);position:relative;
-}
+.ps{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:12px;transition:var(--tr);}
+.ps-lbl{font-size:9px;color:var(--text3);margin-bottom:5px;text-transform:uppercase;
+  letter-spacing:0.5px;font-weight:700}
+.ps-val{font-size:15px;font-weight:900;white-space:nowrap}
+.assets-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 6px}
+.assets-hdr-txt{font-size:11px;font-weight:800;color:var(--text2);
+  text-transform:uppercase;letter-spacing:0.8px}
+.badge-sm{font-size:9px;background:var(--accent-dim);border:1px solid rgba(16,185,129,0.3);
+  border-radius:var(--r-xs);padding:3px 10px;color:var(--accent);font-weight:700}
+.asset-row{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;
+  padding:12px 14px;border-bottom:1px solid rgba(30,41,59,0.5);transition:var(--tr);}
 .asset-row:active{background:rgba(16,185,129,0.04)}
-.asset-row::after{
-  content:'';position:absolute;right:0;top:0;height:100%;width:3px;
-  background:linear-gradient(180deg,transparent,var(--accent),transparent);
-  opacity:0;transition:var(--transition);
-}
-.ar-ico{
-  width:44px;height:44px;border-radius:var(--radius-sm);
-  display:flex;align-items:center;justify-content:center;
-  font-size:17px;font-weight:800;border:2px solid;
-  flex-shrink:0;position:relative;
-}
-.ar-ico::before{
-  content:'';position:absolute;inset:0;border-radius:var(--radius-sm);
-  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
-  pointer-events:none;
-}
+.ar-ico{width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;
+  justify-content:center;font-size:16px;font-weight:800;border:2px solid;flex-shrink:0;position:relative;}
+.ar-ico::before{content:'';position:absolute;inset:0;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);pointer-events:none;}
 .ar-mid{min-width:0}
-.ar-sym{font-size:13px;font-weight:800;color:var(--text-primary)}
-.ar-sub{font-size:9px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ar-bar{height:3px;background:var(--border-subtle);border-radius:2px;margin-top:6px;overflow:hidden}
-.ar-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .8s ease}
-.ar-right{text-align:left;flex-shrink:0}
-.ar-val{font-size:13px;font-weight:800;color:var(--text-primary)}
+.ar-sym{font-size:13px;font-weight:800;color:var(--text)}
+.ar-sub{font-size:9px;color:var(--text2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar-bar{height:3px;background:var(--border);border-radius:2px;margin-top:5px;overflow:hidden}
+.ar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .8s ease}
+.ar-r{text-align:left;flex-shrink:0;padding:0 4px}
+.ar-val{font-size:13px;font-weight:800}
 .ar-pnl{font-size:10px;margin-top:2px;font-weight:700}
-.ar-day{font-size:9px;color:var(--text-muted);margin-top:2px}
+.ar-day{font-size:9px;color:var(--text3);margin-top:2px}
 .green{color:var(--accent)}.red{color:var(--danger)}.gold{color:var(--gold)}
 
-/* ══════════ AI PAGE ══════════ */
-.ai-top-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 14px;gap:8px;
-  background:linear-gradient(90deg,rgba(139,92,246,0.08),rgba(16,185,129,0.06));
-  border-bottom:1px solid var(--border-subtle);
-  flex-wrap:wrap;
-}
-.ai-title{font-size:12px;font-weight:800;display:flex;align-items:center;gap:6px}
-.ai-badge-pill{
-  background:linear-gradient(135deg,var(--purple),#6366f1);
-  border-radius:var(--radius-xs);padding:4px 10px;font-size:9px;font-weight:800;color:#fff;
-  box-shadow:0 4px 12px rgba(139,92,246,0.3);
-}
-.ai-last{font-size:9px;color:var(--text-secondary);flex:1;text-align:center}
-.btn-ai-run{
-  background:linear-gradient(135deg,var(--accent),#059669);
-  border:none;border-radius:var(--radius-sm);padding:8px 16px;
-  font-size:10px;font-weight:800;color:#fff;cursor:pointer;
-  transition:var(--transition);white-space:nowrap;
-  box-shadow:0 4px 15px rgba(16,185,129,0.3);
-  font-family:'Cairo',sans-serif;
-}
-.btn-ai-run:active{transform:scale(0.96)}
-.btn-ai-run:disabled{opacity:.5;cursor:not-allowed}
-.ai-card{
-  margin:10px 12px;
-  background:var(--bg-card);
-  border:1px solid var(--border-subtle);
-  border-radius:var(--radius);overflow:hidden;
-  box-shadow:var(--shadow-card);
-  position:relative;
-}
-.ai-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--purple),var(--accent));
-  opacity:0.5;
-}
-.ai-card-hdr{
-  display:flex;align-items:center;gap:10px;
-  padding:14px 16px;
-  background:rgba(0,0,0,0.2);
-  border-bottom:1px solid var(--border-subtle);
-}
-.ai-card-ico{
-  width:40px;height:40px;border-radius:var(--radius-sm);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:800;border:2px solid;flex-shrink:0;
-  position:relative;
-}
-.ai-card-ico::before{
-  content:'';position:absolute;inset:0;border-radius:var(--radius-sm);
-  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
-  pointer-events:none;
-}
+/* ── AI PAGE ── */
+.ai-top{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;background:linear-gradient(90deg,var(--purple-dim),var(--accent-dim));
+  border-bottom:1px solid var(--border);}
+.ai-ttl{font-size:12px;font-weight:800;display:flex;align-items:center;gap:6px}
+.ai-pill{background:linear-gradient(135deg,var(--purple),#6366f1);border-radius:var(--r-xs);
+  padding:4px 10px;font-size:9px;font-weight:800;color:#fff;
+  box-shadow:0 4px 12px rgba(139,92,246,0.3);}
+.ai-last{font-size:9px;color:var(--text2)}
+.btn-ai{background:linear-gradient(135deg,var(--accent),#059669);border:none;
+  border-radius:var(--r-sm);padding:9px 16px;font-size:11px;font-weight:800;color:#fff;
+  cursor:pointer;transition:var(--tr);white-space:nowrap;
+  box-shadow:0 4px 15px rgba(16,185,129,0.3);font-family:'Cairo',sans-serif;}
+.btn-ai:active{transform:scale(0.96)}
+.btn-ai:disabled{opacity:.5;cursor:not-allowed}
+.ai-card{margin:10px 12px;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);position:relative;}
+.ai-card-hdr{display:flex;align-items:center;gap:10px;padding:14px 16px;
+  background:rgba(0,0,0,0.15);border-bottom:1px solid var(--border);}
+.ai-card-ico{width:38px;height:38px;border-radius:var(--r-sm);display:flex;align-items:center;
+  justify-content:center;font-size:15px;font-weight:800;border:2px solid;flex-shrink:0;position:relative;}
+.ai-card-ico::before{content:'';position:absolute;inset:0;border-radius:var(--r-sm);
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);pointer-events:none;}
 .ai-sym{font-size:14px;font-weight:800}
-.ai-price{font-size:10px;color:var(--text-secondary);margin-top:2px}
-.sig{
-  display:inline-flex;align-items:center;
-  border-radius:var(--radius-xs);padding:5px 12px;font-size:10px;font-weight:800;
-  margin-right:auto;
-}
+.ai-price{font-size:10px;color:var(--text2);margin-top:2px}
+.sig{display:inline-flex;align-items:center;gap:4px;border-radius:var(--r-xs);
+  padding:5px 12px;font-size:10px;font-weight:800;margin-right:auto;margin-left:auto;}
 .sig.buy{background:var(--accent-dim);border:1px solid rgba(16,185,129,0.4);color:var(--accent)}
 .sig.hold{background:var(--gold-dim);border:1px solid rgba(245,158,11,0.4);color:var(--gold)}
 .sig.sell{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.4);color:var(--danger)}
 .ai-body{padding:16px}
-.ai-reason{font-size:11px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px;padding:10px 12px;background:var(--bg-primary);border-right:3px solid var(--accent);border-radius:var(--radius-xs)}
+.ai-reason{font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:12px;
+  padding:10px 12px;background:var(--bg);border-right:3px solid var(--accent);border-radius:var(--r-xs)}
 .ai-scores{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.sc{background:var(--bg-primary);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px;text-align:center}
-.sc-l{font-size:8px;color:var(--text-muted);margin-bottom:4px;font-weight:700;text-transform:uppercase}
+.sc{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;text-align:center}
+.sc-l{font-size:8px;color:var(--text3);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
 .sc-v{font-size:16px;font-weight:900}
-.sc-bar{height:3px;background:var(--border-subtle);border-radius:2px;margin-top:5px;overflow:hidden}
+.sc-bar{height:3px;background:var(--border);border-radius:2px;margin-top:5px;overflow:hidden}
 .sc-fill{height:100%;border-radius:2px;transition:width .6s ease}
-.ai-levels{display:flex;gap:8px;flex-wrap:wrap;font-size:10px;background:var(--bg-primary);border-radius:var(--radius-sm);padding:10px;border:1px solid var(--border-subtle)}
+.ai-levels{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;
+  background:var(--bg);border-radius:var(--r-sm);padding:10px;border:1px solid var(--border);}
 .ai-lv-item{display:flex;align-items:center;gap:5px;flex:1;min-width:90px}
 .ai-lv-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* ══════════ ALERTS PAGE ══════════ */
-.al-hdr{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border-subtle)}
-.al-hdr-txt{font-size:13px;font-weight:800}
-.al-item{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:13px 14px;border-bottom:1px solid var(--border-subtle);
-  transition:var(--transition);
-}
-.al-item.unread{background:var(--accent-dim);border-right:3px solid var(--accent)}
-.al-dot-el{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+/* ── ALERTS PAGE ── */
+.al-hdr{display:flex;justify-content:space-between;align-items:center;
+  padding:14px 16px;border-bottom:1px solid var(--border);}
+.al-hdr-txt{font-size:14px;font-weight:800}
+.al-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;
+  border-bottom:1px solid var(--border);transition:var(--tr);}
+.al-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
 .al-ttl{font-size:12px;font-weight:700}
-.al-msg{font-size:10px;color:var(--text-secondary);margin-top:3px;line-height:1.5}
-.al-time{font-size:9px;color:var(--text-muted);margin-top:3px}
-.btn-sm-clear{
-  background:var(--bg-card);border:1px solid var(--border-subtle);
-  border-radius:var(--radius-xs);padding:6px 12px;font-size:10px;
-  color:var(--text-secondary);cursor:pointer;transition:var(--transition);
-  font-family:'Cairo',sans-serif;font-weight:600;
-}
-.btn-sm-clear:active{background:var(--danger-dim);border-color:var(--danger);color:var(--danger)}
+.al-msg{font-size:10px;color:var(--text2);margin-top:3px;line-height:1.5}
+.al-time{font-size:9px;color:var(--text3);margin-top:3px}
+.al-item.unread{background:var(--accent-dim);border-right:3px solid var(--accent)}
+.btn-clear{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-xs);
+  padding:6px 14px;font-size:10px;color:var(--text2);cursor:pointer;transition:var(--tr);
+  font-family:'Cairo',sans-serif;font-weight:600;}
+.btn-clear:active{border-color:var(--danger);color:var(--danger)}
 
-/* ══════════ SETTINGS PAGE ══════════ */
-.settings-section{
-  border:1px solid var(--border-subtle);
-  border-radius:var(--radius);padding:18px;margin:12px;
-  background:var(--bg-card);position:relative;overflow:hidden;
-}
-.settings-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.settings-section.api-section::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
-.settings-section.ticker-section::before{background:linear-gradient(90deg,var(--info),var(--cyan))}
-.settings-section.ai-section::before{background:linear-gradient(90deg,var(--purple),var(--info))}
-.settings-title{font-size:13px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.settings-title .icon{font-size:18px}
-.api-status{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:9px;font-weight:700;padding:3px 8px;
-  border-radius:20px;margin-right:auto;
-}
-.api-status.saved{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
-.api-status.not-saved{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
-.inp{
-  width:100%;background:var(--bg-input);border:1px solid var(--border-subtle);
-  border-radius:var(--radius-sm);padding:12px 14px;color:var(--text-primary);
-  font-size:14px;margin-bottom:10px;direction:ltr;
-  outline:none;transition:var(--transition);
-  font-family:'Cairo',monospace;
-  -webkit-appearance:none;
-}
+/* ── SETTINGS PAGE ── */
+.s-sec{display:block;border:1px solid var(--border);border-radius:var(--r);
+  padding:16px;margin:12px;background:var(--bg-card);position:relative;overflow:hidden;}
+.s-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.s-sec.api::before{background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.s-sec.ticker::before{background:linear-gradient(90deg,var(--info),var(--cyan))}
+.s-sec.ai-s::before{background:linear-gradient(90deg,var(--purple),var(--info))}
+.s-sec.notif::before{background:linear-gradient(90deg,var(--gold),var(--danger))}
+.s-ttl{font-size:12px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.s-ttl .icon{font-size:16px}
+.api-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;
+  padding:3px 8px;border-radius:20px;}
+.api-badge.ok{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+.api-badge.no{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(239,68,68,0.3)}
+.inp{width:100%;background:var(--bg-inp);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:11px 14px;color:var(--text);font-size:12px;
+  margin-bottom:10px;direction:ltr;outline:none;transition:var(--tr);
+  font-family:'Cairo',monospace;-webkit-appearance:none;}
 .inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
-.inp::placeholder{color:var(--text-muted)}
+.inp::placeholder{color:var(--text3)}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.btn{
-  border:none;border-radius:var(--radius-sm);padding:11px 18px;font-size:12px;
-  font-weight:700;cursor:pointer;transition:var(--transition);
-  font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:5px;
-  -webkit-tap-highlight-color:transparent;
-}
-.btn:active{transform:scale(0.95)}
-.btn-green{background:linear-gradient(135deg,var(--accent),#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,0.25)}
-.btn-gray{background:var(--bg-primary);border:1px solid var(--border-subtle);color:var(--text-secondary)}
-.btn-red{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.4);color:var(--danger)}
-.conn-msg{
-  margin-top:10px;padding:10px 12px;border-radius:var(--radius-xs);
-  font-size:11px;font-weight:600;
-  display:none;line-height:1.5;
-}
+.btn{border:none;border-radius:var(--r-sm);padding:10px 16px;font-size:11px;
+  font-weight:700;cursor:pointer;transition:var(--tr);font-family:'Cairo',sans-serif;
+  display:flex;align-items:center;gap:5px;}
+.btn-g{background:linear-gradient(135deg,var(--accent),#059669);color:#fff;
+  box-shadow:0 4px 15px rgba(16,185,129,0.3);}
+.btn-g:active{transform:scale(0.97)}
+.btn-gr{background:var(--bg);border:1px solid var(--border);color:var(--text2)}
+.btn-gr:active{border-color:var(--accent);color:var(--accent)}
+.btn-r{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.4);color:var(--danger)}
+.conn-msg{margin-top:10px;padding:9px 12px;border-radius:var(--r-xs);font-size:11px;
+  font-weight:600;display:none;}
 .conn-msg.ok{display:block;background:var(--accent-dim);border:1px solid rgba(16,185,129,0.3);color:var(--accent)}
 .conn-msg.fail{display:block;background:var(--danger-dim);border:1px solid rgba(239,68,68,0.3);color:var(--danger)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;padding-bottom:0}
+.toggle-label{font-size:11px;color:var(--text2);font-weight:600}
+.toggle{position:relative;width:44px;height:24px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--border-a);border-radius:12px;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;background:#fff;
+  border-radius:50%;bottom:3px;left:3px;transition:.3s;box-shadow:0 2px 4px rgba(0,0,0,0.3)}
+.toggle input:checked+.toggle-slider{background:var(--accent)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(20px)}
 
-/* ══════════ SHARED ══════════ */
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:14px}
-.spinner{
-  width:40px;height:40px;
-  border:3px solid var(--border-subtle);
-  border-top-color:var(--accent);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-}
-.ld-txt{font-size:12px;color:var(--text-secondary);font-weight:600}
-.empty{text-align:center;padding:50px 20px;color:var(--text-muted);font-size:12px;line-height:1.8}
-.empty .empty-icon{font-size:40px;margin-bottom:14px}
-.footer{
-  text-align:center;padding:20px;color:var(--text-muted);
-  font-size:9px;border-top:1px solid var(--border-subtle);
-  margin-top:8px;line-height:2;
-}
+/* ── SHARED ── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 20px;gap:12px}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .8s linear infinite}
+.ld-txt{font-size:12px;color:var(--text2);font-weight:600}
+.empty{text-align:center;padding:50px 20px;color:var(--text3);font-size:12px;line-height:1.7}
+.footer{text-align:center;padding:20px;color:var(--text3);font-size:9px;
+  border-top:1px solid var(--border);margin-top:8px;line-height:1.8}
 
-/* ══════════ TOAST ══════════ */
-#toast{
-  position:fixed;bottom:calc(70px + var(--safe-bottom) + 12px);left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--bg-card);border:1px solid var(--border-active);
-  border-radius:var(--radius-sm);padding:10px 20px;
-  font-size:12px;font-weight:600;color:var(--text-primary);
-  box-shadow:0 8px 30px rgba(0,0,0,0.5);
-  z-index:9999;opacity:0;transition:all .3s ease;pointer-events:none;
-  white-space:nowrap;max-width:90vw;
+/* ── INSTALL BANNER ── */
+#install-banner{
+  display:none;position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 8px);
+  left:12px;right:12px;
+  background:linear-gradient(135deg,#0f172a,#162032);
+  border:1px solid rgba(16,185,129,0.4);border-radius:var(--r);
+  padding:14px 16px;z-index:100;box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  animation:slideUp .3s ease;
 }
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+#install-banner.show{display:flex;align-items:center;gap:12px}
+.ib-txt{flex:1;font-size:11px;color:var(--text2);line-height:1.5}
+.ib-txt strong{color:var(--accent);display:block;margin-bottom:2px;font-size:12px}
+.ib-btns{display:flex;flex-direction:column;gap:6px}
+.ib-yes{background:var(--accent);color:#fff;border:none;border-radius:var(--r-xs);
+  padding:7px 14px;font-size:10px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif}
+.ib-no{background:transparent;color:var(--text3);border:none;font-size:10px;cursor:pointer;
+  font-family:'Cairo',sans-serif;text-decoration:underline;}
 
-/* ══════════ OFFLINE BADGE ══════════ */
-#offline-badge{
-  display:none;
-  position:fixed;top:calc(var(--safe-top) + 60px);left:50%;transform:translateX(-50%);
-  background:var(--danger);color:#fff;
-  padding:5px 14px;border-radius:20px;font-size:10px;font-weight:700;
-  z-index:9998;box-shadow:0 4px 20px rgba(239,68,68,0.4);
-}
-#offline-badge.show{display:block}
+/* ── NOTIFICATION BADGE on nav ── */
+.nav-badge{position:absolute;top:6px;right:calc(50% - 20px);
+  background:var(--danger);color:#fff;border-radius:10px;
+  font-size:8px;font-weight:900;padding:1px 5px;border:1.5px solid var(--bg2);
+  min-width:16px;text-align:center;display:none}
+.nav-badge.show{display:block}
 
-/* ══════════ RESPONSIVE ══════════ */
-@media(min-width:768px){
-  #app{max-width:480px;margin:0 auto;height:100dvh;box-shadow:0 0 60px rgba(0,0,0,0.8)}
-  .port-total{font-size:36px}
-}
-@media(min-width:1024px){
-  body{background:#030508;display:flex;align-items:center;justify-content:center}
-  #app{border-radius:24px;overflow:hidden;border:1px solid var(--border-subtle);height:min(820px,95dvh)}
-}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border-a);border-radius:2px}
 </style>
 </head>
 <body>
 
-<div id="app">
-
-  <!-- INSTALL BANNER -->
-  <div id="install-banner">
-    <div class="ib-text">
-      <strong>📱 ثبّت التطبيق</strong>
-      وصول سريع من الشاشة الرئيسية
-    </div>
-    <button class="ib-btn" id="btnInstall">تثبيت</button>
-    <button class="ib-close" id="btnDismissInstall">×</button>
-  </div>
-
-  <!-- HEADER -->
-  <div id="hdr">
-    <div class="logo">
-      <div class="logo-ico">₿</div>
-      <div>
-        <div class="logo-txt">HAMMAD CRYPTO</div>
-        <div class="logo-ver">PWA v3.5</div>
-      </div>
-    </div>
-    <div class="hdr-actions">
-      <div class="status-badge disconnected" id="statusBadge">
-        <div class="status-dot"></div>
-        <span id="statusText">غير متصل</span>
-      </div>
-      <button class="ico-btn" id="refreshBtn" title="تحديث">↻</button>
+<!-- HEADER -->
+<div id="hdr">
+  <div class="logo">
+    <div class="logo-ico">₿</div>
+    <div>
+      <span class="logo-txt">HAMMAD CRYPTO</span>
+      <span class="logo-ver">Pro</span>
     </div>
   </div>
+  <div class="hdr-r">
+    <div class="status-badge off" id="statusBadge">
+      <div class="s-dot"></div>
+      <span id="statusTxt">غير متصل</span>
+    </div>
+    <button class="ico-btn" id="refreshBtn" title="تحديث">↻</button>
+  </div>
+</div>
 
-  <!-- COINS BAR -->
-  <div id="coins-bar">
-    <span class="coin-pill"><span class="cp-sym">BTC</span><span class="cp-price" style="color:var(--text-muted)">⏳</span><span class="cp-chg">--</span></span>
+<!-- CAROUSEL -->
+<div id="coins-bar">
+  <div id="asset-carousel"></div>
+  <div id="carousel-dots"></div>
+</div>
+
+<!-- SCROLL AREA -->
+<div id="scroll">
+
+  <!-- HOME -->
+  <div class="page on" id="page-home">
+    <div id="homeContent">
+      <div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div>
+    </div>
   </div>
 
-  <!-- CONTENT -->
-  <div id="content">
-
-    <!-- HOME -->
-    <div class="page on" id="page-home">
-      <div id="homeContent">
-        <div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحميل المحفظة...</div></div>
-      </div>
+  <!-- AI -->
+  <div class="page" id="page-ai">
+    <div class="ai-top">
+      <div class="ai-ttl"><span class="ai-pill">AI</span>التحليل الذكي</div>
+      <span class="ai-last" id="aiLastTxt">—</span>
+      <button class="btn-ai" id="btnRunAI">تحليل ▶</button>
     </div>
-
-    <!-- AI -->
-    <div class="page" id="page-ai">
-      <div class="ai-top-bar">
-        <div class="ai-title"><span class="ai-badge-pill">AI</span>التحليل الذكي</div>
-        <span class="ai-last" id="aiLastTxt">—</span>
-        <button class="btn-ai-run" id="btnRunAI">تحليل الآن ▶</button>
-      </div>
-      <div id="aiContent">
-        <div class="empty">اضغط "تحليل الآن" لبدء التحليل<br><span style="font-size:10px;color:var(--text-muted);display:block;margin-top:6px">AI مجاني بدون تسجيل</span></div>
-      </div>
+    <div id="aiContent">
+      <div class="empty">اضغط "تحليل" لبدء تحليل العملات بالذكاء الاصطناعي</div>
     </div>
-
-    <!-- ALERTS -->
-    <div class="page" id="page-alerts">
-      <div class="al-hdr">
-        <span class="al-hdr-txt">🔔 التنبيهات</span>
-        <button class="btn-sm-clear" id="btnClearAlerts">مسح الكل</button>
-      </div>
-      <div id="alertsContent"><div class="empty">لا توجد تنبيهات</div></div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="page-settings">
-
-      <div class="settings-section api-section">
-        <div class="settings-title">
-          <span class="icon">🔑</span>
-          بيانات OKX API
-          <span class="api-status not-saved" id="apiStatusBadge">غير محفوظ</span>
-        </div>
-        <input class="inp" type="password" id="inp_api" placeholder="API Key" autocomplete="off">
-        <input class="inp" type="password" id="inp_sec" placeholder="Secret Key" autocomplete="off">
-        <input class="inp" type="password" id="inp_pass" placeholder="Passphrase" autocomplete="off">
-        <div class="btn-row">
-          <button class="btn btn-green" id="btnSave" style="flex:1">💾 حفظ</button>
-          <button class="btn btn-gray" id="btnTest" style="flex:1">🔌 اختبار</button>
-          <button class="btn btn-red" id="btnRemove" style="flex:1">🗑️ حذف</button>
-        </div>
-        <div class="conn-msg" id="connMsg"></div>
-        <div style="margin-top:12px;padding:10px 12px;background:var(--bg-primary);border-radius:var(--radius-xs);font-size:10px;color:var(--text-muted);line-height:1.7;border:1px solid var(--border-subtle)">
-          🔒 بياناتك محفوظة محلياً على جهازك فقط ولن تُرسل لأي خادم خارجي
-        </div>
-      </div>
-
-      <div class="settings-section ai-section">
-        <div class="settings-title">
-          <span class="icon">🤖</span>
-          الذكاء الاصطناعي
-          <span class="api-status saved">مجاني ✓</span>
-        </div>
-        <div style="font-size:11px;color:var(--text-secondary);line-height:1.8">
-          التحليل مجاني 100% عبر Pollinations AI — بدون أي مفتاح أو تسجيل
-        </div>
-      </div>
-
-      <div class="settings-section ticker-section">
-        <div class="settings-title">
-          <span class="icon">📊</span>
-          عملات شريط الأسعار
-        </div>
-        <input class="inp" id="tickerCoinsInp" placeholder="BTC,ETH,SOL,..." style="direction:ltr">
-        <button class="btn btn-green" id="btnUpdateTicker" style="width:100%">تحديث الشريط</button>
-      </div>
-
-      <div class="footer">برمجة وتطوير بكل ❤️ المهندس محمد حماد<br><span style="color:var(--accent)">Hammad Crypto PWA v3.5</span></div>
-    </div>
-
-  </div><!-- /content -->
-
-  <!-- BOTTOM NAV -->
-  <div id="bottom-nav">
-    <button class="nav-btn on" id="nav-home" data-tab="home">
-      <span class="nav-ico">🏠</span>
-      <span class="nav-lbl">الرئيسية</span>
-    </button>
-    <button class="nav-btn" id="nav-ai" data-tab="ai">
-      <span class="nav-ico">🤖</span>
-      <span class="nav-lbl">تحليل</span>
-    </button>
-    <button class="nav-btn" id="nav-alerts" data-tab="alerts">
-      <span class="nav-ico">🔔</span>
-      <span class="nav-lbl">تنبيهات</span>
-      <span class="nav-badge" id="alertsBadge">0</span>
-    </button>
-    <button class="nav-btn" id="nav-settings" data-tab="settings">
-      <span class="nav-ico">⚙️</span>
-      <span class="nav-lbl">إعدادات</span>
-    </button>
   </div>
 
-</div><!-- /app -->
+  <!-- ALERTS -->
+  <div class="page" id="page-alerts">
+    <div class="al-hdr">
+      <span class="al-hdr-txt">🔔 التنبيهات</span>
+      <button class="btn-clear" id="btnClear">مسح الكل</button>
+    </div>
+    <div id="alertsContent"><div class="empty">لا توجد تنبيهات</div></div>
+  </div>
 
-<div id="toast"></div>
-<div id="offline-badge">📡 غير متصل بالإنترنت</div>
+  <!-- SETTINGS -->
+  <div class="page" id="page-settings">
 
-<script>
-'use strict';
-
-// ══════════════════════════════════════════
-//   STORAGE (localStorage — persistent)
-// ══════════════════════════════════════════
-const STORE = {
-  get(key){ try{ return JSON.parse(localStorage.getItem(key)) }catch{ return null } },
-  set(key,val){ try{ localStorage.setItem(key,JSON.stringify(val)) }catch{} },
-  remove(key){ localStorage.removeItem(key) }
-};
-
-// ══════════════════════════════════════════
-//   CONSTANTS
-// ══════════════════════════════════════════
-const OKX_BASE = 'https://www.okx.com';
-const AI_ENDPOINT = 'https://text.pollinations.ai/';
-const DEFAULT_COINS = 'BTC,ETH,SOL,BNB,KAT,PI,OFC';
-
-const COIN_META = {
-  BTC:{bg:'#f7931a',icon:'₿'},ETH:{bg:'#627eea',icon:'Ξ'},
-  USDT:{bg:'#26a17b',icon:'$'},USDC:{bg:'#2775ca',icon:'$'},
-  BNB:{bg:'#f3ba2f',icon:'B'},SOL:{bg:'#9945ff',icon:'◎'},
-  XRP:{bg:'#346aa9',icon:'X'},ADA:{bg:'#627eea',icon:'A'},
-  TON:{bg:'#0088cc',icon:'T'},KAT:{bg:'#ff6b35',icon:'K'},
-  PI:{bg:'#8b4513',icon:'π'},OFC:{bg:'#4ecdc4',icon:'O'},
-  BASED:{bg:'#0052ff',icon:'B'},CHIP:{bg:'#a855f7',icon:'C'},
-  LTC:{bg:'#bfbbbb',icon:'Ł'},DOT:{bg:'#e6007a',icon:'●'},
-};
-
-// ══════════════════════════════════════════
-//   STATE
-// ══════════════════════════════════════════
-let portfolio = null;
-let aiAnalyses = [];
-let alerts = [];
-let currentTab = 'home';
-let apiSaved = false;
-let livePrices = {};
-let deferredInstallPrompt = null;
-
-// ══════════════════════════════════════════
-//   HELPERS
-// ══════════════════════════════════════════
-function meta(sym){
-  const s = sym.toUpperCase().replace(/-USDT$|-USD$/g,'');
-  return COIN_META[s] || {bg:'#4ecdc4', icon:s.charAt(0)};
-}
-function fmt(n,d=2){ return isNaN(n)||n===null ? '0' : parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); }
-function fmtPrice(p){
-  p=parseFloat(p);
-  if(p>=1000) return fmt(p,0);
-  if(p>=1) return fmt(p,2);
-  if(p>=0.01) return fmt(p,4);
-  return fmt(p,6);
-}
-function fmtTime(d){ return new Date(d).toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}); }
-
-function safeB64Encode(str){ return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode(parseInt(p1,16)))); }
-function safeB64Decode(b64){ return decodeURIComponent(atob(b64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); }
-
-function showToast(msg, dur=2800){
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), dur);
-}
-
-// ══════════════════════════════════════════
-//   CREDENTIALS (localStorage — persistent)
-// ══════════════════════════════════════════
-function getCredentials(){
-  const enc = STORE.get('okx_creds_enc');
-  if(!enc) return null;
-  try{ return JSON.parse(safeB64Decode(enc)); }catch{ return null; }
-}
-function saveCredentials(creds){
-  STORE.set('okx_creds_enc', safeB64Encode(JSON.stringify(creds)));
-}
-function removeCredentials(){
-  STORE.remove('okx_creds_enc');
-  STORE.remove('portfolio_cache');
-}
-function hasCredentials(){ const c=getCredentials(); return !!(c&&c.apiKey&&c.secretKey&&c.passphrase); }
-
-// ══════════════════════════════════════════
-//   API STATUS UI
-// ══════════════════════════════════════════
-function updateApiStatus(saved){
-  apiSaved = saved;
-  const badge = document.getElementById('apiStatusBadge');
-  const statusBadge = document.getElementById('statusBadge');
-  const statusText = document.getElementById('statusText');
-  if(badge){ badge.className='api-status '+(saved?'saved':'not-saved'); badge.textContent=saved?'محفوظ ✓':'غير محفوظ'; }
-  if(statusBadge){ statusBadge.className='status-badge '+(saved?'connected':'disconnected'); }
-  if(statusText){ statusText.textContent=saved?'متصل':'غير متصل'; }
-}
-function checkApiStatus(){ updateApiStatus(hasCredentials()); }
-
-// ══════════════════════════════════════════
-//   HMAC SHA256
-// ══════════════════════════════════════════
-async function hmacSHA256(key, msg){
-  const k = new TextEncoder().encode(key);
-  const m = new TextEncoder().encode(msg);
-  const ck = await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']);
-  const sig = await crypto.subtle.sign('HMAC',ck,m);
-  return btoa(String.fromCharCode(...new Uint8Array(sig)));
-}
-async function getOKXHeaders(method, path, body=''){
-  const creds = getCredentials();
-  if(!creds) return null;
-  const ts = new Date().toISOString();
-  const sign = await hmacSHA256(creds.secretKey, ts+method.toUpperCase()+path+body);
-  return {
-    'OK-ACCESS-KEY':creds.apiKey,
-    'OK-ACCESS-SIGN':sign,
-    'OK-ACCESS-TIMESTAMP':ts,
-    'OK-ACCESS-PASSPHRASE':creds.passphrase,
-    'Content-Type':'application/json'
-  };
-}
-
-// ══════════════════════════════════════════
-//   OKX API CALLS
-// ══════════════════════════════════════════
-async function fetchTicker(instId){
-  try{
-    const res = await fetch(`${OKX_BASE}/api/v5/market/ticker?instId=${instId}`);
-    const data = await res.json();
-    return data.code==='0' ? data.data[0] : null;
-  }catch{ return null; }
-}
-
-async function fetchDirectTickerPrice(sym){
-  for(const instId of [sym+'-USDT',sym+'-USD']){
-    try{
-      const res = await fetch(`${OKX_BASE}/api/v5/market/ticker?instId=${instId}`);
-      const data = await res.json();
-      if(data.code==='0'&&data.data?.[0]){
-        const t=data.data[0], price=parseFloat(t.last), open24h=parseFloat(t.open24h||price);
-        return {p:price, c:open24h>0?((price-open24h)/open24h)*100:0};
-      }
-    }catch{}
-  }
-  return null;
-}
-
-async function fetchAllDirectPrices(coinsStr){
-  const coins = coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
-  const results = await Promise.allSettled(coins.map(async sym=>({sym, data:await fetchDirectTickerPrice(sym)})));
-  const prices = {};
-  for(const r of results) if(r.status==='fulfilled'&&r.value.data) prices[r.value.sym]=r.value.data;
-  if(Object.keys(prices).length>0) livePrices={...livePrices,...prices};
-  return prices;
-}
-
-async function fetchBalance(){
-  const headers = await getOKXHeaders('GET','/api/v5/account/balance');
-  if(!headers) return null;
-  try{
-    const res = await fetch(`${OKX_BASE}/api/v5/account/balance`,{headers});
-    const data = await res.json();
-    return data.code==='0'?data.data:null;
-  }catch{ return null; }
-}
-
-async function fetchOrderHistory(instId){
-  const path=`/api/v5/trade/orders-history?instType=SPOT&instId=${instId}&limit=50`;
-  const headers = await getOKXHeaders('GET',path);
-  if(!headers) return [];
-  try{
-    const res=await fetch(`${OKX_BASE}${path}`,{headers});
-    const data=await res.json();
-    return data.code==='0'?data.data:[];
-  }catch{ return []; }
-}
-
-function computeAvgBuy(orders){
-  let cost=0,qty=0;
-  for(const o of orders) if(o.side==='buy'&&o.state==='filled'){qty+=parseFloat(o.fillSz||0);cost+=parseFloat(o.fillSz||0)*parseFloat(o.avgPx||0);}
-  return qty>0?cost/qty:0;
-}
-
-async function fetchEGPRate(){
-  try{
-    const res=await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-    const data=await res.json();
-    return data.rates?.EGP||50.8;
-  }catch{ return 50.8; }
-}
-
-// ══════════════════════════════════════════
-//   BUILD PORTFOLIO
-// ══════════════════════════════════════════
-async function buildPortfolio(){
-  const balData = await fetchBalance();
-  if(!balData?.[0]) return null;
-  const details = balData[0].details||[];
-  const assets = [], validAssets = details.filter(d=>d.ccy!=='USDT'&&parseFloat(d.eq||0)>0);
-  let totalVal=0;
-  for(const d of validAssets){
-    const sym=d.ccy, qty=parseFloat(d.eq||0);
-    const ticker=await fetchTicker(sym+'-USDT');
-    if(!ticker) continue;
-    const price=parseFloat(ticker.last), value=qty*price;
-    if(value<1) continue;
-    const open24h=parseFloat(ticker.open24h||price);
-    const dailyChangePct=open24h>0?((price-open24h)/open24h)*100:0;
-    const orders=await fetchOrderHistory(sym+'-USDT');
-    const avgBuy=computeAvgBuy(orders);
-    const costBasis=avgBuy*qty;
-    const unrealizedPnL=value-costBasis;
-    const unrealizedPnLPct=costBasis>0?(unrealizedPnL/costBasis)*100:0;
-    assets.push({sym,qty,price,value,avgBuy,costBasis,unrealizedPnL,unrealizedPnLPct,dailyChangePct});
-    totalVal+=value;
-  }
-  for(const a of assets) a.allocPct=totalVal>0?(a.value/totalVal)*100:0;
-  const totalInvested=assets.reduce((s,a)=>s+(a.costBasis||a.value),0);
-  const egpRate=await fetchEGPRate();
-  const p={total:totalVal,invested:totalInvested,profit:totalVal-totalInvested,egpRate,assets,ts:Date.now()};
-  STORE.set('portfolio_cache',p);
-  return p;
-}
-
-// ══════════════════════════════════════════
-//   RENDER HOME
-// ══════════════════════════════════════════
-function renderHome(){
-  if(!portfolio){ renderNoCreds(); return; }
-  const {total,profit,egpRate,assets}=portfolio;
-  const egp=total*(egpRate||50.8);
-  const todayPnl=assets.reduce((s,a)=>s+(a.value*(a.dailyChangePct/100)||0),0);
-  const rows=assets.map(a=>{
-    const m=meta(a.sym), pos=a.unrealizedPnL>=0;
-    return `<div class="asset-row">
-      <div class="ar-ico" style="background:${m.bg}18;color:${m.bg};border-color:${m.bg}40">${m.icon}</div>
-      <div class="ar-mid">
-        <div class="ar-sym">${a.sym}</div>
-        <div class="ar-sub">${fmt(a.qty,4)} · avg $${fmtPrice(a.avgBuy||a.price)} · ${a.dailyChangePct>=0?'▲':'▼'} ${Math.abs(a.dailyChangePct).toFixed(2)}%</div>
-        <div class="ar-bar"><div class="ar-bar-fill" style="width:${a.allocPct.toFixed(1)}%"></div></div>
+    <div class="s-sec api">
+      <div class="s-ttl">
+        <span class="icon">🔑</span>
+        بيانات OKX API
+        <span class="api-badge no" id="apiBadge">غير محفوظ</span>
       </div>
-      <div class="ar-right">
-        <div class="ar-val">$${fmt(a.value,2)}</div>
-        <div class="ar-pnl ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnL,2)}</div>
-        <div class="ar-day ${pos?'green':'red'}">${pos?'+':''}${fmt(a.unrealizedPnLPct,1)}%</div>
+      <input class="inp" type="password" id="inp_api" placeholder="API Key" autocomplete="off">
+      <input class="inp" type="password" id="inp_sec" placeholder="Secret Key" autocomplete="off">
+      <input class="inp" type="password" id="inp_pass" placeholder="Passphrase" autocomplete="off">
+      <div class="btn-row">
+        <button class="btn btn-g" id="btnSave" style="flex:1">💾 حفظ</button>
+        <button class="btn btn-gr" id="btnTest" style="flex:1">🔌 اختبار</button>
+        <button class="btn btn-r" id="btnRemove" style="flex:1">🗑️ حذف</button>
       </div>
-    </div>`;
-  }).join('');
-  document.getElementById('homeContent').innerHTML = `
-    <div class="port-card">
-      <div class="port-top">
-        <div>
-          <div class="port-total-lbl">إجمالي المحفظة</div>
-          <div class="port-total">$${fmt(total,2)}</div>
-          <div class="port-egp">ج.م ${fmt(egp,0)}</div>
-        </div>
-        <div class="port-badge">
-          <div class="pb-lbl">صافي الربح</div>
-          <div class="pb-val ${profit>=0?'green':'red'}">${profit>=0?'+':''}$${fmt(profit,0)}</div>
-        </div>
+      <div class="conn-msg" id="connMsg"></div>
+    </div>
+
+    <div class="s-sec notif">
+      <div class="s-ttl"><span class="icon">🔔</span>الإشعارات والتنبيهات</div>
+      <div class="toggle-row">
+        <span class="toggle-label">إشعارات الربح/الخسارة</span>
+        <label class="toggle"><input type="checkbox" id="notifToggle"><span class="toggle-slider"></span></label>
       </div>
-      <div class="port-stats">
-        <div class="ps"><div class="ps-lbl">ربح اليوم</div><div class="ps-val ${todayPnl>=0?'green':'red'}">${todayPnl>=0?'+':''}$${fmt(todayPnl,2)}</div></div>
-        <div class="ps"><div class="ps-lbl">عدد العملات</div><div class="ps-val" style="color:var(--cyan)">${assets.length}</div></div>
-        <div class="ps"><div class="ps-lbl">سعر الدولار</div><div class="ps-val gold">ج.م ${(egpRate||50.8).toFixed(1)}</div></div>
+      <div class="toggle-row">
+        <span class="toggle-label">حد التنبيه ($)</span>
+        <input class="inp" type="number" id="profitThreshold" value="50" min="10" step="10"
+          style="width:80px;margin:0;padding:6px 10px;text-align:center;direction:ltr">
+      </div>
+      <div style="margin-top:12px">
+        <button class="btn btn-g" id="btnTestNotif" style="width:100%">🔔 اختبار الإشعار</button>
       </div>
     </div>
-    <div class="assets-hdr"><span class="assets-hdr-txt">الأصول النشطة</span><span class="badge-sm">${assets.length} عملة</span></div>
-    ${rows}`;
-}
 
-function renderNoCreds(){
-  document.getElementById('homeContent').innerHTML=`
-    <div class="empty">
-      <div class="empty-icon">🔑</div>
-      <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:10px">أضف مفاتيح OKX API</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-bottom:20px;line-height:1.8">اذهب إلى الإعدادات وأدخل<br>بيانات OKX API للبدء</div>
-      <button class="btn btn-green" id="btnGoSettings" style="margin:0 auto">⚙️ فتح الإعدادات</button>
-    </div>`;
-  document.getElementById('btnGoSettings')?.addEventListener('click',()=>switchTab('settings'));
-  updateApiStatus(false);
-}
+    <div class="s-sec ticker">
+      <div class="s-ttl"><span class="icon">📊</span>عملات شريط الأسعار</div>
+      <input class="inp" id="tickerInp" placeholder="BTC,ETH,SOL,..." style="direction:ltr">
+      <button class="btn btn-g" id="btnUpdateTicker" style="width:100%">تحديث الشريط</button>
+    </div>
 
-function loadPortfolio(){
-  // Try cache first
-  const cached = STORE.get('portfolio_cache');
-  if(cached){ portfolio=cached; renderHome(); updateApiStatus(true); }
-  if(!hasCredentials()){ renderNoCreds(); return; }
-  buildPortfolio().then(p=>{
-    if(!p){ if(!cached) renderNoCreds(); return; }
-    portfolio=p; renderHome(); updateApiStatus(true);
-    livePrices = {};
-    for(const a of p.assets) livePrices[a.sym]={p:a.price,c:a.dailyChangePct};
-    const coinsStr = STORE.get('tickerCoins')||DEFAULT_COINS;
-    renderCoinsBarWithPrices(coinsStr);
-  }).catch(()=>{ if(!cached) renderNoCreds(); });
-}
-
-// ══════════════════════════════════════════
-//   COINS BAR
-// ══════════════════════════════════════════
-async function initCoinsBar(){
-  const coinsStr = STORE.get('tickerCoins')||DEFAULT_COINS;
-  const tickerInp = document.getElementById('tickerCoinsInp');
-  if(tickerInp) tickerInp.value=coinsStr;
-  renderCoinsBarLoading(coinsStr);
-  try{ await fetchAllDirectPrices(coinsStr); renderCoinsBarWithPrices(coinsStr); }catch{}
-}
-
-function renderCoinsBarLoading(coinsStr){
-  const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
-  document.getElementById('coins-bar').innerHTML=coins.map(sym=>{
-    const d=livePrices[sym];
-    if(d&&d.p){ const up=d.c>=0; return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`; }
-    return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price" style="color:var(--text-muted)">⏳</span><span class="cp-chg">--</span></span>`;
-  }).join('');
-}
-
-function renderCoinsBarWithPrices(coinsStr){
-  const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
-  document.getElementById('coins-bar').innerHTML=coins.map(sym=>{
-    const d=livePrices[sym];
-    if(!d||!d.p) return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price" style="color:var(--text-muted)">--</span><span class="cp-chg">--</span></span>`;
-    const up=d.c>=0;
-    return `<span class="coin-pill"><span class="cp-sym">${sym}</span><span class="cp-price">$${fmtPrice(d.p)}</span><span class="cp-chg ${up?'up':'dn'}">${up?'+':''}${parseFloat(d.c).toFixed(2)}%</span></span>`;
-  }).join('');
-}
-
-async function refreshCoinsBarPrices(){
-  const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
-  try{ await fetchAllDirectPrices(coinsStr); renderCoinsBarWithPrices(coinsStr); }catch{}
-}
-
-function updateTicker(){
-  const v=document.getElementById('tickerCoinsInp').value.trim();
-  if(v){ STORE.set('tickerCoins',v); fetchAllDirectPrices(v).then(()=>renderCoinsBarWithPrices(v)); showToast('✅ تم تحديث الشريط'); }
-}
-
-// ══════════════════════════════════════════
-//   TABS
-// ══════════════════════════════════════════
-function switchTab(tab){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.nav-btn').forEach(t=>t.classList.remove('on'));
-  document.getElementById('page-'+tab).classList.add('on');
-  document.getElementById('nav-'+tab).classList.add('on');
-  currentTab=tab;
-  document.getElementById('content').scrollTop=0;
-  if(tab==='ai') loadAI();
-  if(tab==='alerts') renderAlerts();
-  if(tab==='settings') loadSettings();
-}
-
-// ══════════════════════════════════════════
-//   AI
-// ══════════════════════════════════════════
-function getLocalAnalysis(asset){
-  const pct=asset.dailyChangePct||0, price=asset.price||0;
-  const support=price*.95, resistance=price*1.05, stopLoss=price*.92;
-  let trend,signal,reason,bullScore,bearScore,confidence;
-  if(pct>3){trend='صاعد';signal='buy';bullScore=75;bearScore=25;confidence=65;reason=`${asset.sym} يظهر ارتفاعاً قوياً بنسبة ${pct.toFixed(1)}%. الاتجاه الصاعد واضح مع زخم إيجابي. يُنصح بالشراء مع وقف خسارة عند $${fmtPrice(stopLoss)}.`;}
-  else if(pct>1){trend='صاعد';signal='hold';bullScore=60;bearScore=40;confidence=55;reason=`${asset.sym} يرتفع بنسبة ${pct.toFixed(1)}% اليوم. الاتجاه إيجابي لكن الزخم غير كافٍ. يُفضل الاحتفاظ بالمراكز الحالية.`;}
-  else if(pct<-3){trend='هبوطي';signal='sell';bullScore=20;bearScore=80;confidence=60;reason=`${asset.sym} يهبط بنسبة ${Math.abs(pct).toFixed(1)}%. الضغط البيعي قوي. يُنصح ببيع جزء وتفعيل وقف الخسارة عند $${fmtPrice(stopLoss)}.`;}
-  else if(pct<-1){trend='هبوطي';signal='hold';bullScore=35;bearScore=65;confidence=50;reason=`${asset.sym} ينخفض بنسبة ${Math.abs(pct).toFixed(1)}%. الاتجاه سلبي لكن الهبوط ليس حاداً. يُفضل الانتظار.`;}
-  else{trend='محايد';signal='hold';bullScore=50;bearScore=50;confidence=45;reason=`${asset.sym} يتحرك بشكل محايد. لا توجد إشارات واضحة. يُنصح بالانتظار حتى يظهر اتجاه واضح.`;}
-  return{trend,signal,reason,support,resistance,stopLoss,confidence,bullScore,bearScore};
-}
-
-async function analyzeAssetDirect(sym,price,dailyChangePct){
-  const prompt=`أنت خبير تداول عملات رقمية محترف مع خبرة 15+ سنة.
-حلل: ${sym} السعر: $${price} التغير: ${dailyChangePct>=0?'+':''}${dailyChangePct.toFixed(2)}%
-أجب بـ JSON فقط:
-{"trend":"صاعد أو هابط أو محايد","signal":"buy أو sell أو hold","reason":"تحليل مفصل 3-4 جمل","support":0.0,"resistance":0.0,"stopLoss":0.0,"confidence":75,"bullScore":70,"bearScore":30}`;
-  try{
-    const ctrl=new AbortController();
-    const to=setTimeout(()=>ctrl.abort(),30000);
-    const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'system',content:'أجب بـ JSON فقط'},{role:'user',content:prompt}],model:'openai',temperature:0.7,seed:Math.floor(Math.random()*100000)}),signal:ctrl.signal});
-    clearTimeout(to);
-    if(!res.ok) return getLocalAnalysis({sym,price,dailyChangePct});
-    const txt=await res.text();
-    const m=txt.match(/\{[\s\S]*?\}/);
-    if(!m) return getLocalAnalysis({sym,price,dailyChangePct});
-    return JSON.parse(m[0]);
-  }catch{ return getLocalAnalysis({sym,price,dailyChangePct}); }
-}
-
-function loadAI(){
-  const cached = STORE.get('ai_analyses');
-  const ts = STORE.get('ai_last_update');
-  if(cached&&cached.length){ aiAnalyses=cached; document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(ts||Date.now()); renderAI(); }
-  else{ document.getElementById('aiContent').innerHTML='<div class="empty">اضغط "تحليل الآن" لبدء تحليل العملات<br><span style="font-size:10px;color:var(--text-muted);display:block;margin-top:6px">AI مجاني بدون تسجيل</span></div>'; document.getElementById('aiLastTxt').textContent='لم يتم التحليل بعد'; }
-}
-
-function renderAI(){
-  if(!aiAnalyses.length){ document.getElementById('aiContent').innerHTML='<div class="empty">لا يوجد تحليل</div>'; return; }
-  document.getElementById('aiContent').innerHTML=aiAnalyses.map(a=>{
-    const m=meta(a.sym), sig=a.signal||'hold', conf=a.confidence||50, bull=a.bullScore||50, bear=a.bearScore||50;
-    const sigLabel=sig==='buy'?'🟢 شراء':sig==='sell'?'🔴 بيع':'🟡 انتظار';
-    return `<div class="ai-card">
-      <div class="ai-card-hdr">
-        <div class="ai-card-ico" style="background:${m.bg}18;color:${m.bg};border-color:${m.bg}40">${m.icon}</div>
-        <div><div class="ai-sym">${a.sym}</div><div class="ai-price">$${fmtPrice(a.price)} · ${a.trend||'محايد'}</div></div>
-        <span class="sig ${sig}">${sigLabel}</span>
+    <div class="s-sec ai-s">
+      <div class="s-ttl">
+        <span class="icon">🤖</span>التحليل بالذكاء الاصطناعي
+        <span class="api-badge ok">مجاني ✓</span>
       </div>
-      <div class="ai-body">
-        <div class="ai-reason">${a.reason||'لا يوجد تحليل'}</div>
-        <div class="ai-scores">
-          <div class="sc"><div class="sc-l">الثقة</div><div class="sc-v" style="color:var(--cyan)">${conf}%</div><div class="sc-bar"><div class="sc-fill" style="width:${conf}%;background:var(--cyan)"></div></div></div>
-          <div class="sc"><div class="sc-l">صعودي</div><div class="sc-v green">${bull}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bull}%;background:var(--accent)"></div></div></div>
-          <div class="sc"><div class="sc-l">هبوطي</div><div class="sc-v red">${bear}%</div><div class="sc-bar"><div class="sc-fill" style="width:${bear}%;background:var(--danger)"></div></div></div>
-        </div>
-        ${a.support?`<div class="ai-levels">
-          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--accent)"></div><span class="green">دعم: $${fmtPrice(a.support)}</span></div>
-          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--danger)"></div><span class="red">مقاومة: $${fmtPrice(a.resistance||0)}</span></div>
-          <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--gold)"></div><span class="gold">وقف: $${fmtPrice(a.stopLoss||0)}</span></div>
-        </div>`:''}
+      <div style="font-size:10px;color:var(--text2);line-height:1.7">
+        التحليل يعمل تلقائياً بدون أي مفتاح أو تسجيل — مجاني 100% عبر Pollinations AI
       </div>
-    </div>`;
-  }).join('');
-}
+    </div>
 
-async function runAI(){
-  const btn=document.getElementById('btnRunAI');
-  btn.disabled=true; btn.textContent='⏳ جاري التحليل...';
-  document.getElementById('aiContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">جاري تحليل العملات...</div></div>';
-  try{
-    const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
-    const coins=coinsStr.split(',').map(c=>c.trim().toUpperCase()).filter(Boolean);
-    const prices=await fetchAllDirectPrices(coinsStr);
-    const analyses=[];
-    for(const sym of coins){
-      const d=livePrices[sym]||prices[sym];
-      if(!d) continue;
-      const analysis=await analyzeAssetDirect(sym,d.p,d.c);
-      analyses.push({sym,price:d.p,dailyChangePct:d.c,avgBuy:0,unrealizedPnL:0,unrealizedPnLPct:0,allocPct:0,...analysis});
-    }
-    aiAnalyses=analyses;
-    STORE.set('ai_analyses',analyses); STORE.set('ai_last_update',Date.now());
-    document.getElementById('aiLastTxt').textContent='آخر تحديث: '+fmtTime(Date.now());
-    renderAI(); showToast('✅ اكتمل التحليل');
-  }catch(e){ document.getElementById('aiContent').innerHTML=`<div class="empty">حدث خطأ. حاول مرة أخرى.<br><span style="font-size:9px;color:var(--text-muted)">${e.message}</span></div>`; }
-  finally{ btn.disabled=false; btn.textContent='تحليل الآن ▶'; }
-}
+    <div class="footer">
+      برمجة وتطوير بكل ❤️ المهندس محمد حماد<br>
+      <span style="color:var(--accent)">Hammad Crypto v3.5 Pro PWA</span>
+    </div>
+  </div>
 
-// ══════════════════════════════════════════
-//   ALERTS
-// ══════════════════════════════════════════
-function addAlert(title,body,type='info'){
-  alerts.unshift({id:Date.now(),title,body,type,time:new Date(),read:false});
-  STORE.set('popup_alerts',alerts);
-  if(currentTab==='alerts') renderAlerts();
-  updateAlertsBadge();
-}
-function updateAlertsBadge(){
-  const unread=alerts.filter(a=>!a.read).length;
-  const badge=document.getElementById('alertsBadge');
-  if(unread>0){ badge.textContent=unread>9?'9+':unread; badge.classList.add('show'); }
-  else badge.classList.remove('show');
-}
-function renderAlerts(){
-  const el=document.getElementById('alertsContent');
-  if(!alerts.length){ el.innerHTML='<div class="empty">لا توجد تنبيهات</div>'; return; }
-  const col={profit:'var(--accent)',alert:'var(--danger)',ai:'var(--purple)',info:'var(--info)'};
-  el.innerHTML=alerts.map(a=>`
-    <div class="al-item ${a.read?'':'unread'}">
-      <div class="al-dot-el" style="background:${col[a.type]||'var(--info)'}"></div>
-      <div><div class="al-ttl">${a.title}</div><div class="al-msg">${a.body}</div><div class="al-time">${fmtTime(a.time)}</div></div>
-    </div>`).join('');
-  alerts.forEach(a=>a.read=true);
-  STORE.set('popup_alerts',alerts);
-  updateAlertsBadge();
-}
+</div><!-- /scroll -->
 
-// ══════════════════════════════════════════
-//   SETTINGS
-// ══════════════════════════════════════════
-function loadSettings(){
-  const coinsStr=STORE.get('tickerCoins')||DEFAULT_COINS;
-  const el=document.getElementById('tickerCoinsInp');
-  if(el) el.value=coinsStr;
-  checkApiStatus();
-}
+<!-- BOTTOM NAV -->
+<nav id="nav">
+  <div class="nav-item on" data-tab="home">
+    <span class="nav-ico">🏠</span>
+    <span class="nav-lbl">الرئيسية</span>
+    <div class="nav-active-bar"></div>
+  </div>
+  <div class="nav-item" data-tab="ai">
+    <span class="nav-ico">🤖</span>
+    <span class="nav-lbl">تحليل</span>
+    <div class="nav-active-bar"></div>
+  </div>
+  <div class="nav-item" data-tab="alerts">
+    <span class="nav-ico">🔔</span>
+    <span class="nav-lbl">تنبيهات</span>
+    <div class="nav-badge" id="alertBadge"></div>
+    <div class="nav-active-bar"></div>
+  </div>
+  <div class="nav-item" data-tab="settings">
+    <span class="nav-ico">⚙️</span>
+    <span class="nav-lbl">إعدادات</span>
+    <div class="nav-active-bar"></div>
+  </div>
+</nav>
 
-function saveCreds(){
-  const api=document.getElementById('inp_api').value.trim();
-  const sec=document.getElementById('inp_sec').value.trim();
-  const pass=document.getElementById('inp_pass').value.trim();
-  if(!api||!sec||!pass){ showConn('fail','⚠️ يرجى ملء الحقول الثلاثة'); return; }
-  saveCredentials({apiKey:api,secretKey:sec,passphrase:pass});
-  showConn('ok','✅ تم الحفظ — المفاتيح محفوظة محلياً على جهازك');
-  updateApiStatus(true);
-  addAlert('🔑 OKX','تم حفظ بيانات API','info');
-  showToast('✅ تم حفظ بيانات API');
-  setTimeout(loadPortfolio,1500);
-}
+<!-- INSTALL BANNER -->
+<div id="install-banner">
+  <div class="ib-txt">
+    <strong>📲 ثبّت التطبيق على هاتفك</strong>
+    للوصول السريع وتلقي إشعارات الربح/الخسارة
+  </div>
+  <div class="ib-btns">
+    <button class="ib-yes" id="btnInstall">تثبيت</button>
+    <button class="ib-no" id="btnDismiss">لاحقاً</button>
+  </div>
+</div>
 
-function removeCreds(){
-  if(!confirm('هل تريد حذف بيانات OKX API؟')) return;
-  removeCredentials();
-  showConn('fail','🗑️ تم حذف البيانات');
-  updateApiStatus(false);
-  ['inp_api','inp_sec','inp_pass'].forEach(id=>{ const e=document.getElementById(id); if(e) e.value=''; });
-  portfolio=null;
-  document.getElementById('homeContent').innerHTML='<div class="loading"><div class="spinner"></div><div class="ld-txt">...</div></div>';
-  setTimeout(renderNoCreds,500);
-  showToast('🗑️ تم حذف البيانات');
-}
-
-async function testConn(){
-  showConn('fail','⏳ جاري الاختبار...');
-  const api=document.getElementById('inp_api').value.trim();
-  const sec=document.getElementById('inp_sec').value.trim();
-  const pass=document.getElementById('inp_pass').value.trim();
-  if(!api||!sec||!pass){ showConn('fail','⚠️ أدخل البيانات أولاً'); return; }
-  try{
-    const ts=new Date().toISOString(), path='/api/v5/account/balance';
-    const k=new TextEncoder().encode(sec), m=new TextEncoder().encode(ts+'GET'+path);
-    const ck=await crypto.subtle.importKey('raw',k,{name:'HMAC',hash:'SHA-256'},false,['sign']);
-    const sig=await crypto.subtle.sign('HMAC',ck,m);
-    const sign=btoa(String.fromCharCode(...new Uint8Array(sig)));
-    const res=await fetch('https://www.okx.com'+path,{headers:{'OK-ACCESS-KEY':api,'OK-ACCESS-SIGN':sign,'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':pass,'Content-Type':'application/json'}});
-    showConn(res.ok?'ok':'fail',res.ok?'🟢 الاتصال بـ OKX ناجح!':'🔴 بيانات غير صحيحة');
-    if(res.ok) updateApiStatus(true);
-  }catch{ showConn('fail','⚠️ فشل الاتصال — تحقق من الشبكة'); }
-}
-
-function showConn(type,msg){
-  const el=document.getElementById('connMsg');
-  el.textContent=msg; el.className='conn-msg '+type;
-}
-
-// ══════════════════════════════════════════
-//   REFRESH
-// ══════════════════════════════════════════
-function doRefresh(){
-  const btn=document.getElementById('refreshBtn');
-  btn.classList.add('spin');
-  loadPortfolio();
-  refreshCoinsBarPrices();
-  setTimeout(()=>btn.classList.remove('spin'),1800);
-  showToast('🔄 جاري التحديث...');
-}
-
-// ══════════════════════════════════════════
-//   ONLINE / OFFLINE
-// ══════════════════════════════════════════
-function updateOnlineStatus(){
-  const badge=document.getElementById('offline-badge');
-  if(navigator.onLine) badge.classList.remove('show');
-  else badge.classList.add('show');
-}
-window.addEventListener('online',updateOnlineStatus);
-window.addEventListener('offline',updateOnlineStatus);
-
-// ══════════════════════════════════════════
-//   PWA INSTALL
-// ══════════════════════════════════════════
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();
-  deferredInstallPrompt=e;
-  const dismissed=STORE.get('install_dismissed');
-  if(!dismissed) document.getElementById('install-banner').classList.add('show');
-});
-
-document.getElementById('btnInstall')?.addEventListener('click',()=>{
-  if(deferredInstallPrompt){
-    deferredInstallPrompt.prompt();
-    deferredInstallPrompt.userChoice.then(r=>{
-      if(r.outcome==='accepted') document.getElementById('install-banner').classList.remove('show');
-      deferredInstallPrompt=null;
-    });
-  }
-});
-
-document.getElementById('btnDismissInstall')?.addEventListener('click',()=>{
-  document.getElementById('install-banner').classList.remove('show');
-  STORE.set('install_dismissed',true);
-});
-
-// ══════════════════════════════════════════
-//   INIT
-// ══════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',()=>{
-  // Nav tabs
-  document.querySelectorAll('.nav-btn').forEach(t=>{
-    t.addEventListener('click',()=>switchTab(t.dataset.tab));
-  });
-
-  // Buttons
-  document.getElementById('refreshBtn').addEventListener('click',doRefresh);
-  document.getElementById('btnRunAI').addEventListener('click',runAI);
-  document.getElementById('btnClearAlerts').addEventListener('click',()=>{ alerts=[]; STORE.remove('popup_alerts'); renderAlerts(); });
-  document.getElementById('btnSave').addEventListener('click',saveCreds);
-  document.getElementById('btnTest').addEventListener('click',testConn);
-  document.getElementById('btnRemove').addEventListener('click',removeCreds);
-  document.getElementById('btnUpdateTicker').addEventListener('click',updateTicker);
-
-  // Load saved alerts
-  const savedAlerts=STORE.get('popup_alerts');
-  if(savedAlerts) alerts=savedAlerts;
-  else alerts=[{id:1,title:'🎉 مرحباً بك',body:'أضف مفاتيح OKX API من الإعدادات للبدء',type:'info',time:new Date(),read:false}];
-  updateAlertsBadge();
-
-  // Online status
-  updateOnlineStatus();
-
-  // Init data
-  initCoinsBar();
-  loadPortfolio();
-  checkApiStatus();
-
-  // Refresh every 30s
-  setInterval(refreshCoinsBarPrices,30000);
-  setInterval(()=>{ if(hasCredentials()&&currentTab==='home') loadPortfolio(); },60000);
-});
-
-// Service Worker
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-</script>
+<script src="app.js"></script>
 </body>
 </html>
