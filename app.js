@@ -1,6 +1,6 @@
 'use strict';
 // ============================================================
-// Hammad Crypto PWA — app.js v3.5
+// Hammad Crypto PWA — app.js v3.8 WITH SOUND NOTIFICATIONS
 // Storage: localStorage (persistent across sessions)
 // ============================================================
 
@@ -138,6 +138,82 @@ async function fetchEGPRate() {
   } catch { return 50.8; }
 }
 
+// ── SOUND NOTIFICATIONS 🔊 ────────────────────────────────
+function playNotificationSound(type = 'success') {
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioContext.currentTime;
+    
+    if (type === 'success') {
+      // صوت الربح - نغمات صاعدة 📈
+      const notes = [
+        { freq: 523.25, time: 0 },    // C5
+        { freq: 659.25, time: 0.1 },  // E5
+        { freq: 783.99, time: 0.2 }   // G5
+      ];
+      
+      notes.forEach(note => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.value = note.freq;
+        osc.type = 'sine';
+        
+        gain.gain.setValueAtTime(0.3, now + note.time);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + 0.08);
+        
+        osc.start(now + note.time);
+        osc.stop(now + note.time + 0.08);
+      });
+    } else if (type === 'warning') {
+      // صوت التحذير - نغمات هابطة 📉
+      const notes = [
+        { freq: 659.25, time: 0 },    // E5
+        { freq: 523.25, time: 0.1 },  // C5
+        { freq: 392, time: 0.2 }      // G4
+      ];
+      
+      notes.forEach(note => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        
+        osc.frequency.value = note.freq;
+        osc.type = 'sine';
+        
+        gain.gain.setValueAtTime(0.3, now + note.time);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + 0.08);
+        
+        osc.start(now + note.time);
+        osc.stop(now + note.time + 0.08);
+      });
+    } else if (type === 'notification') {
+      // صوت التنبيه - نغمة بسيطة 🔵
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      
+      osc.frequency.value = 600;
+      osc.type = 'sine';
+      
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      
+      osc.start(now);
+      osc.stop(now + 0.15);
+    }
+  } catch (e) {
+    console.warn('Audio context error:', e);
+  }
+}
+
 // ── Build Portfolio ────────────────────────────────────────
 async function buildPortfolio() {
   const balData = await fetchBalance();
@@ -191,7 +267,7 @@ function switchTab(tab) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
   document.getElementById('page-'+tab).classList.add('on');
-  document.querySelector(`.nav-item[data-tab="${tab}"]`).classList.add('on');
+  document.querySelector(`.nav-item[data-tab=\"${tab}\"]`).classList.add('on');
   document.getElementById('scroll').scrollTop = 0;
   currentTab = tab;
   if(tab==='ai') loadAI();
@@ -308,7 +384,7 @@ function updateAppBadge(profit) {
   }
 }
 
-// ── Profit/Loss Alerts ────────────────────────────────────
+// ── Profit/Loss Alerts WITH SOUND ────────────────────────
 function checkProfitAlerts(profit, prevProfit) {
   const threshold = parseInt(lsGet(STORAGE_KEY_THRESHOLD, 50));
   const change = profit - prevProfit;
@@ -319,11 +395,19 @@ function checkProfitAlerts(profit, prevProfit) {
       ? `ارتفع ربحك بمقدار +$${Math.abs(change).toFixed(0)} 💰`
       : `انخفضت محفظتك بمقدار -$${Math.abs(change).toFixed(0)}`;
     addAlert(title, body, isProfit?'profit':'alert');
+    
+    // شغّل الصوت المناسب 🔊
+    if(isProfit) {
+      playNotificationSound('success');
+    } else {
+      playNotificationSound('warning');
+    }
+    
     sendPushNotification(title, body);
   }
 }
 
-// ── Push Notifications ────────────────────────────────────
+// ── Push Notifications WITH SOUND ────────────────────────
 async function requestNotifPermission() {
   if(!('Notification' in window)) return false;
   if(Notification.permission==='granted'){ notifGranted=true; return true; }
@@ -337,6 +421,16 @@ function sendPushNotification(title, body, icon='icons/icon192.png') {
   const enabled = lsGet(STORAGE_KEY_NOTIF, false);
   if(!enabled) return;
   if(Notification.permission!=='granted') return;
+  
+  // شغّل الصوت المناسب 🔊
+  if(title.includes('ربح') || title.includes('Profit')) {
+    playNotificationSound('success');
+  } else if(title.includes('خسارة') || title.includes('Loss') || title.includes('⚠️')) {
+    playNotificationSound('warning');
+  } else {
+    playNotificationSound('notification');
+  }
+  
   try {
     if(navigator.serviceWorker?.ready) {
       navigator.serviceWorker.ready.then(reg=>{
@@ -373,7 +467,7 @@ function getLocalAnalysis(asset) {
 }
 
 async function analyzeAssetDirect(sym,price,dailyChangePct) {
-  const prompt=`أنت خبير تداول عملات رقمية محترف.\nالعملة: ${sym}\nالسعر: $${price}\nالتغير اليومي: ${dailyChangePct>=0?'+':''}${dailyChangePct.toFixed(2)}%\nأجب بـ JSON فقط:\n{"trend":"صاعد أو هابط أو محايد","signal":"buy أو sell أو hold","reason":"تحليل عربي 2-3 جمل","support":0.0,"resistance":0.0,"stopLoss":0.0,"confidence":75,"bullScore":70,"bearScore":30}`;
+  const prompt=`أنت خبير تداول عملات رقمية محترف.\\nالعملة: ${sym}\\nالسعر: $${price}\\nالتغير اليومي: ${dailyChangePct>=0?'+':''}${dailyChangePct.toFixed(2)}%\\nأجب بـ JSON فقط:\\n{\"trend\":\"صاعد أو هابط أو محايد\",\"signal\":\"buy أو sell أو hold\",\"reason\":\"تحليل عربي 2-3 جمل\",\"support\":0.0,\"resistance\":0.0,\"stopLoss\":0.0,\"confidence\":75,\"bullScore\":70,\"bearScore\":30}`;
   try {
     const ctrl=new AbortController();
     const to=setTimeout(()=>ctrl.abort(),30000);
@@ -438,7 +532,7 @@ function renderAI() {
           <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--accent)"></div><span class="green">دعم: $${fmtPrice(a.support)}</span></div>
           <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--danger)"></div><span class="red">مقاومة: $${fmtPrice(a.resistance||0)}</span></div>
           <div class="ai-lv-item"><div class="ai-lv-dot" style="background:var(--gold)"></div><span class="gold">وقف: $${fmtPrice(a.stopLoss||0)}</span></div>
-        </div>`:''}
+        </div>`:''}\
       </div>
     </div>`;
   }).join('');
@@ -471,7 +565,7 @@ function renderAlerts() {
   const col={profit:'var(--accent)',alert:'var(--danger)',ai:'var(--purple)',info:'var(--info)'};
   el.innerHTML=alerts.map(a=>`
     <div class="al-item ${a.read?'':'unread'}">
-      <div class="al-dot" style="background:${col[a.type]||'var(--info)'}"></div>
+      <div class="al-dot" style="background:${col[a.type]||'var(--info)'};"></div>
       <div>
         <div class="al-ttl">${a.title}</div>
         <div class="al-msg">${a.body}</div>
@@ -544,9 +638,9 @@ async function testConnUI() {
   try {
     const ts=new Date().toISOString(), path='/api/v5/account/balance';
     const sign=await hmac256(creds.secretKey, ts+'GET'+path);
-    const r=await fetch(OKX_BASE+path,{headers:{
-      'OK-ACCESS-KEY':creds.apiKey,'OK-ACCESS-SIGN':sign,
-      'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':creds.passphrase,'Content-Type':'application/json'
+    const r=await fetch(OKX_BASE+path,{headers:{\
+      'OK-ACCESS-KEY':creds.apiKey,'OK-ACCESS-SIGN':sign,\
+      'OK-ACCESS-TIMESTAMP':ts,'OK-ACCESS-PASSPHRASE':creds.passphrase,'Content-Type':'application/json'\
     }});
     showConn(r.ok?'ok':'fail', r.ok?'🟢 الاتصال بـ OKX ناجح!':'🔴 بيانات غير صحيحة');
     if(r.ok) updateApiStatus(true);
@@ -582,9 +676,9 @@ function buildCarousel() {
       </div>
     </div>`;
   }).join('');
-  document.getElementById('carousel-dots').innerHTML=n>1?carouselAssets.map((_,i)=>
-    `<div class="c-dot ${i===carouselIdx?'on':''}" onclick="carouselGoTo(${i})"></div>`
-  ).join(''):'';
+  document.getElementById('carousel-dots').innerHTML=n>1?carouselAssets.map((_,i)=>\
+    `<div class="c-dot ${i===carouselIdx?'on':''}" onclick="carouselGoTo(${i})"></div>`\
+  ).join(''):'';\
 }
 
 window.carouselGoTo = function(idx){ carouselIdx=idx; buildCarousel(); resetCarouselTimer(); };
@@ -718,6 +812,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(!ok){ alert('السماح بالإشعارات مطلوب'); return; }
     lsSet(STORAGE_KEY_NOTIF, true);
     document.getElementById('notifToggle').checked=true;
+    playNotificationSound('notification');
     sendPushNotification('🔔 Hammad Crypto','هذا إشعار تجريبي — التنبيهات تعمل بشكل صحيح ✅');
     addAlert('🔔 اختبار الإشعار','تم إرسال إشعار تجريبي بنجاح','info');
   });
